@@ -1,4 +1,4 @@
-import Order from '../../../../pages/orders/models/Order'
+import Order from '../../../../pages/orders/domain/Order'
 const newOrder = {
   userId: 'test-user',
   network: 'facebook',

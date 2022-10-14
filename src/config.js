@@ -1,4 +1,4 @@
 const env = require('react-dotenv')
 export default {
-    API_URL: 'localhost:3000'
+    BACKEND_URL: env.default.BACKEND_URL
 }

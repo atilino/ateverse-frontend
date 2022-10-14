@@ -46,6 +46,6 @@
     "webpack-dev-server": "^4.7.2"
   },
   "react-dotenv": {
-    "whitelist": ["API_URL"]
+    "whitelist": ["BACKEND_URL"]
   }
 }

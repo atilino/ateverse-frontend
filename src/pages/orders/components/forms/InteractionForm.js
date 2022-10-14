@@ -11,7 +11,6 @@ import FormTemplate from '../FormTemplate';
 import { ReactionsInput, ShareGroupInput } from '../'
 import useProfiles from '../../../../hooks/useProfiles';
 import AvailableMessage from '../AvailableMessage';
-import Order from '../../models/Order';
 
 function InteractionForm({
     initialValues,

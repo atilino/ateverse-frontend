@@ -19,7 +19,7 @@ module.exports = {
     devtool: 'inline-source-map',
     devServer: {
         static: './public',
-        historyApiFallback: true,
+        historyApiFallback: true
     },
     plugins: [
         new webpack.ProvidePlugin({
