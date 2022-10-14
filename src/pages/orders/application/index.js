@@ -20,7 +20,7 @@ class OrderFactory {
    * Create a order
    * @param {string} networkName Network name
    * @param {object} order Order object
-   * @returns {import('../domain/order.entity').IOrder} instanced Order object
+   * @returns {import('../models/order.entity').IOrder} instanced Order object
    */
   createNetworkOrder(networkName, order) {
     if(!networks[networkName]) throw new Error('Red social invalida')

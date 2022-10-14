@@ -1,7 +1,7 @@
 //@ts-check
 'use strict'
 
-const { constants } = require('../../../utilities')
+import { constants } from '../../../utilities'
 
 class Order {
   constructor({ userId, network, variant, priority = false, status = constants.ORDER_STATUS[0], deliveryAt = null }) {
@@ -14,4 +14,4 @@ class Order {
   }
 }
 
-module.exports = Order
+export default Order

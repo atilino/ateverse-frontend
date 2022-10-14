@@ -1,4 +1,4 @@
-import { IOrder } from '../domain/order.entity'
+import { IOrder } from '../models/order.entity'
 
 
 export interface IOrderFactory {

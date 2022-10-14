@@ -1,7 +1,7 @@
 //@ts-check
 'use strict'
 
-const { twitter } = require('../domain')
+import { twitter } from '../models'
 /** @typedef {import('./network-factory.interface').IFactory} IFactory */
 
 
@@ -12,7 +12,7 @@ class TwitterFactory {
    * Create a order
    * @param {number} variant Order variant
    * @param {object} order Order object
-   * @returns {import('../domain/order.entity').IOrder} instanced Order object
+   * @returns {import('../models/order.entity').IOrder} instanced Order object
    */
   createOrder(variant, order) {
     if (!twitter[variant]) throw new Error('Variante invalida')
@@ -20,4 +20,4 @@ class TwitterFactory {
   }
 }
 
-module.exports = TwitterFactory
+export default TwitterFactory

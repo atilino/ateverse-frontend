@@ -2,7 +2,7 @@
 //@ts-check
 'use strict'
 
-const Order = require('../order.value')
+import Order from '../order.value'
 
 /** @typedef {import('../order.entity').IOrder} IOrder */
 
@@ -43,4 +43,4 @@ const Order = require('../order.value')
   }
 }
 
-module.exports = Publication
+export default Publication

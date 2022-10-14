@@ -1,10 +1,10 @@
+//@ts-check
+'use strict'
+import { constants } from '../../../../utilities'
+import Order from '../order.value'
 
-//@ts-check'use strict'
 
-const Order = require('../order.value')
-const { constants } = require('../../../../utilities')
-
-/** @typedef {import('./order.entity').IOrder} IOrder */
+/** @typedef {import('../order.entity').IOrder} IOrder*/
 
 /**
  * @typedef {object} InteractionOptions
@@ -13,10 +13,10 @@ const { constants } = require('../../../../utilities')
  * @prop {number} reactionType
  * @prop {Array<string>} comments
  * @prop {number} shares
+ * @prop {number} watchTime
  */
-
 /** @implements {IOrder} */
- class Interaction extends Order {
+class Interaction extends Order {
 
   /**
    * @constructor
@@ -43,13 +43,12 @@ const { constants } = require('../../../../utilities')
     if (this.variant !== 0) return false
     if (typeof this.network !== 'string') return false
     if (typeof this.options.link !== 'string') return false
-    if (!constants.PATTERNS.TWITTER.MAIN.test(this.options.link)) return false
+    if (!constants.PATTERNS.FACEBOOK.MAIN.test(this.options.link)) return false
     if (typeof this.options.reactions !== 'number') return false
     if (typeof this.options.comments !== 'object') return false
     if (typeof this.options.shares !== 'number') return false
-    return true
 
+    return true
   }
 }
-
-module.exports = Interaction
+export default Interaction

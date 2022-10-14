@@ -1,7 +1,7 @@
 //@ts-check
 'use strict'
 
-const { instagram } = require('../domain')
+import { instagram } from '../models'
 /** @typedef {import('./network-factory.interface').IFactory } IFactory */
 
 /** Instagram order factory */
@@ -11,7 +11,7 @@ class InstagramFactory {
    * Create a order
    * @param {number} variant Order variant
    * @param {object} order Order object
-   * @returns {import('../domain/order.entity').IOrder} instanced Order object
+   * @returns {import('../models/order.entity').IOrder} instanced Order object
    */
   createOrder(variant, order) {
     if (!instagram[variant]) throw new Error('Variante invalida')
@@ -19,4 +19,4 @@ class InstagramFactory {
   }
 }
 
-module.exports = InstagramFactory
+export default InstagramFactory

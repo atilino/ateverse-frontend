@@ -1,7 +1,7 @@
 //@ts-check
 'use strict'
-const Order = require('../order.value')
-const { constants } = require('../../../../utilities')
+import Order from '../order.value'
+import { constants } from '../../../../utilities'
 
 /** @typedef {import('../order.entity').IOrder} IOrder*/
 
@@ -44,4 +44,4 @@ class ShareGroups extends Order {
   }
 }
 
-module.exports = ShareGroups
+export default ShareGroups
