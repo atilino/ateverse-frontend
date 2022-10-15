@@ -20,19 +20,19 @@ const PATTERNS = Object.freeze({
 })
 
 const ORDER_VARIANTS = {
-  FACEBOOK: {
-    0: 'interaction',
-    1: 'join-groups',
-    2: 'share-groups',
-    3: 'reports'
-  },
-  INSTAGRAM: {
-    0: 'interaction',
-  },
-  TWITTER: {
-    0: 'interaction',
-    1: 'publication'
-  }
+  facebook: [
+    { id: 0, label: 'Interacción', name: 'interaction' },
+    { id: 1, label: 'Agregar grupos', name: 'join-groups' },
+    { id: 2, label: 'Compartir en grupos', name: 'share-groups' },
+    { id: 3, label: 'Reportar', name: 'report' }
+  ],
+  instagram: [
+   { id: 0, label: 'Interacción', name: 'interaction' },
+  ],
+  twitter: [
+    { id: 0, label: 'Interacción', name: 'interaction' },
+    { id: 1, label: 'Publicación', name: 'publication' }
+  ]
 }
 
 export default {

@@ -3,9 +3,8 @@ import { FormInput, FormItem, FormSelect } from '../../../../components/Form';
 import FormTemplate from '../FormTemplate';
 import { ShareGroupsInput } from '../'
 import useProfiles from '../../../../hooks/useProfiles';
-import AvailableMessage from '../AvailableMessage';
 import { validateLink } from '../../utilities';
-import { filterUndefined } from '../../../../utilities';
+import { filterUndefined } from 'utilities/index';
 
 function ShareGroupsForm({ form, initialValues, onValuesChange, onFinish, onError }) {
 
@@ -27,7 +26,7 @@ function ShareGroupsForm({ form, initialValues, onValuesChange, onFinish, onErro
             }}
             onFinish={values => {
 
-                if (!validateLink({ network: 'facebook', link: values.link })) return onError('URL no valida', 'Compruebe su link')
+                if (!validateLink('facebook', values.link)) return onError('URL no valida', 'Compruebe su link')
                 if (values.groups) {
                     values.groups = values.groups.map(group => {
                         return {
@@ -36,12 +35,9 @@ function ShareGroupsForm({ form, initialValues, onValuesChange, onFinish, onErro
                         }
                     })
                 }
-                onFinish({ shareGroups: values, priority: true })
+                onFinish({ options: values, priority: true })
             }}
         >
-            <div style={{ textAlign: "center", margin: "15px 0" }}>
-                <AvailableMessage quantity={profiles.length} />
-            </div>
             <FormInput label="Link" name="link" />
             <FormSelect
                 label="Perfil"

@@ -1,4 +1,4 @@
-export const validateLink = ({ network, link }) => {
+export const validateLink = (network, link) => {
     const networkValidators = {
         facebook: ["m.facebook", "/posts", "/watch", "/live", "/videos", "photos", "/groups"],
         twitter: ["twitter."],

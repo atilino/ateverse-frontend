@@ -1,10 +1,11 @@
 
-//@ts-check'use strict'
+//@ts-check
+'use strict'
 
 import Order  from '../order.value'
 import { constants }  from '../../../../utilities'
 
-/** @typedef {import('./order.entity').IOrder} IOrder */
+/** @typedef {import('../order.entity').IOrder} IOrder */
 
 /**
  * @typedef {object} InteractionOptions
@@ -21,20 +22,14 @@ import { constants }  from '../../../../utilities'
   /**
    * @constructor
    * @param {object} orderData
-   * @param {string} orderData.userId
    * @param {string} orderData.network
    * @param {number} orderData.variant
    * @param {InteractionOptions} orderData.options
    * @param {boolean} orderData.priority
    */
 
-  constructor({ userId, network, variant, options, priority }) {
-    super({ userId, network, variant, priority })
-    this.executed = {
-      reactions: 0,
-      comments: [],
-      shares: 0
-    }
+  constructor({ network, variant, options, priority }) {
+    super({ network, variant, priority })
     /** @type {InteractionOptions} */
     this.options = options
   }

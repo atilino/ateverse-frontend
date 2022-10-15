@@ -2,24 +2,24 @@ import { Input } from 'antd';
 import React from 'react';
 import { FormItem } from '../../../../components/Form';
 import FormTemplate from '../FormTemplate';
-import useProfiles from '../../../../hooks/useProfiles';
-import AvailableMessage from '../AvailableMessage';
+import { breakStringToArray } from 'utilities/formaters.utility';
 
-function PublicationForm({ initialValues, onValuesChange, form, value, onFinish, onError }) {
-    const { profilesCount } = useProfiles({ type: 'available', network: 'twitter' })
-
+function PublicationForm({ maxPublications, initialValues, onValuesChange, form, onFinish, onError }) {
     return (
         <FormTemplate
-            disabled={profilesCount === 0}
+            disabled={maxPublications === 0}
             form={form}
             initialValues={initialValues}
             onValuesChange={onValuesChange}
-            onFinish={values => onFinish({ ...values, network: 'twitter' })}
+            onFinish={(values) => {
+                const options = { publications: breakStringToArray(values.publications) }
+                console.log(options, maxPublications)
+                if (options.publications.length > maxPublications) {
+                    return onError('Limite de publicaciones', 'Se excedio el limite de publicaciones permitidas')
+                }
+                onFinish({ options })
+            }}
         >
-            <div style={{ textAlign: "center", margin: "15px 0" }}>
-                <AvailableMessage quantity={profilesCount} />
-            </div>
-
             <FormItem label="Publicaciones" name="publications">
                 <Input.TextArea />
             </FormItem>

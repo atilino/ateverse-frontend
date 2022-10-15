@@ -28,9 +28,6 @@ class Report extends Order {
 
   constructor({ userId, network, variant, options, priority }) {
     super({ userId, network, variant, priority })
-    this.executed = {
-      reports: 0
-    }
     /** @type {ReportOptions} */
     this.options = options
   }

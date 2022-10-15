@@ -1,7 +1,7 @@
 import React from 'react';
 import { Radio, Space } from 'antd'
 
-function RadioGroup({ children, options = [], type = 'radio', direction = 'horizontal', config = { label: 'name', value: '_id' }, ...rest }) {
+function RadioGroup({ children, options = [], type = 'radio', direction = 'horizontal', config = { label: 'label', value: 'value' }, ...rest }) {
     return (
         <Radio.Group {...rest} >
             <Space direction={direction} wrap >

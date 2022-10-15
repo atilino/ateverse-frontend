@@ -1,4 +1,11 @@
-exports[0] = require('./Interaction')
-exports[1] = require('./JoinGroups')
-exports[2] = require('./ShareGroups')
-exports[3] = require('./Report')
+import Interaction from './Interaction'
+import JoinGroups from './JoinGroups'
+import ShareGroups from './ShareGroups'
+import Report from './Report'
+
+export default {
+  0: Interaction,
+  1: JoinGroups,
+  2: ShareGroups,
+  3: Report
+}

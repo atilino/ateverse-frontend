@@ -1,2 +1,7 @@
-exports[0] = require('./Interaction');
-exports[1] = require('./Publication');
+import Interaction from './Interaction'
+import Publication from './Publication'
+
+export default {
+  0: Interaction,
+  1: Publication
+}

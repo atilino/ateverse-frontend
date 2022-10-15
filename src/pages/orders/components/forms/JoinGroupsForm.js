@@ -2,10 +2,9 @@ import React from 'react'
 import { FormItem, FormSelect } from '../../../../components/Form'
 import FormTemplate from '../FormTemplate'
 import useProfiles from '../../../../hooks/useProfiles'
-import AvailableMessage from '../AvailableMessage'
 import { JoinGroupsInput } from '../'
 
-function JoinGroupsForm({ initialValues, onValuesChange, form, value, onFinish, onError }) {
+function JoinGroupsForm({ initialValues, onValuesChange, form, onFinish, onError }) {
 
     const { profiles } = useProfiles({ type: 'active', network: 'facebook' })
 
@@ -16,12 +15,8 @@ function JoinGroupsForm({ initialValues, onValuesChange, form, value, onFinish, 
             form={form}
             initialValues={initialValues}
             onValuesChange={values => onValuesChange({ joinGroups: values })}
-            onFinish={values => onFinish({ joinGroups: values, priority: true })}
+            onFinish={values => onFinish({ options: values, priority: true })}
         >
-            <div style={{ textAlign: "center", margin: "15px 0" }}>
-                <AvailableMessage quantity={profiles.length} />
-            </div>
-
             <FormSelect
                 label="Perfil"
                 name="profileId"

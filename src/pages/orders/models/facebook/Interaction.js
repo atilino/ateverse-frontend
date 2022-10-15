@@ -21,20 +21,14 @@ class Interaction extends Order {
   /**
    * @constructor
    * @param {object} orderData
-   * @param {string} orderData.userId
    * @param {string} orderData.network
    * @param {number} orderData.variant
    * @param {InteractionOptions} orderData.options
    * @param {boolean} orderData.priority
    */
 
-  constructor({ userId, network, variant, options, priority }) {
-    super({ userId, network, variant, priority })
-    this.executed = {
-      reactions: 0,
-      comments: [],
-      shares: 0
-    }
+  constructor({ network, variant, options, priority }) {
+    super({ network, variant, priority })
     /** @type {InteractionOptions} */
     this.options = options
   }

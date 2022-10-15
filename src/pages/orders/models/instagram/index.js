@@ -1,1 +1,5 @@
-exports[0] = require('./Interaction.js')
+import Interaction from './Interaction'
+
+export default {
+  0: Interaction,
+}

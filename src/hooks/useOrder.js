@@ -44,14 +44,6 @@ const useOrder = () => {
     const resetLocalOrder = () => setOrder(init)
 
     const createOrder = (orderObject) => {
-        if(typeof orderObject.commentsText === 'string') {
-            orderObject.commentsText = breakStringToArray(orderObject.commentsText)
-            orderObject.comments = orderObject.commentsText.length
-        }
-        if(typeof orderObject.publications === 'string') {
-            orderObject.publications = breakStringToArray(orderObject.publications)
-        }
-
         return orderService
             .createOrder(orderObject)
             .then(response => {

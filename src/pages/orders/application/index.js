@@ -2,9 +2,9 @@
 'use strict'
 /** @typedef {import('./order-factory.interface').IOrderFactory} IOrderFactory */
 
-const facebook = require('./FacebookFactory')
-const twitter = require('./TwitterFactory')
-const instagram = require('./InstagramFactory')
+import facebook  from './FacebookFactory'
+import twitter  from './TwitterFactory'
+import instagram  from './InstagramFactory'
 
 
 const networks = {
@@ -28,4 +28,4 @@ class OrderFactory {
   }
 }
 
-module.exports = OrderFactory
+export default OrderFactory

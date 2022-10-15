@@ -1,11 +1,9 @@
-import { Input } from 'antd';
 import React from 'react';
 import { FormInput, FormInputNumber, FormSelect } from '../../../../components/Form';
 import FormTemplate from '../FormTemplate';
 import useProfiles from '../../../../hooks/useProfiles';
-import AvailableMessage from '../AvailableMessage';
 
-function PublicationForm({ initialValues, onValuesChange, form, value, onFinish, onError }) {
+function PublicationForm({ initialValues, onValuesChange, form, onFinish, onError }) {
     const { profilesCount } = useProfiles({ type: 'available', network: 'facebook' })
 
     const _REPORT_TYPES = [
@@ -36,20 +34,16 @@ function PublicationForm({ initialValues, onValuesChange, form, value, onFinish,
             onFinish={values => {
                 console.log(values)
                 onFinish({
-                    link: values.link,
                     options: {
+                        link: values.link,
                         type: values['options.type'],
                         reason: 'social',
-                        reportsNumber: values['options.reportsNumber'],
+                        reports: values['options.reports'],
                     },
                     priority: values.priority
                 })
             }}
         >
-            <div style={{ textAlign: "center", margin: "15px 0" }}>
-                <AvailableMessage quantity={profilesCount} />
-            </div>
-
             <FormInput
                 label="Link"
                 name="link"
@@ -65,7 +59,7 @@ function PublicationForm({ initialValues, onValuesChange, form, value, onFinish,
 
             <FormInputNumber
                 label="Numero de reportes"
-                name="options.reportsNumber"
+                name="options.reports"
                 min={0}
                 max={profilesCount}
             />
