@@ -1,0 +1,31 @@
+name: ci-cd develop
+
+on:
+  push:
+    branches: [ "develop" ]
+
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Image version'
+        required: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to droplet via SSH action
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST_DEV }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSHKEY_DEV }}
+          script: |
+            cd ./ateverse-frontend
+            git pull origin develop
+            cp ./public ../ateverse-infra/nginx/public
+            cd ../ateverse-infra
+            docker rm --force atverse-nginx
+            docker build -t ateverse-nginx ./nginx
+            docker run -d --restart always --name ateverse-nginx \
+            -v ~/ateverse-infra/nginx/public:/var/www/html/app \
+            -p 80:80 --network ateverse-network ateverse-nginx
