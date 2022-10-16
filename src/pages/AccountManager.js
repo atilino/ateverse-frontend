@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
 import { Table } from 'antd'
 import { deleteModal, FormModal, ManagePanel, ViewModal } from '../components/templates'
-import { notification } from '../components/primitives';
+import { notification, Selector } from '../components/primitives';
 import { actions, columns } from '../resources/tables';
 import { forms } from '../resources/forms';
 import { PersonalityForm, SelectorModal } from '../components/organisms';
 import useAccount from '../hooks/useAccount'
 import useToggle from '../hooks/useToggle'
 import useDevice from '../hooks/useDevice'
+import { constants } from 'utilities/index';
 
 function AccountManager(props) {
 
-    const { accounts, account, updateAccount, personalityInterests, selectAndUpdateAccount } = useAccount()
+    const {
+        accounts,
+        account,
+        updateAccount,
+        personalityInterests,
+        selectAndUpdateAccount,
+        updateAccountStatus
+    } = useAccount()
 
     const { devices } = useDevice()
     const [reload, setReload] = useState(false)
@@ -51,7 +59,7 @@ function AccountManager(props) {
             name: object.name,
             phone: object.phone,
             personality: {
-                id: account.personality._id? account.personality._id : null,
+                id: account.personality._id ? account.personality._id : null,
                 networkPriority: object.networkPriority,
                 activityLevel: object.activityLevel,
                 activityHours: object.activityHours,
@@ -71,18 +79,44 @@ function AccountManager(props) {
         modals.update.toggle()
     }
 
+    const onStatusChange = async (id, status) => {
+        updateAccountStatus(id, status)
+            .then(() => {
+                notification.updateSuccess()
+            })
+            .catch(error => {
+                notification.updateError(error)
+            })
+    }
+
     const CustomColumns = (
-        <Table.Column
-            title='Personalidad'
-            dataIndex='personality'
-            key='personality'
-            align="center"
-            render={(value, record) => (
-                <a onClick={e => handleActionClick(e, 'viewPersonality', record._id,)}>
-                    Ver
-                </a>
-            )}
-        />
+        <>
+            <Table.Column
+                title='Personalidad'
+                dataIndex='personality'
+                key='personality'
+                align="center"
+                render={(value, record) => (
+                    <a onClick={e => handleActionClick(e, 'viewPersonality', record._id,)}>
+                        Ver
+                    </a>
+                )}
+            />
+            <Table.Column
+                title='Estado'
+                dataIndex='status'
+                key='status'
+                align="center"
+                render={(value, record) => (
+                    <Selector
+                        value={value}
+                        data={constants.ACCOUNT_STATUS}
+                        style={{ width: '9rem' }}
+                        onChange={(status) => onStatusChange(record._id, status)}
+                    />
+                )}
+            />
+        </>
     )
     return (
         <>
