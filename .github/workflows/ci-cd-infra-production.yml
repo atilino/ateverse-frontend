@@ -22,9 +22,9 @@ jobs:
           script: |
             cd ./ateverse-frontend
             git pull origin main
-            cp ./public ../ateverse-infra/nginx/public
+            cp -r ./public ../ateverse-infra/nginx/public
             cd ../ateverse-infra
-            docker rm --force atverse-nginx
+            docker rm --force ateverse-nginx
             docker build -t ateverse-nginx ./nginx
             docker run -d --restart always --name ateverse-nginx \
             -v ~/ateverse-infra/nginx/public:/var/www/html/app \
