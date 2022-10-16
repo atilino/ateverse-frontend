@@ -220,13 +220,7 @@ export const columns = {
             dataIndex: 'password',
             key: 'password',
             responsive: ['md'],
-        },
-        {
-            title: 'Estado',
-            dataIndex: 'status',
-            key: 'status',
-            render: status => accountsStatus[status]
-        },
+        }
     ],
     networks: [
         {

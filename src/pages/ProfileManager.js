@@ -3,10 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import accountService from '../services/accounts';
 import { ManageHeader } from '../components/organisms';
-import { notification } from '../components/primitives';
+import { notification, Selector } from '../components/primitives';
 import { deleteModal, FormModal, ManageTable } from '../components/templates';
 import { forms } from '../resources/forms';
 import { actions, columns } from '../resources/tables';
+import { TableColumn } from 'components/Table';
+import { constants } from 'utilities/index';
+import { useProfiles } from 'hooks';
 
 function ProfileManager(props) {
     const { id } = useParams()
@@ -15,6 +18,7 @@ function ProfileManager(props) {
     const [reload, setReload] = useState(false)
     const [updateModal, setUpdateModal] = useState(false)
     const [selected, setSelected] = useState({})
+    const { updateProfileStatus } = useProfiles()
 
     useEffect(async () => {
         const result = await accountService.getProfilesByAccountId(id)
@@ -43,6 +47,18 @@ function ProfileManager(props) {
         setUpdateModal(false)
         setReload(!reload)
     }
+
+    const onStatusChange = async (id, status) => {
+        updateProfileStatus(id, status)
+            .then(() => {
+                notification.updateSuccess()
+                setReload(!reload)
+            })
+            .catch(error => {
+                notification.updateError(error)
+            })
+    }
+
     return (
         <>
             <ManageHeader model='profiles' reload={() => setReload(!reload)} />
@@ -53,7 +69,23 @@ function ProfileManager(props) {
                         columns={columns.profiles}
                         dataSource={data}
                         actions={actions.profiles}
-                        onActionClick={handleActionClick} />
+                        onActionClick={handleActionClick}
+                    >
+                        <TableColumn
+                            title='Estado'
+                            dataIndex='status'
+                            key='status'
+                            align="center"
+                            render={(value, record) => (
+                                <Selector
+                                    value={value}
+                                    data={constants.PROFILE_STATUS}
+                                    style={{ width: '12rem' }}
+                                    onChange={(status) => onStatusChange(record._id, status)}
+                                />
+                            )}
+                        />
+                    </ManageTable>
                 </Col>
             </Row>
             <FormModal
