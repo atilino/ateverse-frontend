@@ -17,12 +17,12 @@ jobs:
         uses: appleboy/ssh-action@v0.1.4
         with:
           host: ${{ secrets.HOST_PROD }}
-          username: ${{ secrets.USERNAME }}
+          username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSHKEY_PROD }}
           script: |
             cd ./ateverse-frontend
             git pull origin main
-            cp -r ./public ../ateverse-infra/nginx/public
+            cp -r ./public ../ateverse-infra/nginx
             cd ../ateverse-infra
             docker rm --force ateverse-nginx
             docker build -t ateverse-nginx ./nginx
