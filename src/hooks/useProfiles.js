@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import accountService from '../services/accounts';
+import { resultHandler } from './helpers';
 
-const useProfiles = ({ type = 'all', network = 'facebook' }) => {
+const useProfiles = ({ type = 'all', network = 'facebook' } = {}) => {
     const [profiles, setProfiles] = useState([])
     const [profilesCount, setProfilesCount] = useState(0)
     const [groups, setGroups] = useState([])
@@ -80,6 +81,20 @@ const useProfiles = ({ type = 'all', network = 'facebook' }) => {
                 }
             })
     }
+    const updateProfileStatus = (id, status) => {
+        return accountService
+            .updateProfileStatus(id, status)
+            .then(response => {
+                resultHandler(response, result => {
+                    const updatedProfile = profiles.map(item => {
+                        if (item._id === id) return { ...item, status: status }
+                        return item
+                    })
+                    setProfiles(updatedProfile)
+                })
+            })
+    }
+
     const deleteProfile = async (id) => {
         accountService
             .deleteProfileById(id)
@@ -99,6 +114,7 @@ const useProfiles = ({ type = 'all', network = 'facebook' }) => {
         getProfileGroups,
         createProfile,
         updateProfile,
+        updateProfileStatus,
         deleteProfile
     }
 }

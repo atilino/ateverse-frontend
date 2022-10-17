@@ -23,6 +23,11 @@ const getAccountById = async (id) => {
 const updateAccountById = async (id, data) => {
     return (await resolver(axios.put(config.BACKEND_URL + `/accounts/${id}`, data, headers)))
 }
+
+const updateAccountStatus = async (id, status) => {
+    return (await resolver(axios.patch(config.BACKEND_URL + `/accounts/${id}/status`, { status }, headers)))
+}
+
 const createAccount = async (data) => {
     return (await resolver(axios.post(config.BACKEND_URL + '/accounts', data, headers)))
 }
@@ -44,6 +49,9 @@ const getBlockedProfiles = async (networkId) => {
 }
 const updateProfileById = async (id, data) => {
     return (await resolver(axios.put(config.BACKEND_URL + `/accounts/profiles/${id}`, data, headers)))
+}
+const updateProfileStatus = async (id, status) => {
+    return (await resolver(axios.patch(config.BACKEND_URL + `/accounts/profiles/${id}/status`, { status }, headers)))
 }
 const createProfile = async (data) => {
     return (await resolver(axios.post(config.BACKEND_URL + '/accounts/profiles', data, headers)))
@@ -82,5 +90,7 @@ export default {
     deleteProfileById,
     getAvailableProfiles,
     getActiveProfiles,
-    getProfileGroups
+    getProfileGroups,
+    updateAccountStatus,
+    updateProfileStatus
 }

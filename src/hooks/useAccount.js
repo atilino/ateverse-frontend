@@ -29,8 +29,8 @@ const useAccount = () => {
 
     const selectAndUpdateAccount = (id, accountObject = {}) => {
         let account = accounts.filter(item => item._id === id)[0]
-        setAccount({ ...account, ...accountObject})
-        return { ...account, ...accountObject}
+        setAccount({ ...account, ...accountObject })
+        return { ...account, ...accountObject }
     }
 
     const getDeviceAccounts = (deviceImei) => {
@@ -66,6 +66,19 @@ const useAccount = () => {
             })
     }
 
+    const updateAccountStatus = (id, status) => {
+        return accountService
+            .updateAccountStatus(id, status)
+            .then(response => {
+                resultHandler(response, result => {
+                    const updatedAccounts = accounts.map(item => {
+                        if (item._id === id) return { ...item, status: status }
+                        return item
+                    })
+                    setAccounts(updatedAccounts)
+                })
+            })
+    }
     const deleteAccount = (id) => {
         return accountService
             .deleteAccountById(id)
@@ -97,6 +110,7 @@ const useAccount = () => {
         personalityInterests,
         getAllPersonalityInterests,
         selectAndUpdateAccount,
+        updateAccountStatus
     }
 }
 

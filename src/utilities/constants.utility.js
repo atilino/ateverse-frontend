@@ -1,10 +1,90 @@
-const ORDER_STATUS = Object.freeze(["CREATED", "IN_PROGRESS", "FINISHED", "ERROR"])
+const ORDER_STATUS = Object.freeze([
+  {
+    name: 'CREATED',
+    label: 'Creada',
+  },
+  {
+    name: 'IN_PROGRESS',
+    label: 'En progreso',
+  },
+  {
+    name: 'FINISHED',
+    label: 'Finalizada',
+  },
+  {
+    name: 'ERROR',
+    label: 'Error'
+  },
+])
 
-const ACCOUNT_STATUS = Object.freeze(["DISABLED", "ENABLED", "BUSSY", "IN_PERSISTENCE"])
+const ACCOUNT_STATUS = Object.freeze([
+  {
+    name: 'DISABLED',
+    label: 'Deshabilitada',
+  },
+  {
+    name: 'ENABLED',
+    label: 'Habilitada',
+  },
+  {
+    name: 'BUSSY',
+    label: 'Ocupada',
+  },
+  {
+    name: 'IN_PERSISTENCE',
+    label: 'En persistencia'
+  },
+])
 
-const PROFILE_STATUS = Object.freeze(["DISABLED", "ENABLED", "BLOCKED", "VERIFICATION", "LOGIN_ERROR", "SUSPENDED", "BAD_CREDENTIALS", "LOGOUT_ERROR"])
+const PROFILE_STATUS = Object.freeze([
+  {
+    name: 'DISABLED',
+    label: 'Deshabilitado',
+  },
+  {
+    name: 'ENABLED',
+    label: 'Habilitado',
+  },
+  {
+    name: 'BLOCKED',
+    label: 'Bloqueado',
+  },
+  {
+    name: 'VERIFICATION',
+    label: 'Verificación pendiente',
+  },
+  {
+    name: 'LOGIN_ERROR',
+    label: 'Error de login',
+  },
+  {
+    name: 'SUSPENDED',
+    label: 'Suspendido',
+  },
+  {
+    name: 'BAD_CREDENTIALS',
+    label: 'Credenciales invalidas',
+  },
+  {
+    name: 'LOGOUT_ERROR',
+    label: 'Error de logout'
+  },
+])
 
-const DEVICE_STATUS = Object.freeze(["OFF", "ON", "BUSSY"])
+const DEVICE_STATUS = Object.freeze([
+  {
+    label: 'Iniciado',
+    name: 'ON'
+  },
+  {
+    label: 'Suspendido',
+    name: 'OFF'
+  },
+  {
+    label: 'Ocupado',
+    name: 'BUSSY'
+  }
+])
 
 const PATTERNS = Object.freeze({
   FACEBOOK: {
@@ -27,7 +107,7 @@ const ORDER_VARIANTS = {
     { id: 3, label: 'Reportar', name: 'report' }
   ],
   instagram: [
-   { id: 0, label: 'Interacción', name: 'interaction' },
+    { id: 0, label: 'Interacción', name: 'interaction' },
   ],
   twitter: [
     { id: 0, label: 'Interacción', name: 'interaction' },

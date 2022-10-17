@@ -32,7 +32,7 @@ function Router() {
         <BrowserRouter>
             <Redirect from="/" to="/orders/create" />
             <Switch>
-                <LayoutRoute path='/orders/create' authorization={true} >
+                <LayoutRoute index path='/orders/create' authorization={true} >
                     <Orders/>
                 </LayoutRoute>
 

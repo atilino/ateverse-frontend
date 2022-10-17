@@ -67,7 +67,7 @@ function OrderManager(props) {
             title: "Fecha de creación",
             dataIndex: "createdAt",
             key: "createdAt",
-            render: date => formatDate(date)
+            render: date => date? formatDate(date) : 'No disponible'
         },
     ]
     return (
