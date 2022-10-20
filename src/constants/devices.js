@@ -1,5 +1,16 @@
 import constants from '.'
 
+const DEVICE_STATUS = Object.freeze({
+    ON: 'En servicio',
+    OFF: 'Suspendido',
+    LOGIN_SESSIONS: 'Iniciando sesiones',
+    LOGOUT_SESSIONS: 'Cerrando sesiones',
+    BUSSY: 'Ocupado'
+  })
+
+export const ERRORS = {
+    'Device not available': 'Dispositivo no disponible'
+}
 export const tables = {
     COLUMNS: {
         DASHBOARD: [
@@ -12,7 +23,7 @@ export const tables = {
                 title: 'Estado',
                 dataIndex: 'status',
                 key: 'status',
-                render: status => status.name,
+                render: status => DEVICE_STATUS[status],
 
             }
         ],

@@ -45,10 +45,7 @@ const useDevice = () => {
                     setDevice(result)
                     const devicesUpdated = devices.map(item => {
                         if(item._id === id){
-                            return {
-                                ...item,
-                                ...result
-                            }
+                            return { ...item, ...result }
                         }
                         return item
                     })
@@ -61,7 +58,6 @@ const useDevice = () => {
         return deviceService
             .deleteDeviceById(id)
             .then(() => {
-                console.log(devices.filter(item => item._id !== id))
                 setDevices(devices.filter(item => item._id !== id))
             })
     }

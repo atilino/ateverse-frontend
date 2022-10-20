@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { LoaderButton, TableColumn, DashboardHeader, CreateButton } from 'components'
 import { deleteModal, FormModal, ManageTable, TableModal } from 'components/templates'
 import { notification, SwitchButton } from 'components/primitives';
-import { tables, forms, variables } from 'constants/devices'
+import { tables, forms, variables, ERRORS } from 'constants/devices'
 import { DownloadOutlined } from '@ant-design/icons';
 import { ConnectionIndicator } from 'components/indicators';
 
@@ -62,7 +62,9 @@ function Devices() {
             .then(() => {
                 notification.updateSuccess()
             })
-            .catch(error => notification.updateError(error))
+            .catch(error => {
+                notification.updateError(ERRORS[error.message])
+            })
     }
 
     const handleCloseModal = () => {
@@ -99,20 +101,20 @@ function Devices() {
                     title="Conexión"
                     dataIndex="connected"
                     key="connected"
-                    render={(value, record) => 
-                        <ConnectionIndicator state={value}/>
+                    render={(connection, record) =>
+                        <ConnectionIndicator state={connection}/>
                     }
                     align="center"
                 />
                 <TableColumn
                     title="Switch"
-                    dataIndex="accounts"
-                    key="accounts"
-                    render={(value, record) =>
+                    dataIndex="switch"
+                    key="switch"
+                    render={(state, { _id, status }) =>
                         <SwitchButton
-                            state={record.switch}
-                            loading={!record.switch && record.status.name !== "Suspendido" ? true : false}
-                            onChange={(e) => onSwitchClick(e, record._id)}
+                            checked={state}
+                            loading={status === 'ON' || status === 'OFF' ? false : true}
+                            onChange={(currentState) => onSwitchClick(currentState, _id)}
                         />
                     }
                     align="center"

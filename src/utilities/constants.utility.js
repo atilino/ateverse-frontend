@@ -59,21 +59,6 @@ const PROFILE_STATUS = Object.freeze([
   },
 ])
 
-const DEVICE_STATUS = Object.freeze([
-  {
-    label: 'Iniciado',
-    name: 'ON'
-  },
-  {
-    label: 'Suspendido',
-    name: 'OFF'
-  },
-  {
-    label: 'Ocupado',
-    name: 'BUSSY'
-  }
-])
-
 const PATTERNS = Object.freeze({
   FACEBOOK: {
     MAIN: /(?:(?:http|https):\/\/)?(?:www.)?facebook.com\/?/,
@@ -107,7 +92,6 @@ export default {
   ORDER_STATUS,
   ACCOUNT_STATUS,
   PROFILE_STATUS,
-  DEVICE_STATUS,
   PATTERNS,
   ORDER_VARIANTS
 }
