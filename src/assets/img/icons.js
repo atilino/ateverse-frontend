@@ -5,6 +5,9 @@ import like from './like.png'
 import angry from './angry.png'
 import wow from './wow.png'
 import sad from './sad.png'
+import facebook from './facebook.png'
+import instagram from './instagram.png'
+import twitter from './twitter.png'
 
 export {
     love,
@@ -13,5 +16,8 @@ export {
     like,
     angry,
     wow,
-    sad
+    sad,
+    facebook,
+    instagram,
+    twitter,
 }

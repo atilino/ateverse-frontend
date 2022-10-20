@@ -10,6 +10,7 @@ module.exports = {
     },
     resolve: {
         alias: {
+            assets: path.resolve(__dirname, 'src/assets'),
             constants: path.resolve(__dirname, 'src/constants'),
             components: path.resolve(__dirname, 'src/components'),
             utilities: path.resolve(__dirname, 'src/utilities'),
@@ -19,7 +20,11 @@ module.exports = {
     devtool: 'inline-source-map',
     devServer: {
         static: './public',
-        historyApiFallback: true
+        historyApiFallback: true,
+        open: true,
+        hot: true,
+        compress: true,
+        port: 4000
     },
     plugins: [
         new webpack.ProvidePlugin({

@@ -1,11 +1,8 @@
 import React from "react"
-import { accountsStatus, activityLevel, days, variants } from "./variables"
-import { love, care, haha, like, angry, wow, sad } from '../assets/img/icons'
+import { activityLevel, days } from "./variables"
 import { Tag } from "antd"
 import { Link } from "react-router-dom"
-import { formatDate } from '../libs/utils'
 
-const reactionIcons = [like, love, care, haha, wow, sad, angry]
 
 export const titles = {
     orders: 'Estado de ordernes',
@@ -15,66 +12,6 @@ export const titles = {
     profiles: 'Administrar perfiles de cuentas',
 }
 export const columns = {
-    orders: [
-        {
-            title: 'Red',
-            dataIndex: 'network',
-            key: 'network',
-            render: network => network.label
-        },
-        {
-            title: 'Tipo de orden',
-            dataIndex: 'variant',
-            key: 'variant',
-            render: variantIndex => variants[variantIndex]
-        },
-        {
-            title: 'Reacciones',
-            dataIndex: 'reactions',
-            key: 'reactions',
-            render: (text, record) => `${record.executed?.reactions}/${text}`,
-            align: 'center',
-            responsive: ['md'],
-        },
-        {
-            title: 'Tipo de reacción',
-            dataIndex: 'type',
-            key: 'type',
-            render: type => (
-            <div style={{textAlign: 'center'}}>
-                <img style={{ width: "30px" }} src={reactionIcons[type]} />
-            </div>
-            ),
-            responsive: ['md'],
-        },
-        {
-            title: 'Comentarios',
-            dataIndex: 'comments',
-            key: 'comments',
-            render: (text, record) => `${record.executed?.comments.length}/${text}`,
-            align: 'center',
-            responsive: ['md'],
-        },
-        {
-            title: 'Compartidos',
-            dataIndex: 'shares',
-            key: 'shares',
-            render: (text, record) => `${record.executed?.shares}/${text}`,
-            align: 'center',
-            responsive: ['md'],
-        },
-        {
-            title: "Estado",
-            dataIndex: "status",
-            key: "status",
-        },
-        {
-            title: "Fecha de entrega",
-            dataIndex: "deliveryTime",
-            key: "deliveryTime",
-            render: date => date === null ? 'No calculada' : formatDate(date, "dateTime")
-        },
-    ],
     accounts: [
         {
             title: 'Dispositivo asignado',

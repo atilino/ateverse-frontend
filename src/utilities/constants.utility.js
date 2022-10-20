@@ -1,21 +1,9 @@
-const ORDER_STATUS = Object.freeze([
-  {
-    name: 'CREATED',
-    label: 'Creada',
-  },
-  {
-    name: 'IN_PROGRESS',
-    label: 'En progreso',
-  },
-  {
-    name: 'FINISHED',
-    label: 'Finalizada',
-  },
-  {
-    name: 'ERROR',
-    label: 'Error'
-  },
-])
+const ORDER_STATUS = Object.freeze({
+  CREATED: 'Creada',
+  IN_PROGRESS: 'En progreso',
+  FINISHED: 'Finalizada',
+  ERROR: 'Error'
+})
 
 const ACCOUNT_STATUS = Object.freeze([
   {

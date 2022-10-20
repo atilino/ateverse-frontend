@@ -3,7 +3,7 @@ import AssignDevices from './AssignDevices';
 import MonitDevices from './MonitDevices';
 import ProfileManager from './ProfileManager';
 import Devices from './devices';
-import OrderManager from './OrderManager';
+import OrderManager from './orders/pages/Manager';
 import AccountManager from './AccountManager';
 import UserManager from './UserManager';
 import NetworksManager from './NetworksManager'

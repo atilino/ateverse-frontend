@@ -33,11 +33,11 @@ function Router() {
             <Redirect from="/" to="/orders/create" />
             <Switch>
                 <LayoutRoute index path='/orders/create' authorization={true} >
-                    <Orders/>
+                    <Orders.Create/>
                 </LayoutRoute>
 
                 <LayoutRoute path='/orders/status' authorization={true} >
-                    <OrderManager />
+                    <Orders.Manager/>
                 </LayoutRoute>
 
                 <LayoutRoute path='/accounts/manage' authorization={isAdmin || isModerator} >

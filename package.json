@@ -4,7 +4,7 @@
   "description": "Atila paltform - frontend",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "react-dotenv && webpack serve --open --hot",
+    "start": "react-dotenv && webpack serve",
     "test": "react-dotenv && jest",
     "watch": "react-dotenv && webpack --mode development --watch",
     "build": "react-dotenv && webpack --mode production",

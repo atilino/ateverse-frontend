@@ -15,7 +15,7 @@ export const forms = {
                 },
             ]
         },
-        
+
         {
             label: 'Teléfono',
             name: 'phone',
@@ -154,17 +154,7 @@ export const forms = {
             //         message: 'La contraseña es requerida',
             //     },
             // ]
-        },
-        {
-            label: 'Estado',
-            name: 'status',
-            key: 'status',
-            type: 'select',
-            options: accountsStatus,
-            atributes: {
-                placeholder: 'Selecciona un estado'
-            },
-        },
+        }
     ],
     personalityTemplates: [
         {
