@@ -24,7 +24,9 @@ const ACCOUNT_STATUS = Object.freeze([
   },
 ])
 
-const PROFILE_STATUS = Object.freeze([
+
+
+const ADMIN_PROFILE_STATUS = Object.freeze([
   {
     name: 'DISABLED',
     label: 'Deshabilitado',
@@ -58,6 +60,8 @@ const PROFILE_STATUS = Object.freeze([
     label: 'Error de logout'
   },
 ])
+
+const PROFILE_STATUS = ADMIN_PROFILE_STATUS.filter(status => status.name === 'ENABLED' || status.name === 'DISABLED')
 
 const PATTERNS = Object.freeze({
   FACEBOOK: {
@@ -93,5 +97,6 @@ export default {
   ACCOUNT_STATUS,
   PROFILE_STATUS,
   PATTERNS,
-  ORDER_VARIANTS
+  ORDER_VARIANTS,
+  ADMIN_PROFILE_STATUS
 }

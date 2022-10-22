@@ -9,6 +9,7 @@ import useAccount from '../hooks/useAccount'
 import useToggle from '../hooks/useToggle'
 import useDevice from '../hooks/useDevice'
 import { constants } from 'utilities/index';
+import { currentUser } from '..//libs/userInfo';
 
 function AccountManager(props) {
 
@@ -21,6 +22,7 @@ function AccountManager(props) {
         updateAccountStatus
     } = useAccount()
 
+    const { isAdmin } = currentUser()
     const { devices } = useDevice()
     const [reload, setReload] = useState(false)
     const modals = {
@@ -108,12 +110,15 @@ function AccountManager(props) {
                 key='status'
                 align="center"
                 render={(value, record) => (
+                    isAdmin ?
                     <Selector
                         value={value}
                         data={constants.ACCOUNT_STATUS}
                         style={{ width: '9rem' }}
                         onChange={(status) => onStatusChange(record._id, status)}
                     />
+                    :
+                    constants.ACCOUNT_STATUS.find(({ name }) => name === value).label
                 )}
             />
         </>

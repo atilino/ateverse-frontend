@@ -10,6 +10,7 @@ import { actions, columns } from '../resources/tables';
 import { TableColumn } from 'components/Table';
 import { constants } from 'utilities/index';
 import { useProfiles } from 'hooks';
+import { currentUser } from '../libs/userInfo';
 
 function ProfileManager(props) {
     const { id } = useParams()
@@ -19,6 +20,8 @@ function ProfileManager(props) {
     const [updateModal, setUpdateModal] = useState(false)
     const [selected, setSelected] = useState({})
     const { updateProfileStatus } = useProfiles()
+
+    const { isAdmin } = currentUser()
 
     useEffect(async () => {
         const result = await accountService.getProfilesByAccountId(id)
@@ -79,7 +82,7 @@ function ProfileManager(props) {
                             render={(value, record) => (
                                 <Selector
                                     value={value}
-                                    data={constants.PROFILE_STATUS}
+                                    data={isAdmin ? constants.ADMIN_PROFILE_STATUS : constants.PROFILE_STATUS }
                                     style={{ width: '12rem' }}
                                     onChange={(status) => onStatusChange(record._id, status)}
                                 />
