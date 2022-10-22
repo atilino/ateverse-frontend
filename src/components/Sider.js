@@ -70,16 +70,6 @@ function Sider(props) {
                         path: '/accounts/personalities/templates'
                     },
                 ]
-            }
-        )
-    }
-    if (isAdmin) {
-        menu.push(
-            {
-                title: 'Redes sociales',
-                key: 'networks',
-                icon: <FacebookFilled />,
-                path: '/networks'
             },
             {
                 title: 'Dispositivos',
@@ -97,6 +87,16 @@ function Sider(props) {
                         path: '/devices/monit'
                     },
                 ]
+            },
+        )
+    }
+    if (isAdmin) {
+        menu.push(
+            {
+                title: 'Redes sociales',
+                key: 'networks',
+                icon: <FacebookFilled />,
+                path: '/networks'
             },
             {
                 title: 'Usuarios',
