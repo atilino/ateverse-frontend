@@ -49,7 +49,7 @@ function InteractionForm({
                 const options = {
                     link: values.link,
                     reactions: values.reactions,
-                    reactionType: values.reactionType,
+                    reactionType: values.reactionType? values.reactionType : 0,
                     comments: breakStringToArray(values.commentsText),
                     shares: values.shares,
                     watchTime: values.watchTime || 0
