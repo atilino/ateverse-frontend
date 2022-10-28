@@ -16,6 +16,7 @@ module.exports = {
             utilities: path.resolve(__dirname, 'src/utilities'),
             hooks: path.resolve(__dirname, 'src/hooks')
         },
+        extensions: ['*', '.js', '.jsx'],
     },
     devtool: 'inline-source-map',
     devServer: {
@@ -27,16 +28,16 @@ module.exports = {
         port: 4000
     },
     plugins: [
-        new webpack.ProvidePlugin({
-            'React': 'react'
-          })
+        new webpack.ProvidePlugin({ 'React': 'react' }),
+        new webpack.HotModuleReplacementPlugin()
     ],
     module: {
         rules: [
             {
                 use: 'babel-loader',
-                test: [/\.js$/, /\.jsx$/],
-                exclude: /node_modules/
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: ['babel-loader']
             },
             {
                 use: [

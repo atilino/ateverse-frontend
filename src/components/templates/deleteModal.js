@@ -8,7 +8,7 @@ import userService from '../../services/users';
 import { notification } from '../primitives';
 import personalityService from '../../services/personalities';
 
-const deleteModal = (name, page, id, onFinish) => {
+const deleteModal = (name, page, id, onFinish=()=>{}) => {
     Modal.confirm({
         title: '¿Seguro que deseas eliminar este elemento?',
         icon: <ExclamationCircleOutlined />,
@@ -19,7 +19,7 @@ const deleteModal = (name, page, id, onFinish) => {
         onOk() {deleteItem(page, id)},
         onCancel() {},
     });
-    
+
     const deleteItem = async (page, id) => {
         const selector = {
             orders: () => orderService.deleteOrderById(id),

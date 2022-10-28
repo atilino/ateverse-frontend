@@ -12,7 +12,7 @@ const useAccount = () => {
         accountService
             .getAccounts()
             .then(resultAccounts => {
-                setAccounts(resultAccounts.data)
+                setAccounts(resultAccounts.data.results)
             })
         getAllPersonalityInterests()
     }, [])

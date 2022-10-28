@@ -4,7 +4,7 @@ import MonitDevices from './MonitDevices';
 import ProfileManager from './ProfileManager';
 import Devices from './devices';
 import OrderManager from './orders/pages/Manager';
-import AccountManager from './AccountManager';
+import AccountManagement from './AccountsManagement/AccountManagement';
 import UserManager from './UserManager';
 import NetworksManager from './NetworksManager'
 import Login from './Login'
@@ -18,7 +18,7 @@ export {
     ProfileManager,
     Login,
     Devices,
-    AccountManager,
+    AccountManagement,
     UserManager,
     OrderManager,
     NetworksManager,

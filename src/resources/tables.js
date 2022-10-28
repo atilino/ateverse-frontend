@@ -12,33 +12,6 @@ export const titles = {
     profiles: 'Administrar perfiles de cuentas',
 }
 export const columns = {
-    accounts: [
-        {
-            title: 'Dispositivo asignado',
-            dataIndex: 'deviceId',
-            key: 'deviceId',
-            render: deviceId => deviceId ? deviceId.imei : 'No asignado',
-            responsive: ['md'],
-        },
-        {
-            title: 'Nombre',
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
-            title: 'Teléfono',
-            dataIndex: 'phone',
-            key: 'phone',
-            responsive: ['md'],
-        },
-        {
-            title: 'Perfiles',
-            dataIndex: 'profiles',
-            key: 'profiles',
-            align: "center",
-            render: (profiles, record) => <Link to={`/accounts/${record._id}/profile`}>{profiles && profiles.length}</Link>,
-        }
-    ],
     devices: [
         {
             title: 'IMEI',
@@ -190,23 +163,6 @@ export const actions = {
             title: 'Ver más',
             dataIndex: 'more',
             key: 'more',
-        },
-    ],
-    accounts: [
-        {
-            title: 'Actualizar',
-            dataIndex: 'update',
-            key: 'update',
-        },
-        {
-            title: 'Eliminar',
-            dataIndex: 'delete',
-            key: 'delete',
-        },
-        {
-            title: 'Cambiar dispositivo',
-            dataIndex: 'changeDevice',
-            key: 'changeDevice',
         },
     ],
     devices: [

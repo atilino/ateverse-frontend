@@ -7,12 +7,11 @@ import {
     Redirect,
 } from 'react-router-dom'
 import {
-    AccountManager,
+    AccountManagement,
     Orders,
     Devices,
     Login,
     MonitDevices,
-    OrderManager,
     ProfileManager,
     UserManager,
     NetworksManager,
@@ -41,7 +40,7 @@ function Router() {
                 </LayoutRoute>
 
                 <LayoutRoute path='/accounts/manage' authorization={isAdmin || isModerator} >
-                    <AccountManager />
+                    <AccountManagement />
                 </LayoutRoute>
 
                 <LayoutRoute path='/accounts/:id/profile' authorization={isAdmin || isModerator} >

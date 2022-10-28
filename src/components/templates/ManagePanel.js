@@ -7,9 +7,9 @@ import { PageTitle } from '../primitives';
 function ManagePanel({
     title,
     customHeader = true,
-    customContent,
+    customContent = undefined,
     model,
-    reload = () => {},
+    reload = () => { },
     children,
     tableAtributes = {
         data: [],
@@ -17,8 +17,8 @@ function ManagePanel({
         actions: [],
         onActionClick: (e, index, id) => (e, index, id),
         loading: false,
-        defaultPageSize,
-        children
+        defaultPageSize: 10,
+        children: undefined
     }
 }) {
     return (
@@ -31,20 +31,22 @@ function ManagePanel({
                 </PageTitle>
             }
             {customContent}
-            <Row>
-                <Col span={24}>
-                    <ManageTable
-                        loading={tableAtributes.loading}
-                        columns={tableAtributes.columns}
-                        dataSource={tableAtributes.data}
-                        actions={tableAtributes.actions}
-                        onActionClick={tableAtributes.onActionClick}
-                        defaultPageSize={tableAtributes.defaultPageSize}
-                    >
-                        {tableAtributes.children}
-                    </ManageTable>
-                </Col>
-            </Row>
+            {!children &&
+                <Row>
+                    <Col span={24}>
+                        <ManageTable
+                            loading={tableAtributes.loading}
+                            columns={tableAtributes.columns}
+                            dataSource={tableAtributes.data}
+                            actions={tableAtributes.actions}
+                            onActionClick={tableAtributes.onActionClick}
+                            defaultPageSize={tableAtributes.defaultPageSize}
+                        >
+                            {tableAtributes.children}
+                        </ManageTable>
+                    </Col>
+                </Row>
+            }
             <Row>
                 {children}
             </Row>

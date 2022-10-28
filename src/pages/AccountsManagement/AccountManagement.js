@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
-import { Table } from 'antd'
-import { deleteModal, FormModal, ManagePanel, ViewModal } from '../components/templates'
-import { notification, Selector } from '../components/primitives';
-import { actions, columns } from '../resources/tables';
-import { forms } from '../resources/forms';
-import { PersonalityForm, SelectorModal } from '../components/organisms';
-import useAccount from '../hooks/useAccount'
-import useToggle from '../hooks/useToggle'
-import useDevice from '../hooks/useDevice'
-import { constants } from 'utilities/index';
-import { currentUser } from '..//libs/userInfo';
+import { deleteModal, FormModal, ManagePanel, ViewModal } from '../../components/templates'
+import { notification } from '../../components/primitives';
+import { columns } from '../../resources/tables';
+import { forms } from '../../resources/forms';
+import { PersonalityForm, SelectorModal } from '../../components/organisms';
+import useAccount from '../../hooks/useAccount'
+import useToggle from '../../hooks/useToggle'
+import useDevice from '../../hooks/useDevice'
+import { AccountsTable } from './components';
+import { Col } from 'antd';
 
-function AccountManager(props) {
+function AccountManagement(props) {
 
     const {
         accounts,
@@ -22,7 +21,6 @@ function AccountManager(props) {
         updateAccountStatus
     } = useAccount()
 
-    const { isAdmin } = currentUser()
     const { devices } = useDevice()
     const [reload, setReload] = useState(false)
     const modals = {
@@ -31,21 +29,6 @@ function AccountManager(props) {
         personality: useToggle()
     }
 
-    const handleActionClick = async (e, index, id) => {
-        e.preventDefault()
-        const selectedAccount = selectAndUpdateAccount(id)
-        if (index === 'update') {
-            const formatedAccountObj = toMixedForm(selectedAccount)
-            selectAndUpdateAccount(account._id, formatedAccountObj)
-            modals.update.toggle()
-        }
-        if (index === 'delete') {
-            deleteModal(selectedAccount.name, 'accounts', id, () => setReload(!reload))
-        }
-        if (index === 'changeDevice') modals.changeDevice.toggle()
-
-        if (index === 'viewPersonality') modals.personality.toggle()
-    }
     const toMixedForm = (object) => {
         return {
             ...object,
@@ -91,52 +74,35 @@ function AccountManager(props) {
             })
     }
 
-    const CustomColumns = (
-        <>
-            <Table.Column
-                title='Personalidad'
-                dataIndex='personality'
-                key='personality'
-                align="center"
-                render={(value, record) => (
-                    <a onClick={e => handleActionClick(e, 'viewPersonality', record._id,)}>
-                        Ver
-                    </a>
-                )}
-            />
-            <Table.Column
-                title='Estado'
-                dataIndex='status'
-                key='status'
-                align="center"
-                render={(value, record) => (
-                    isAdmin ?
-                    <Selector
-                        value={value}
-                        data={constants.ACCOUNT_STATUS}
-                        style={{ width: '9rem' }}
-                        onChange={(status) => onStatusChange(record._id, status)}
-                    />
-                    :
-                    constants.ACCOUNT_STATUS.find(({ name }) => name === value).label
-                )}
-            />
-        </>
-    )
     return (
         <>
-            <ManagePanel
-                title='Administrar cuentas'
-                model='accounts'
-                tableAtributes={{
-                    data: accounts,
-                    columns: columns.accounts,
-                    actions: actions.accounts,
-                    onActionClick: handleActionClick,
-                    loading: accounts.length ? false : true,
-                    children: CustomColumns
-                }}
-            />
+            <ManagePanel title='Administrar cuentas' model='accounts' >
+                <Col span={24}>
+                    <AccountsTable
+                        accounts={accounts}
+                        onChangeDevice={id => {
+                            selectAndUpdateAccount(id)
+                            modals.changeDevice.toggle()
+                        }}
+                        onStatusChange={onStatusChange}
+                        onDeleteClick={id => {
+                            const selectedAccount = selectAndUpdateAccount(id)
+                            deleteModal(selectedAccount.name, 'accounts', id, () => setReload(!reload))
+                        }}
+                        onUpdateClick={id => {
+                            const selectedAccount = selectAndUpdateAccount(id)
+                            const formatedAccountObj = toMixedForm(selectedAccount)
+                            selectAndUpdateAccount(account._id, formatedAccountObj)
+                            modals.update.toggle()
+                        }}
+                        onPersonalityClick={id => {
+                            selectAndUpdateAccount(id)
+                            modals.personality.toggle()
+                        }}
+                    />
+                </Col>
+            </ManagePanel>
+
             <FormModal
                 visible={modals.update.state}
                 fields={forms.accounts}
@@ -180,4 +146,4 @@ function AccountManager(props) {
     );
 }
 
-export default AccountManager;
+export default AccountManagement;
