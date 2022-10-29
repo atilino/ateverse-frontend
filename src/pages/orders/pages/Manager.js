@@ -112,7 +112,9 @@ function OrderManager(props) {
                     actions: actions.orders,
                     onActionClick: handleActionClick,
                     loading: data.length ? false : true,
-                    defaultPageSize: 10,
+                    pagination: {
+                        defaultPageSize: 10
+                    },
                 }}
             >
             </ManagePanel>

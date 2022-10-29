@@ -1,18 +1,26 @@
+import { Space } from 'antd';
 import React from 'react';
-import { Table, Space } from 'antd';
+import { TableColumn, Table } from '../Table';
 
-const { Column } = Table;
 
-function ManageTable({ columns=[], children=null, actions=[], onActionClick, size="small", defaultPageSize=5, ...rest }) {
+function ManageTable({
+    columns = [],
+    children = null,
+    actions = [],
+    onActionClick,
+    size = "small",
+    pagination = {},
+    ...rest
+}) {
 
     return (
-        <Table size={size} {...rest} pagination={{ defaultPageSize, showSizeChanger: true, pageSizeOptions: ['5', '10', '20', '30']}}>
+        <Table size={size} {...rest} pagination={{ showSizeChanger: true, pageSizeOptions: ['5', '10', '20', '30'], ...pagination }}>
             {columns.map((column, index) => (
-                <Column {...column} key={index} />
+                <TableColumn {...column} key={index} />
             ))}
             {children}
             {actions.length &&
-                <Column
+                <TableColumn
                     title="Acción"
                     key="action"
                     render={(text, record) => (

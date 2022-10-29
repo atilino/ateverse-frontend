@@ -17,7 +17,9 @@ function ManagePanel({
         actions: [],
         onActionClick: (e, index, id) => (e, index, id),
         loading: false,
-        defaultPageSize: 10,
+        pagination: {
+            defaultPageSize: 10
+        },
         children: undefined
     }
 }) {
@@ -40,7 +42,7 @@ function ManagePanel({
                             dataSource={tableAtributes.data}
                             actions={tableAtributes.actions}
                             onActionClick={tableAtributes.onActionClick}
-                            defaultPageSize={tableAtributes.defaultPageSize}
+                            pagination={tableAtributes.pagination}
                         >
                             {tableAtributes.children}
                         </ManageTable>

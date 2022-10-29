@@ -13,7 +13,6 @@ import { Col } from 'antd';
 function AccountManagement(props) {
 
     const {
-        accounts,
         account,
         updateAccount,
         personalityInterests,
@@ -79,7 +78,6 @@ function AccountManagement(props) {
             <ManagePanel title='Administrar cuentas' model='accounts' >
                 <Col span={24}>
                     <AccountsTable
-                        accounts={accounts}
                         onChangeDevice={id => {
                             selectAndUpdateAccount(id)
                             modals.changeDevice.toggle()

@@ -1,9 +1,15 @@
 import React from "react"
-import { Table } from "antd"
+import { Table as TableComponent } from "antd"
 
 
 export const TableColumn = ({ children=undefined, ...rest }) => (
-  <Table.Column {...rest}>
+  <TableComponent.Column {...rest}>
     {children}
-  </Table.Column>
+  </TableComponent.Column>
+)
+
+export const Table = ({ children=undefined, ...rest }) => (
+  <TableComponent {...rest}>
+    {children}
+  </TableComponent>
 )

@@ -7,6 +7,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { currentUser } from '../../../libs/userInfo';
 import { constants } from 'utilities/index';
+import { DEFAULT_PAGINATE_LIMIT } from 'constants/accounts';
+import useAccount from 'hooks/useAccount';
 
 const COLUMNS = [
   {
@@ -66,7 +68,6 @@ const ACTIONS = [
  * @param {(id: string, status: string) => void} props.onStatusChange
  */
 function AccountsTable({
-  accounts,
   onPersonalityClick,
   onDeleteClick,
   onUpdateClick,
@@ -75,6 +76,7 @@ function AccountsTable({
 }) {
 
   const { isAdmin } = currentUser()
+  const { accounts, accountsPagination, getAccounts } = useAccount()
 
   const actions = {
     update: onUpdateClick,
@@ -87,7 +89,22 @@ function AccountsTable({
   }
 
   return (
-    <ManageTable columns={COLUMNS} actions={ACTIONS} dataSource={accounts} onActionClick={handleAction}>
+    <ManageTable
+      columns={COLUMNS}
+      actions={ACTIONS}
+      dataSource={accounts}
+      onActionClick={handleAction}
+      pagination={{
+        current: accountsPagination.page,
+        pageSize: accountsPagination.limit,
+        pageSizeOptions: [5, 10, 20],
+        showSizeChanger: true,
+        total: accountsPagination.totalResults,
+        showTotal: (total, [from, to]) => `${from} a ${to} de ${total} cuentas encontradas`,
+        onChange: (page, limit) => getAccounts(page, limit),
+        onShowSizeChange: (current, limit) => getAccounts(current, limit),
+      }}
+    >
       <TableColumn
         title='Personalidad'
         dataIndex='personality'

@@ -95,7 +95,6 @@ function Devices() {
                 dataSource={devices}
                 actions={tables.ACTIONS}
                 onActionClick={handleActionClick}
-                defaultPageSize={5}
             >
                 <TableColumn
                     title="Conexión"

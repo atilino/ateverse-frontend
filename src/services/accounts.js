@@ -2,6 +2,7 @@ import axios from 'axios'
 import config from '../config'
 import resolver from './resolver'
 import { currentUser } from '../libs/userInfo'
+import { DEFAULT_PAGINATE_LIMIT } from 'constants/accounts'
 
 const { token } = currentUser()
 
@@ -13,14 +14,14 @@ const headers = {
 
 const getAccounts = async (page, limit, query) => {
     page = page || 1
-    limit = limit || 10
+    limit = limit || DEFAULT_PAGINATE_LIMIT
 
     let queryString = ''
-    if(query.name) queryString + `&name=${query.name}`
-    if(query.phone) queryString + `&phone=${query.phone}`
-    if(query.imei) queryString + `&imei=${query.imei}`
-    
-    return (await resolver(axios.get(config.BACKEND_URL + `/accounts?page=${page}&?limit=${limit}${queryString}`, headers)))
+    if(query?.name) queryString + `&name=${query.name}`
+    if(query?.phone) queryString + `&phone=${query.phone}`
+    if(query?.imei) queryString + `&imei=${query.imei}`
+
+    return (await resolver(axios.get(config.BACKEND_URL + `/accounts?page=${page}&limit=${limit}${queryString}`, headers)))
 }
 const getAccountsByImei = async (imei) => {
     return (await resolver(axios.get(config.BACKEND_URL + `/accounts?imei=${imei}`, headers)))
