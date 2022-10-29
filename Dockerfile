@@ -9,4 +9,4 @@ RUN npm install --silent
 
 COPY . .
 
-RUN npm build:dev
+RUN npm run build:dev
