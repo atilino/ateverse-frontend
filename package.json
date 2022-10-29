@@ -5,10 +5,10 @@
   "main": "webpack.config.js",
   "scripts": {
     "start": "react-dotenv && webpack serve",
+    "build:dev": "react-dotenv && webpack --mode development",
     "test": "react-dotenv && jest",
     "watch": "react-dotenv && webpack --mode development --watch",
     "build": "react-dotenv && webpack --mode production",
-    "build:dev": "react-dotenv && webpack --mode development",
     "analyze": "source-map-explorer 'public/*.js"
   },
   "browserslist": {

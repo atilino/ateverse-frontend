@@ -22,6 +22,8 @@ jobs:
           script: |
             cd ./ateverse-frontend
             git pull origin develop
+            docker build -t ateverse-frontend .
+            docker run -d --name ateverse-frontend -v ~./ateverse-frontend/public:/usr/src/app ateverse-frontend
             cp -r ./public ../ateverse-infra/nginx
             cd ../ateverse-infra
             docker rm --force ateverse-nginx
