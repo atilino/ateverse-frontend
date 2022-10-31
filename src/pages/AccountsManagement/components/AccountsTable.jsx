@@ -1,7 +1,7 @@
 //@ts-check
 'use strict'
 import { Selector } from 'components/primitives';
-import { TableColumn } from 'components/Table';
+import { searchProps, TableColumn } from 'components/Table';
 import { ManageTable } from 'components/templates';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -10,33 +10,6 @@ import { constants } from 'utilities/index';
 import { DEFAULT_PAGINATE_LIMIT } from 'constants/accounts';
 import useAccount from 'hooks/useAccount';
 
-const COLUMNS = [
-  {
-    title: 'Dispositivo asignado',
-    dataIndex: 'deviceId',
-    key: 'deviceId',
-    render: deviceId => deviceId ? deviceId.imei : 'No asignado',
-    responsive: ['md'],
-  },
-  {
-    title: 'Nombre',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Teléfono',
-    dataIndex: 'phone',
-    key: 'phone',
-    responsive: ['md'],
-  },
-  {
-    title: 'Perfiles',
-    dataIndex: 'profiles',
-    key: 'profiles',
-    align: "center",
-    render: (profiles, record) => <Link to={`/accounts/${record._id}/profile`}>{profiles && profiles.length}</Link>,
-  }
-]
 
 const ACTIONS = [
   {
@@ -78,6 +51,49 @@ function AccountsTable({
   const { isAdmin } = currentUser()
   const { accounts, accountsPagination, getAccounts } = useAccount()
 
+  const COLUMNS = [
+    {
+      title: 'Dispositivo asignado',
+      dataIndex: 'deviceId',
+      key: 'deviceId',
+      render: deviceId => deviceId ? deviceId.imei : 'No asignado',
+      responsive: ['md'],
+      ...searchProps({
+        index: 'imei',
+        onSearch: (value) => getAccounts(1, accountsPagination.limit, { imei: value }),
+        onReset: () => getAccounts()
+      })
+    },
+    {
+      title: 'Nombre',
+      dataIndex: 'name',
+      key: 'name',
+      ...searchProps({
+        index: 'nombre',
+        onSearch: (value) => getAccounts(1, accountsPagination.limit, { name: value }),
+        onReset: () => getAccounts()
+      })
+    },
+    {
+      title: 'Teléfono',
+      dataIndex: 'phone',
+      key: 'phone',
+      responsive: ['md'],
+      ...searchProps({
+        index: 'telefono',
+        onSearch: (value) => getAccounts(1, accountsPagination.limit, { phone: value }),
+        onReset: () => getAccounts()
+      })
+    },
+    {
+      title: 'Perfiles',
+      dataIndex: 'profiles',
+      key: 'profiles',
+      align: "center",
+      render: (profiles, record) => <Link to={`/accounts/${record._id}/profile`}>{profiles && profiles.length}</Link>,
+    }
+  ]
+
   const actions = {
     update: onUpdateClick,
     delete: onDeleteClick,
@@ -87,6 +103,7 @@ function AccountsTable({
     e.preventDefault()
     return actions[action](id)
   }
+
 
   return (
     <ManageTable
@@ -101,7 +118,7 @@ function AccountsTable({
         showSizeChanger: true,
         total: accountsPagination.totalResults,
         showTotal: (total, [from, to]) => `${from} a ${to} de ${total} cuentas encontradas`,
-        onChange: (page, limit) => getAccounts(page, limit),
+        onChange: page => page !== accountsPagination.page && getAccounts(page, accountsPagination.limit),
         onShowSizeChange: (current, limit) => getAccounts(current, limit),
       }}
     >

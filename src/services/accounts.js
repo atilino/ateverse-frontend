@@ -17,9 +17,9 @@ const getAccounts = async (page, limit, query) => {
     limit = limit || DEFAULT_PAGINATE_LIMIT
 
     let queryString = ''
-    if(query?.name) queryString + `&name=${query.name}`
-    if(query?.phone) queryString + `&phone=${query.phone}`
-    if(query?.imei) queryString + `&imei=${query.imei}`
+    if(query?.name) queryString += `&name=${query.name}`
+    if(query?.phone) queryString += `&phone=${query.phone}`
+    if(query?.imei) queryString += `&imei=${query.imei}`
 
     return (await resolver(axios.get(config.BACKEND_URL + `/accounts?page=${page}&limit=${limit}${queryString}`, headers)))
 }
