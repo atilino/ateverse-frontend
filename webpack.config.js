@@ -35,7 +35,7 @@ module.exports = () => {
             open: true,
             hot: true,
             compress: true,
-            port: 4000
+            port: 4000,
         },
         plugins: [
             new webpack.DefinePlugin(envKeys),

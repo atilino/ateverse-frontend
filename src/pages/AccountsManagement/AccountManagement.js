@@ -34,7 +34,7 @@ function AccountManagement(props) {
             activityLevel: object.personality.activityLevel,
             activityHours: object.personality.activityHours,
             activityDays: object.personality.activityDays,
-            networkPriority: object.personality.networkPriority._id,
+            networkPriority: object.personality.networkPriority?._id,
             interests: object.personality.interests.map(interest => interest._id),
         }
     }
@@ -90,7 +90,7 @@ function AccountManagement(props) {
                         onUpdateClick={id => {
                             const selectedAccount = selectAndUpdateAccount(id)
                             const formatedAccountObj = toMixedForm(selectedAccount)
-                            selectAndUpdateAccount(account._id, formatedAccountObj)
+                            selectAndUpdateAccount(selectedAccount._id, formatedAccountObj)
                             modals.update.toggle()
                         }}
                         onPersonalityClick={id => {

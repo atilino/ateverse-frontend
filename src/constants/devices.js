@@ -3,8 +3,12 @@ import constants from '.'
 const DEVICE_STATUS = Object.freeze({
     ON: 'En servicio',
     OFF: 'Suspendido',
+    SUSPENDING: 'Suspendiendo',
+    CREATING_BROWSER: 'Creando buscador',
     LOGIN_SESSIONS: 'Iniciando sesiones',
     LOGOUT_SESSIONS: 'Cerrando sesiones',
+    IN_PERSISTENCE: 'En persistencia',
+    IN_TASKS: 'Ejecutando tareas',
     BUSSY: 'Ocupado'
   })
 
