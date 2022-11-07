@@ -1,4 +1,3 @@
-const env = require('react-dotenv')
 export default {
-    BACKEND_URL: env.default.BACKEND_URL
+    BACKEND_URL: process.env.BACKEND_URL
 }
