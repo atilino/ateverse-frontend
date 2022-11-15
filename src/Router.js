@@ -1,7 +1,6 @@
 import Layout from './components/Layout'
 import React from 'react'
 import {
-    BrowserRouter,
     Navigate,
     Route,
     Routes,

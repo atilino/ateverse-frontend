@@ -7,8 +7,11 @@ import { DownloadOutlined } from '@ant-design/icons';
 import { ConnectionIndicator } from 'components/indicators';
 
 import useDevice from 'hooks/useDevice'
+import { useNavigate } from 'react-router-dom';
 
 function Devices() {
+
+    const navigate = useNavigate()
     const { devices, device, findDevice, updateDevice, createDevice } = useDevice()
 
     const [updateModal, setUpdateModal] = useState(false)
@@ -30,6 +33,9 @@ function Devices() {
         }
         if (index === 'delete') {
             deleteModal('este dispositivo', 'devices', id, () => { })
+        }
+        if (index === 'detail') {
+            navigate(`${id}/detail`)
         }
     }
     const handleCreateDevice = async (values) => {

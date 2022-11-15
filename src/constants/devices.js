@@ -46,7 +46,12 @@ export const tables = {
         ]
     },
     ACTIONS: [
-        ...constants.table.ACTION
+        ...constants.table.ACTION,
+        {
+            title: 'Ver más',
+            dataIndex: 'detail',
+            key: 'detail',
+          },
     ]
 }
 
