@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import networkService from '../services/networks';
-import { notification } from '../components/primitives';
-import { FormModal, ManagePanel } from '../components/templates';
-import { getData } from '../libs/dataToTable';
-import { forms } from '../resources/forms';
-import { actions, columns } from '../resources/tables';
+import networkService from '../../services/networks';
+import { notification } from '../../components/primitives';
+import { FormModal, ManagePanel } from '../../components/templates';
+import { getData } from '../../libs/dataToTable';
+import { forms } from '../../resources/forms';
+import { actions, columns } from '../../resources/tables';
 
 function NetworksManager(props) {
     const [reload, setReload] = useState(false)

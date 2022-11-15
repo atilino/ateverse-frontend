@@ -90,7 +90,7 @@ function AccountsTable({
       dataIndex: 'profiles',
       key: 'profiles',
       align: "center",
-      render: (profiles, record) => <Link to={`/accounts/${record._id}/profile`}>{profiles && profiles.length}</Link>,
+      render: (profiles, record) => <Link to={`${record._id}/profiles`}>{profiles && profiles.length}</Link>,
     }
   ]
 

@@ -1,19 +1,19 @@
 import { Col, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import accountService from '../services/accounts';
-import { ManageHeader } from '../components/organisms';
-import { notification, Selector } from '../components/primitives';
-import { deleteModal, FormModal, ManageTable } from '../components/templates';
-import { forms } from '../resources/forms';
-import { actions, columns } from '../resources/tables';
+import accountService from '../../../services/accounts';
+import { ManageHeader } from '../../../components/organisms';
+import { notification, Selector } from '../../../components/primitives';
+import { deleteModal, FormModal, ManageTable } from '../../../components/templates';
+import { forms } from '../../../resources/forms';
+import { actions, columns } from '../../../resources/tables';
 import { TableColumn } from 'components/Table';
 import { constants } from 'utilities/index';
 import { useProfiles } from 'hooks';
-import { currentUser } from '../libs/userInfo';
+import { currentUser } from '../../../libs/userInfo';
 
 function ProfileManager(props) {
-    const { id } = useParams()
+    const { accountId } = useParams()
 
     const [data, setData] = useState([])
     const [reload, setReload] = useState(false)
@@ -24,7 +24,7 @@ function ProfileManager(props) {
     const { isAdmin } = currentUser()
 
     useEffect(async () => {
-        const result = await accountService.getProfilesByAccountId(id)
+        const result = await accountService.getProfilesByAccountId(accountId)
         if (result.error) return notification.loadingError(result.status)
         setData(result.data)
     }, [reload])

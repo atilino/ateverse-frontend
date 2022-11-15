@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { PageTitle } from '../components/primitives'
+import { PageTitle } from '../../components/primitives'
 import { Row, Col, Table } from 'antd'
-import deviceService from '../services/devices'
-import { notification } from '../components/primitives'
-import { columns } from '../resources/tables'
+import deviceService from '../../services/devices'
+import { notification } from '../../components/primitives'
+import { columns } from '../../resources/tables'
 import { Line } from 'react-chartjs-2'
 
-function MonitDevices() {
+function Detail() {
     const [selectedDevice, setSelectedDevice] = useState({})
     const [devicesData, setDevicesData] = useState([])
     const [telemetryData, setTelemetryData] = useState({
         data: {
-            cpu: [], 
+            cpu: [],
             ram: []
         },
         labels: []
@@ -97,4 +97,4 @@ function MonitDevices() {
     );
 }
 
-export default MonitDevices;
+export default Detail;

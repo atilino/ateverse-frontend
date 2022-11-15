@@ -9,7 +9,6 @@ const login = async (email, password) => {
     const result = await resolver(axios.post(config.BACKEND_URL + '/auth/signIn', { email, password }))
     if (!result.error) {
         setCurrentUser(result.data)
-        location.reload();
     }
     return ({ error : result.error})
 }

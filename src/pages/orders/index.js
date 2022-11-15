@@ -1,7 +1,2 @@
-import Manager from './pages/Manager'
-import Create from './pages/Create'
-
-export default {
-  Manager,
-  Create
-}
+export { default as NewOrder } from './NewOrder';
+export { default as Orders } from './Orders';

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { deleteModal, FormModal, ManagePanel } from '../components/templates'
-import { notification } from '../components/primitives';
-import { actions, columns } from '../resources/tables';
-import { forms } from '../resources/forms'
-import useUser from '../hooks/useUser'
+import { deleteModal, FormModal, ManagePanel } from '../../components/templates'
+import { notification } from '../../components/primitives';
+import { actions, columns } from '../../resources/tables';
+import { forms } from '../../resources/forms'
+import useUser from '../../hooks/useUser'
 
 function UserManager() {
     const { users, user, findUser, updateUser } = useUser()

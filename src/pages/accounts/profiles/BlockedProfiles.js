@@ -1,10 +1,10 @@
 import React from 'react';
-import { Selector } from '../components/primitives'
-import { ManagePanel } from '../components/templates';
-import useProfiles from '../hooks/useProfiles';
-import useNetwork from '../hooks/useNetwork';
-import { columns } from '../resources/tables'
-import { currentUser } from '../libs/userInfo';
+import { Selector } from '../../../components/primitives'
+import { ManagePanel } from '../../../components/templates';
+import useProfiles from '../../../hooks/useProfiles';
+import useNetwork from '../../../hooks/useNetwork';
+import { columns } from '../../../resources/tables'
+import { currentUser } from '../../../libs/userInfo';
 import { TableColumn } from 'components/Table';
 import { constants } from 'utilities/index';
 

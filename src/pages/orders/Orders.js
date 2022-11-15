@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { ManagePanel } from '../../../components/templates'
-import { notification } from '../../../components/primitives';
-import { MoreModal } from '../../../components/organisms';
-import { getData } from '../../../libs/dataToTable';
-import { actions } from '../../../resources/tables';
-import { formatDate } from '../../../libs/utils'
-import userService from '../../../services/users';
+import { ManagePanel } from '../../components/templates'
+import { notification } from '../../components/primitives';
+import { MoreModal } from '../../components/organisms';
+import { getData } from '../../libs/dataToTable';
+import { actions } from '../../resources/tables';
+import { formatDate } from '../../libs/utils'
+import userService from '../../services/users';
 import { constants } from 'utilities/index';
-import { Summary } from '../components/indicators';
-import NetworkLogo from '../components/indicators/NetworkLogo';
+import { Summary } from './components/indicators';
+import NetworkLogo from './components/indicators/NetworkLogo';
 
-function OrderManager(props) {
+function Orders(props) {
 
     const [reload, setReload] = useState(false)
     const [data, setData] = useState([])
@@ -91,7 +91,7 @@ function OrderManager(props) {
         },
         {
             title: 'Link',
-            render: (text, { options }) => options.link && <a href={text} target="_blank">{options.link.slice(0, -25)}...</a>
+            render: (text, { options }) => options.link && <a href={options.link} target="_blank">{options.link.slice(0, -25)}...</a>
         },
         ...columns,
         {
@@ -131,4 +131,4 @@ function OrderManager(props) {
     );
 }
 
-export default OrderManager;
+export default Orders;

@@ -10,7 +10,7 @@ import useDevice from '../../hooks/useDevice'
 import { AccountsTable } from './components';
 import { Col } from 'antd';
 
-function AccountManagement(props) {
+function Accounts(props) {
 
     const {
         account,
@@ -144,4 +144,4 @@ function AccountManagement(props) {
     );
 }
 
-export default AccountManagement;
+export default Accounts;

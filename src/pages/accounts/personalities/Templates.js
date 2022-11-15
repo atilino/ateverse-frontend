@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'antd'
-import { deleteModal, FormModal, ManagePanel, ViewModal } from '../components/templates'
-import { notification } from '../components/primitives';
-import { getData } from '../libs/dataToTable';
-import { actions, columns } from '../resources/tables';
-import { forms } from '../resources/forms'
-import personalityService from '../services/personalities';
-import { PersonalityForm } from '../components/organisms';
+import { deleteModal, FormModal, ManagePanel, ViewModal } from '../../../components/templates'
+import { notification } from '../../../components/primitives';
+import { getData } from '../../../libs/dataToTable';
+import { actions, columns } from '../../../resources/tables';
+import { forms } from '../../../resources/forms'
+import personalityService from '../../../services/personalities';
+import { PersonalityForm } from '../../../components/organisms';
 
-function PersonalityTemplateManager(props) {
+function Templates(props) {
     const [reload, setReload] = useState(false)
     const [data, setData] = useState([])
     const [updateModal, setUpdateModal] = useState(false)
@@ -131,4 +131,4 @@ function PersonalityTemplateManager(props) {
     )
 }
 
-export default PersonalityTemplateManager;
+export default Templates;

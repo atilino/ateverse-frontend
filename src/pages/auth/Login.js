@@ -2,19 +2,22 @@ import React from 'react';
 import { Form, Input, Card, Layout, Typography, Col, Row } from 'antd'
 const { Title } = Typography
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { notification, SubmitButton } from '../components/primitives';
-import authService from '../services/auth'
+import { notification, SubmitButton } from '../../components/primitives';
+import authService from '../../services/auth'
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
+    const navigate = useNavigate()
     const onFinish = async (values) => {
         const result = await authService.login(values.email, values.password)
-        if (result.error) notification.loginError()
+        if (result.error) return notification.loginError()
+        navigate('/')
     }
 
     return (
         <Layout.Content>
-            <Row justify="space-around" align="middle" style={{height: '100vh'}}>
+            <Row justify="space-around" align="middle" style={{ height: '100vh' }}>
                 <Col xl={8} xs={22}>
                     <Card >
                         <Title style={{ textAlign: "center", fontWeight: "200" }}>Atila</Title>
@@ -53,7 +56,7 @@ const Login = () => {
                                 />
                             </Form.Item>
                             <Form.Item>
-                                <SubmitButton onClick={onsubmit}>
+                                <SubmitButton>
                                     Entrar
                                 </SubmitButton>
                             </Form.Item>

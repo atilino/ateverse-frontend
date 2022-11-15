@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Router from './routes/Router';
+import Router from './Router';
 import "antd/dist/antd.css";
+import { BrowserRouter } from 'react-router-dom';
 
 
 ReactDOM.render(
     <React.StrictMode>
-        <Router />
+        <BrowserRouter>
+            <Router/>
+        </BrowserRouter>
     </React.StrictMode>,
     document.getElementById('root')
 );

@@ -1,13 +1,13 @@
 
 import React from 'react';
-import { notification, RadioGroup } from '../../../components/primitives';
-import { useField, useNetwork, useOrder, useProfiles } from '../../../hooks'
-import { useForm } from '../../../components/Form';
-import { JoinGroupsForm, InteractionForm, PublicationForm, ShareGroupsForm, ReportsForm, AvailableMessage } from '../components';
+import { notification, RadioGroup } from '../../components/primitives';
+import { useField, useNetwork, useOrder, useProfiles } from '../../hooks'
+import { useForm } from '../../components/Form';
+import { JoinGroupsForm, InteractionForm, PublicationForm, ShareGroupsForm, ReportsForm, AvailableMessage } from './components';
 import { constants } from 'utilities/index';
-import OrderFactory from '../application'
+import OrderFactory from './application'
 
-function CreateOrder() {
+function NewOrder() {
     const defaults = {
         network: 'facebook',
         variant: 'interaction'
@@ -130,4 +130,4 @@ function CreateOrder() {
     );
 }
 
-export default CreateOrder;
+export default NewOrder;
