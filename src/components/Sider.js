@@ -11,10 +11,12 @@ import { CompanyName } from '../components/primitives'
 import { Layout, Menu } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import useUser from '../hooks/useUser'
+import useAuth from 'hooks/useAuth';
 
 function Sider(props) {
-    const { currentUser, logout } = useUser()
+    const { currentUser } = useUser()
     const { isAdmin, isModerator } = currentUser();
+    const { logout } = useAuth()
 
     const location = useLocation()
     const navigate = useNavigate()

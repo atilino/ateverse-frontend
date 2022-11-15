@@ -6,12 +6,12 @@ import {
     Routes,
 } from 'react-router-dom'
 
-import { currentUser } from './libs/userInfo'
 import { Login } from './pages/auth'
 import { NewOrder, Orders } from './pages/orders'
 import { Accounts, BlockedProfiles, Profiles, Templates } from './pages/accounts'
 import { Users } from './pages/users'
 import { Detail, Devices } from './pages/devices'
+import useAuth from 'hooks/useAuth'
 
 function Router() {
     return (
@@ -31,9 +31,9 @@ function Router() {
     );
 }
 
-const Protected = ({ authorization, children }) => {
-    const { token } = currentUser()
-    if (!token) {
+const Protected = ({ children }) => {
+    const { isAuthenticated } = useAuth()
+    if (!isAuthenticated) {
         return <Navigate to='/login' />
     }
     return (

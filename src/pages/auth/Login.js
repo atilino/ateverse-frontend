@@ -3,15 +3,19 @@ import { Form, Input, Card, Layout, Typography, Col, Row } from 'antd'
 const { Title } = Typography
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { notification, SubmitButton } from '../../components/primitives';
-import authService from '../../services/auth'
 import { useNavigate } from 'react-router-dom';
+import useAuth from 'hooks/useAuth';
 
 const Login = () => {
 
     const navigate = useNavigate()
+    const { login, isAuthenticated } = useAuth()
+
     const onFinish = async (values) => {
-        const result = await authService.login(values.email, values.password)
+        console.log(isAuthenticated)
+        const result = await login({ email: values.email, password: values.password })
         if (result.error) return notification.loginError()
+        console.log(isAuthenticated)
         navigate('/')
     }
 
