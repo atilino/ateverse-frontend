@@ -5,7 +5,6 @@ import notification from './notification'
 import RoleSelector from './RoleSelector'
 import NetworkSelector from './NetworkSelector'
 import InterestsSelector from './InterestsSelector'
-import DeviceStatusSelector from './DeviceStatusSelector'
 import SwitchButton from './SwitchButton'
 import Selector from './Selector'
 import Modal from './Modal'
@@ -19,7 +18,6 @@ export {
     RoleSelector,
     NetworkSelector,
     InterestsSelector,
-    DeviceStatusSelector,
     SwitchButton,
     Selector,
     Modal,

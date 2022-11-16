@@ -4,9 +4,9 @@ import { ManagePanel } from '../../../components/templates';
 import useProfiles from '../../../hooks/useProfiles';
 import useNetwork from '../../../hooks/useNetwork';
 import { columns } from '../../../resources/tables'
-import { currentUser } from '../../../libs/userInfo';
 import { TableColumn } from 'components/Table';
 import { constants } from 'utilities/index';
+import useAuth from 'hooks/useAuth';
 
 function BlockedProfiles() {
 
@@ -14,7 +14,7 @@ function BlockedProfiles() {
     const { profiles, getBlockedProfiles, updateProfileStatus } = useProfiles({ type: 'blocked', network: defaultValue })
     const { networks } = useNetwork()
 
-    const { isAdmin } = currentUser()
+    const { isAdmin } = useAuth()
 
 
     const onStatusChange = async (id, status) => {

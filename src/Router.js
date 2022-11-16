@@ -17,23 +17,86 @@ function Router() {
     return (
         <Routes>
             <Route path='/login' element={<Login />} />
-            <Route path='/' element={<Protected><NewOrder /> </Protected>} />
-            <Route path='/orders' element={<Protected><Orders /></Protected>} />
-
-            <Route path='/accounts' element={<Protected><Accounts /> </Protected>} />
-            <Route path='/accounts/:accountId/profiles' element={<Protected><Profiles /> </Protected>} />
-            <Route path='/blocked-profiles' element={<Protected><BlockedProfiles /> </Protected>} />
-            <Route path='/personalities' element={<Protected><Templates /></Protected>} />
-            <Route path='/devices' element={<Protected><Devices /> </Protected>} />
-            <Route path='/devices/:deviceId/detail' element={<Protected><Detail /> </Protected>} />
-            <Route path='/users' element={<Protected><Users /> </Protected>} />
+            <Route
+                index
+                element={
+                    <ProtectedLayout>
+                        <NewOrder />
+                    </ProtectedLayout>
+                }
+            />
+            <Route
+                path='/orders'
+                element={
+                    <ProtectedLayout>
+                        <Orders />
+                    </ProtectedLayout>
+                }
+            />
+            <Route
+                path='/accounts'
+                element={
+                    <ProtectedLayout>
+                        <Accounts />
+                    </ProtectedLayout>
+                }
+            />
+            <Route
+                path='/accounts/:accountId/profiles'
+                element={
+                    <ProtectedLayout>
+                        <Profiles />
+                    </ProtectedLayout>
+                }
+            />
+            <Route
+                path='/blocked-profiles'
+                element={
+                    <ProtectedLayout>
+                        <BlockedProfiles />
+                    </ProtectedLayout>
+                }
+            />
+            <Route
+                path='/personalities'
+                element={
+                    <ProtectedLayout>
+                        <Templates />
+                    </ProtectedLayout>
+                }
+            />
+            <Route
+                path='/devices'
+                element={
+                    <ProtectedLayout>
+                        <Devices />
+                    </ProtectedLayout>
+                }
+            />
+            <Route
+                path='/devices/:deviceId/detail'
+                element={
+                    <ProtectedLayout>
+                        <Detail />
+                    </ProtectedLayout>
+                }
+            />
+            <Route
+                path='/users'
+                element={
+                    <ProtectedLayout>
+                        <Users />
+                    </ProtectedLayout>
+                }
+            />
+            <Route path='*' component={<h1>Not found</h1>} />
         </Routes>
     );
 }
 
-const Protected = ({ children }) => {
-    const { isAuthenticated } = useAuth()
-    if (!isAuthenticated) {
+const ProtectedLayout = ({ children }) => {
+    const { user } = useAuth()
+    if (!user) {
         return <Navigate to='/login' />
     }
     return (
@@ -42,4 +105,6 @@ const Protected = ({ children }) => {
         </Layout >
     )
 }
+
+
 export default Router;

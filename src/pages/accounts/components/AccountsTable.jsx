@@ -5,10 +5,9 @@ import { searchProps, TableColumn } from 'components/Table';
 import { ManageTable } from 'components/templates';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { currentUser } from '../../../libs/userInfo';
 import { constants } from 'utilities/index';
-import { DEFAULT_PAGINATE_LIMIT } from 'constants/accounts';
 import useAccount from 'hooks/useAccount';
+import useAuth from 'hooks/useAuth';
 
 
 const ACTIONS = [
@@ -48,7 +47,7 @@ function AccountsTable({
   onStatusChange
 }) {
 
-  const { isAdmin } = currentUser()
+  const { isAdmin } = useAuth()
   const { accounts, accountsPagination, getAccounts } = useAccount()
 
   const COLUMNS = [

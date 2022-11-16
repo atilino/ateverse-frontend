@@ -1,36 +1,32 @@
-import { useState } from "react"
-import { currentUser, deleteCurrentUser, setCurrentUser } from "../libs/userInfo"
+import { useNavigate } from "react-router-dom"
 import authService from "../services/auth"
-
+import { useLocalStorage } from "./useLocalStorage"
 
 const useAuth = () => {
-  const { token } = currentUser()
-  const [isAuthenticated, setIsAuthenticated] = useState(token !== undefined)
+  const [user, setUser] = useLocalStorage("user", null);
+  const navigate = useNavigate();
 
   const login = async ({ email, password }) => {
     const result = await authService.login(email, password)
-    if (!result.error) {
-      setCurrentUser({
-        username: result.data.username,
-        email: result.data.email,
-        roles: result.data.roles,
-        token: result.data.token
-      })
-      setIsAuthenticated(true)
+    if(!result.error) {
+      setUser(result.data)
+      navigate("/")
     }
     return result
-  }
+  };
 
   const logout = () => {
-    deleteCurrentUser()
-    setIsAuthenticated(false)
-  }
+    setUser(null)
+    navigate("/login", { replace: true })
+  };
 
   return {
-    isAuthenticated,
+    user,
     login,
-    logout
+    logout,
+    isAdmin: user?.roles.find(role => role.name === 'admin') !== undefined,
+    isModerator: user?.roles.find(role => role.name === 'moderator') !== undefined,
   }
-}
+};
 
 export default useAuth

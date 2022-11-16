@@ -3,22 +3,25 @@ import config from '../config'
 import resolver from './resolver'
 import { currentUser } from '../libs/userInfo'
 
-const { token } = currentUser()
-
-const headers = {
-    headers:{
-        "x-access-token": token
-    }
+const headerConfig = {
+    headers: {}
 }
+
 const getOrders = async () =>{
-    return await resolver(axios.get(config.BACKEND_URL + '/orders', headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.get(config.BACKEND_URL + '/orders', headerConfig))
 }
 const getOrderById = async (id) =>{
-    return await resolver(axios.get(config.BACKEND_URL + `/orders/${id}`, headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.get(config.BACKEND_URL + `/orders/${id}`, headerConfig))
 }
 
 const createOrder= async (data) =>{
-    return await resolver(axios.post(config.BACKEND_URL + '/orders', data, headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.post(config.BACKEND_URL + '/orders', data, headerConfig))
 }
 
 export default {

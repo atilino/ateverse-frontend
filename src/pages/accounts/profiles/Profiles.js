@@ -10,7 +10,7 @@ import { actions, columns } from '../../../resources/tables';
 import { TableColumn } from 'components/Table';
 import { constants } from 'utilities/index';
 import { useProfiles } from 'hooks';
-import { currentUser } from '../../../libs/userInfo';
+import useAuth from 'hooks/useAuth';
 
 function ProfileManager(props) {
     const { accountId } = useParams()
@@ -21,7 +21,7 @@ function ProfileManager(props) {
     const [selected, setSelected] = useState({})
     const { updateProfileStatus } = useProfiles()
 
-    const { isAdmin } = currentUser()
+    const { isAdmin } = useAuth()
 
     useEffect(async () => {
         const result = await accountService.getProfilesByAccountId(accountId)

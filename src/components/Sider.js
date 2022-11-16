@@ -5,25 +5,16 @@ import {
     TeamOutlined,
     ClusterOutlined,
     LogoutOutlined,
-    FacebookFilled
 } from '@ant-design/icons';
 import { CompanyName } from '../components/primitives'
 import { Layout, Menu } from 'antd'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import useUser from '../hooks/useUser'
+import { Link, useLocation } from 'react-router-dom'
 import useAuth from 'hooks/useAuth';
 
 function Sider(props) {
-    const { currentUser } = useUser()
-    const { isAdmin, isModerator } = currentUser();
-    const { logout } = useAuth()
+    const { logout, isAdmin, isModerator } = useAuth()
 
     const location = useLocation()
-    const navigate = useNavigate()
-    const handleLogout = (e) => {
-        logout()
-        navigate('/login')
-    }
 
     const menu = [
         {
@@ -120,7 +111,7 @@ function Sider(props) {
                                 :
                                 <Menu.Item key={item.key} icon={item.icon}>
                                     {item.key === 'logout' ?
-                                        <a onClick={handleLogout}>{item.title}</a>
+                                        <a onClick={logout}>{item.title}</a>
                                         :
                                         <Link to={item.path} key={`${item.key}-link`}>{item.title}</Link>
                                     }

@@ -1,13 +1,13 @@
 
 //Obtain the user data from sessionStorage
 export const currentUser = () =>{
-    const username = JSON.parse(sessionStorage.getItem('username'))
-    const email = JSON.parse(sessionStorage.getItem('email'))
-    const roles = JSON.parse(sessionStorage.getItem('roles'))
-    const token = JSON.parse(sessionStorage.getItem('token'))
-    const isAdmin = roles?.find(role => role.name === 'admin') !== undefined
-    const isModerator = roles?.find(role => role.name === 'moderator') !== undefined
-    return({ username, email, roles, token, isAdmin, isModerator })
+    const user = JSON.parse(localStorage.getItem('user'))
+    if(!user) {
+        return {
+            token: null
+        }
+    }
+    return user
 }
 
 //Set the user data from sessionStorage
