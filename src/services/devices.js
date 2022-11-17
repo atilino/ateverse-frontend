@@ -52,7 +52,7 @@ const getDeviceLogs = async (id, variableName, from, to) => {
     }))
 }
 
-const getDeviceProcesses = async (id) => {
+const listDeviceProcesses = async (id) => {
     const { token } = currentUser()
     return await resolver(axios.get(config.BACKEND_URL + `/devices/${id}/processes`, {
         headers: {
@@ -68,5 +68,5 @@ export default {
     deleteDeviceById,
     getDeviceAccountsById,
     getDeviceLogs,
-    getDeviceProcesses
+    listDeviceProcesses
 }

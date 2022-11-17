@@ -5,6 +5,8 @@ import deviceService from '../../services/devices'
 import { notification } from '../../components/primitives'
 import { columns } from '../../resources/tables'
 import { Line } from 'react-chartjs-2'
+import { LoaderButton } from 'components/buttons'
+import { DownloadOutlined } from '@ant-design/icons'
 
 function Detail() {
     const [selectedDevice, setSelectedDevice] = useState({})
@@ -56,7 +58,7 @@ function Detail() {
     const getTelemetryData = async () => {
         const telemetry = await deviceService.getDeviceLogs(selectedDevice)
         if (telemetry.error) return notification.loadingError()
-        const formatedTelemetry =  formatTelemetry(telemetry.data)
+        const formatedTelemetry = formatTelemetry(telemetry.data)
         setTelemetryData(formatedTelemetry)
     }
 
@@ -77,6 +79,15 @@ function Detail() {
         <>
             <PageTitle>Monitorear dispositivos</PageTitle>
             <Row>
+                <LoaderButton
+                    description="Presione para actualizar a la nueva versión"
+                    state={record.upgradeable}
+                    shape="round"
+                    icon={<DownloadOutlined />}
+                    loading={record.actions.update && record.upgradeable ? true : false}
+                    loadingDescription="En actualización"
+                    onClick={() => handleUpgrade(record._id)}
+                />
                 <Col xl={12} xs={24}>
                     <Table
                         rowSelection={{

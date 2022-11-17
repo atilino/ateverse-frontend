@@ -10,7 +10,7 @@ import { Login } from './pages/auth'
 import { NewOrder, Orders } from './pages/orders'
 import { Accounts, BlockedProfiles, Profiles, Templates } from './pages/accounts'
 import { Users } from './pages/users'
-import { Detail, Devices } from './pages/devices'
+import { Detail, Devices, Processes } from './pages/devices'
 import useAuth from 'hooks/useAuth'
 
 function Router() {
@@ -78,6 +78,14 @@ function Router() {
                 element={
                     <ProtectedLayout>
                         <Detail />
+                    </ProtectedLayout>
+                }
+            />
+            <Route
+                path='/devices/:deviceId/processes'
+                element={
+                    <ProtectedLayout>
+                        <Processes />
                     </ProtectedLayout>
                 }
             />

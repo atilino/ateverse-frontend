@@ -8,6 +8,7 @@ import { ConnectionIndicator } from 'components/indicators';
 
 import useDevice from 'hooks/useDevice'
 import { useNavigate } from 'react-router-dom';
+import { ManagementMenu } from './components';
 
 function Devices() {
 
@@ -133,20 +134,13 @@ function Devices() {
                     responsive={['md']}
                 />
                 <TableColumn
-                    title="Notificaciones"
-                    dataIndex="notifications"
-                    key="notifications"
+                    title="Administrar"
+                    dataIndex="management"
+                    key="management"
                     render={(value, record) => (
-                        <LoaderButton
-                            description="Presione para actualizar a la nueva versión"
-                            state={record.upgradeable}
-                            shape="round"
-                            icon={<DownloadOutlined />}
-                            loading={record.actions.update && record.upgradeable ? true : false}
-                            loadingDescription="En actualización"
-                            onClick={() => handleUpgrade(record._id)}
-                        />
+                        <ManagementMenu deviceId={record._id}/>
                     )}
+                    responsive={['md']}
                     align="center"
                 />
             </ManageTable>
