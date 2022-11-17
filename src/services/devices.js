@@ -38,12 +38,28 @@ const getDeviceAccountsById = async (id) => {
     return await resolver(axios.get(config.BACKEND_URL + `/accounts?deviceId=${id}`, headerConfig))
 }
 
-const getDeviceLogs = async (id) => {
+const getDeviceLogs = async (id, variableName, from, to) => {
     const { token } = currentUser()
-    headerConfig.headers['x-access-token'] = token
-    return await resolver(axios.get(config.BACKEND_URL + `/devices/${id}/logs`, headerConfig))
+    let url = `/devices/${id}/logs?name=${variableName}&from=${from}`
+
+    if (to !== undefined) {
+        url += `&to=${to}`
+    }
+    return await resolver(axios.get(config.BACKEND_URL + url, {
+        headers: {
+            'x-access-token': token
+        }
+    }))
 }
 
+const getDeviceProcesses = async (id) => {
+    const { token } = currentUser()
+    return await resolver(axios.get(config.BACKEND_URL + `/devices/${id}/processes`, {
+        headers: {
+            'x-access-token': token
+        }
+    }))
+}
 export default {
     getDevices,
     getDeviceById,
@@ -51,5 +67,6 @@ export default {
     createDevice,
     deleteDeviceById,
     getDeviceAccountsById,
-    getDeviceLogs
+    getDeviceLogs,
+    getDeviceProcesses
 }

@@ -11,6 +11,7 @@ const useDevice = () => {
         switch: false,
         accounts: []
     })
+    const [logs, setLogs] = useState([])
 
     useEffect(() => {
         deviceService

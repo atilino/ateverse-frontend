@@ -9,5 +9,5 @@ export interface Account {
   email: string;
   deviceId: string;
   profiles: Array<object>;
-  _config: AccountConfiguration
+  _config: AccountConfiguration;
 }
