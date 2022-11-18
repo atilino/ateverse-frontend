@@ -1,6 +1,6 @@
 import { SignalFilled } from '@ant-design/icons';
 import React from 'react';
-import Indicator from './Indicator'
+import { Indicator } from 'components/index'
 
 function ConnectionIndicator({ state }) {
   return (

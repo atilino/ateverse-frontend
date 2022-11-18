@@ -4,7 +4,7 @@ import { deleteModal, FormModal, ManageTable, TableModal } from 'components/temp
 import { notification, SwitchButton } from 'components/primitives';
 import { tables, forms, variables, ERRORS } from 'constants/devices'
 import { DownloadOutlined } from '@ant-design/icons';
-import { ConnectionIndicator } from 'components/indicators';
+import { ConnectionIndicator } from './components';
 
 import useDevice from 'hooks/useDevice'
 import { useNavigate } from 'react-router-dom';

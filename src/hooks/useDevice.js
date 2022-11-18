@@ -1,21 +1,17 @@
 import { useEffect, useState } from 'react'
+import Device from '../adapters/device.adapter'
 import deviceService from '../services/devices'
 import { resultHandler } from './helpers'
 
 /**
- * @param {( 'devices' | 'logs' | 'processes')} [firstLoadService]
+ * @param {( 'devices' | 'logs' | 'processes' | 'device' )} [firstLoadService]
  * @param {object} [config]
  */
 const useDevice = (firstLoadService, config) => {
 
     const [devices, setDevices] = useState([])
-    const [device, setDevice] = useState({
-        imei: '',
-        status: '',
-        switch: false,
-        accounts: []
-    })
-    const [logs, setLogs] = useState([])
+    const [device, setDevice] = useState(new Device())
+    const [logs, setLogs] = useState({})
     const [processes, setProcesses] = useState()
 
     useEffect(async () => {
@@ -24,6 +20,9 @@ const useDevice = (firstLoadService, config) => {
         } else if (firstLoadService === 'processes') {
             const { id } = config
             await listDeviceProcesses(id)
+        } else if (firstLoadService === 'device') {
+            const { id } = config
+            await getDeviceById(id)
         }
         else {
             await listDevices()
@@ -35,6 +34,14 @@ const useDevice = (firstLoadService, config) => {
             .getDevices()
             .then(resultDevices => {
                 setDevices(resultDevices.data)
+            })
+    }
+
+    const getDeviceById = (id) => {
+        return deviceService
+            .getDeviceById(id)
+            .then(resultDevice => {
+                setDevice(new Device(resultDevice.data))
             })
     }
 
@@ -99,6 +106,7 @@ const useDevice = (firstLoadService, config) => {
         logs,
         processes,
         listDevices,
+        getDeviceById,
         createDevice,
         updateDevice,
         deleteDevice,
