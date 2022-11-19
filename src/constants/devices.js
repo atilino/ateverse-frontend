@@ -1,6 +1,6 @@
 import constants from '.'
 
-const DEVICE_STATUS = Object.freeze({
+export const DEVICE_STATUS = Object.freeze({
     ON: 'En servicio',
     OFF: 'Suspendido',
     SUSPENDING: 'Suspendiendo',
@@ -46,7 +46,12 @@ export const tables = {
         ]
     },
     ACTIONS: [
-        ...constants.table.ACTION
+        ...constants.table.ACTION,
+        {
+            title: 'Ver más',
+            dataIndex: 'detail',
+            key: 'detail',
+          },
     ]
 }
 

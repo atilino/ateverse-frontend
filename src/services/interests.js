@@ -3,39 +3,51 @@ import config from '../config'
 import resolver from './resolver'
 import { currentUser } from '../libs/userInfo'
 
-const { token } = currentUser()
-
-const headers = {
-    headers: {
-        "x-access-token": token
-    }
+const headerConfig = {
+    headers: {}
 }
 
 const getInterests = async () => {
-    return await resolver(axios.get(config.BACKEND_URL + '/interests', headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.get(config.BACKEND_URL + '/interests', headerConfig))
 }
 const getInterestsById = async (id) => {
-    return await resolver(axios.get(config.BACKEND_URL + `/interests/${id}`, headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.get(config.BACKEND_URL + `/interests/${id}`, headerConfig))
 }
 const updateInterestsById = async (id, data) => {
-    return await resolver(axios.put(config.BACKEND_URL + `/interests/${id}`, data, headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.put(config.BACKEND_URL + `/interests/${id}`, data, headerConfig))
 }
 const createInterest = async (data) => {
-    return await resolver(axios.post(config.BACKEND_URL + '/interests', data, headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.post(config.BACKEND_URL + '/interests', data, headerConfig))
 }
 const deleteInterest = async (id) => {
-    return await resolver(axios.delete(config.BACKEND_URL + `/interests/${id}`, headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.delete(config.BACKEND_URL + `/interests/${id}`, headerConfig))
 }
 
 //Interest objects
 const getInterestsObjects = async () => {
-    return await resolver(axios.get(config.BACKEND_URL + '/interests/objects', headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.get(config.BACKEND_URL + '/interests/objects', headerConfig))
 }
 const getObjectsByInterest = async (interestId) => {
-    return await resolver(axios.get(config.BACKEND_URL + `/interests/${interestId}/objects`, headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.get(config.BACKEND_URL + `/interests/${interestId}/objects`, headerConfig))
 }
 const createInterestObject = async (data) => {
-    return await resolver(axios.post(config.BACKEND_URL + '/interests/objects', data, headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.post(config.BACKEND_URL + '/interests/objects', data, headerConfig))
 }
 
 export default {

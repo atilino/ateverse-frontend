@@ -3,17 +3,17 @@ import React from 'react';
 import Button from './Button'
 
 
-function LoaderButton({ title, description, state, loading, loadingDescription, ...rest }) {
+function LoaderButton({ title, state, loading, children, ...rest }) {
   return (
     state ?
-      <Tooltip title={loading ? description : description} >
+      <Tooltip title={title} >
         <Button disabled={!state} loading={loading} {...rest} >
-          {title}
+          {children}
         </Button>
       </Tooltip>
       :
       <Button disabled={!state} loading={loading} {...rest} >
-        {title}
+        {children}
       </Button>
   );
 }

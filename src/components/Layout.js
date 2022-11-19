@@ -14,9 +14,9 @@ const AppLayout = ({ children, roles }) => {
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
-            <Sider/>
+            <Sider />
             <Layout className="site-layout">
-                <AppHeader/>
+                <AppHeader />
                 <Content
                     style={{
                         margin: '24px 16px',
@@ -24,10 +24,9 @@ const AppLayout = ({ children, roles }) => {
                         minHeight: 280,
                     }}
                 >
-                    { children }
+                    {children}
                 </Content>
             </Layout>
-
         </Layout>
     );
 }

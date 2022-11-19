@@ -4,11 +4,13 @@
         "baseUrl": ".",
         "module": "commonjs",
         "paths": {
+            "/*": ["./src/*"],
             "assets/*": ["./src/assets/*"],
             "constants/*": ["./src/constants/*"],
             "components/*": ["./src/components/*"],
             "utilities/*": ["./src/utilities/*"],
-            "hooks/*": ["./src/hooks/*"]
+            "hooks/*": ["./src/hooks/*"],
+            "models/*": ["./src/models/*"]
         }
     }
 }

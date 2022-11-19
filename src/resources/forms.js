@@ -1,5 +1,3 @@
-import { devicesList } from "../libs/dataToSelect"
-import { accountsStatus, devicesStatus, networks } from "./variables"
 
 export const forms = {
     accounts: [

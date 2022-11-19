@@ -5,3 +5,5 @@ export { getProp } from './get-prop.utility'
 export { filterUndefined } from './main.utility'
 import constants from './constants.utility'
 export { constants }
+
+export { default as date } from './date.utility'

@@ -3,45 +3,56 @@ import config from '../config'
 import resolver from './resolver'
 import { currentUser } from '../libs/userInfo'
 
-const { token } = currentUser()
-
-const headers = {
-    headers: {
-        "x-access-token": token
-    }
+const headerConfig = {
+    headers: {}
 }
 
 const getPersonalities = async () => {
-    return await resolver(axios.get(config.BACKEND_URL + '/personalities', headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.get(config.BACKEND_URL + '/personalities', headerConfig))
 }
 const getPersonalityById = async (id) => {
-    return await resolver(axios.get(config.BACKEND_URL + `/personalities/${id}?raw=true`, headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.get(config.BACKEND_URL + `/personalities/${id}?raw=true`, headerConfig))
 }
 const updatePersonalityById = async (id, data) => {
-    return await resolver(axios.put(config.BACKEND_URL + `/personalities/${id}`, data, headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.put(config.BACKEND_URL + `/personalities/${id}`, data, headerConfig))
 }
 const createPersonality = async (data) => {
-    return await resolver(axios.post(config.BACKEND_URL + '/personalities', data, headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.post(config.BACKEND_URL + '/personalities', data, headerConfig))
 }
-// const deletePersonality = async (id) =>{
-//     return await resolver(axios.delete(config.BACKEND_URL + `/personalities/${id}`, headers))
-// }
 
 //Personality Templates
 const getTemplates = async () => {
-    return await resolver(axios.get(config.BACKEND_URL + '/personalities/templates', headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.get(config.BACKEND_URL + '/personalities/templates', headerConfig))
 }
 const getTemplateById = async (id) => {
-    return await resolver(axios.get(config.BACKEND_URL + `/personalities/templates/${id}`, headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.get(config.BACKEND_URL + `/personalities/templates/${id}`, headerConfig))
 }
 const updateTemplateById = async (id, data) => {
-    return await resolver(axios.put(config.BACKEND_URL + `/personalities/templates/${id}`, data, headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.put(config.BACKEND_URL + `/personalities/templates/${id}`, data, headerConfig))
 }
 const createTemplate = async (data) => {
-    return await resolver(axios.post(config.BACKEND_URL + '/personalities/templates', data, headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.post(config.BACKEND_URL + '/personalities/templates', data, headerConfig))
 }
 const deleteTemplateById = async (id) => {
-    return await resolver(axios.delete(config.BACKEND_URL + `/personalities/templates/${id}`, headers))
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.delete(config.BACKEND_URL + `/personalities/templates/${id}`, headerConfig))
 }
 
 export default {
