@@ -56,14 +56,6 @@ function Devices() {
             .catch(error => notification.updateError(error))
     }
 
-    const handleUpgrade = (id) => {
-        updateDevice(id, { actions: { update: true } })
-            .then(() => {
-                notification.success("En proceso de actualización")
-            })
-            .catch(error => notification.error("Error al ejecturar acción"))
-    }
-
     const onSwitchClick = async (state, id) => {
         updateDevice(id, { switch: state })
             .then(() => {

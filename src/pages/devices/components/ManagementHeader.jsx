@@ -20,6 +20,15 @@ function ManagementHeader({ device }) {
                 notification.updateError(ERRORS[error.message])
             })
     }
+
+    const handleUpgrade = (id) => {
+        updateDevice(id, { actions: { update: true } })
+            .then(() => {
+                notification.success("En proceso de actualización")
+            })
+            .catch(error => notification.error("Error al ejecturar acción"))
+    }
+
     return (
         <Row align='middle' style={{ marginBottom: '1.5rem' }}>
             <Col span={8}>
@@ -42,6 +51,7 @@ function ManagementHeader({ device }) {
                         state={device.upgradeable}
                         loading={device.status === 'Actualizando'}
                         shape='round'
+                        onClick={e => handleUpgrade(device.id)}
                         icon={<CloudDownloadOutlined />}
                     />
 

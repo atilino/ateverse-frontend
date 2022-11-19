@@ -26,6 +26,8 @@ const ACCOUNT_STATUS = Object.freeze([
 
 const MBIT = 125000
 
+const MBYTE = 8000000
+
 const ADMIN_PROFILE_STATUS = Object.freeze([
   {
     name: 'DISABLED',
@@ -99,5 +101,6 @@ export default {
   PATTERNS,
   ORDER_VARIANTS,
   ADMIN_PROFILE_STATUS,
-  MBIT
+  MBIT,
+  MBYTE
 }

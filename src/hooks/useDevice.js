@@ -95,7 +95,7 @@ const useDevice = (firstLoadService, config) => {
     }
 
     const listDeviceProcesses = (id) => {
-        return deviceService.listProcesses(id)
+        return deviceService.listDeviceProcesses(id)
             .then(resultProcesses => {
                 setProcesses(resultProcesses.data)
             })
