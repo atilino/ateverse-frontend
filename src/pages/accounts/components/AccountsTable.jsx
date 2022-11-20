@@ -28,7 +28,7 @@ const ACTIONS = [
   },
 ]
 
-/** @typedef {(id: string) => void} actionCallback */
+/** @typedef {(id: string, account: object) => void} actionCallback */
 /**
  *
  * @param {object} props
@@ -98,9 +98,9 @@ function AccountsTable({
     delete: onDeleteClick,
     changeDevice: onChangeDevice
   }
-  const handleAction = (e, action, id) => {
+  const handleAction = (e, action, id, account) => {
     e.preventDefault()
-    return actions[action](id)
+    return actions[action](id, account)
   }
 
 
@@ -129,7 +129,7 @@ function AccountsTable({
         render={(value, record) => (
           <a onClick={e => {
             e.preventDefault()
-            return onPersonalityClick(record._id)
+            return onPersonalityClick(record._id, record)
           }}>
             Ver
           </a>
