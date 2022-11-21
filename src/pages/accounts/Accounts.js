@@ -78,23 +78,23 @@ function Accounts(props) {
             <ManagePanel title='Administrar cuentas' model='accounts' >
                 <Col span={24}>
                     <AccountsTable
-                        onChangeDevice={id => {
-                            selectAndUpdateAccount(id)
+                        onChangeDevice={(id, account) => {
+                            selectAndUpdateAccount(account)
                             modals.changeDevice.toggle()
                         }}
                         onStatusChange={onStatusChange}
-                        onDeleteClick={id => {
-                            const selectedAccount = selectAndUpdateAccount(id)
-                            deleteModal(selectedAccount.name, 'accounts', id, () => setReload(!reload))
+                        onDeleteClick={(id, account) => {
+                            selectAndUpdateAccount(account)
+                            deleteModal(account.name, 'accounts', id, () => setReload(!reload))
                         }}
-                        onUpdateClick={id => {
-                            const selectedAccount = selectAndUpdateAccount(id)
-                            const formatedAccountObj = toMixedForm(selectedAccount)
-                            selectAndUpdateAccount(selectedAccount._id, formatedAccountObj)
+                        onUpdateClick={(id, account) => {
+                            const formatedAccountObj = toMixedForm(account)
+                            selectAndUpdateAccount(formatedAccountObj)
                             modals.update.toggle()
                         }}
-                        onPersonalityClick={id => {
-                            selectAndUpdateAccount(id)
+                        onPersonalityClick={(id, account) => {
+                            console.log(account)
+                            selectAndUpdateAccount(account)
                             modals.personality.toggle()
                         }}
                     />

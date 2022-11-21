@@ -26,7 +26,7 @@ function ManageTable({
                     render={(text, record) => (
                         <Space size="small" direction="vertical">
                             {actions.map((action, index) => (
-                                <a key={index} onClick={e => onActionClick(e, action.dataIndex, record._id)}>{action.title}</a>
+                                <a key={index} onClick={e => onActionClick(e, action.dataIndex, record._id, record)}>{action.title}</a>
                             ))
                             }
                         </Space>

@@ -73,7 +73,7 @@ export const columns = {
             title: 'Red prioritaria',
             dataIndex: 'networkPriority',
             key: 'networkPriority',
-            render: network => network.label
+            render: network => network?.label
         },
         {
             title: 'Nivel de actividad',

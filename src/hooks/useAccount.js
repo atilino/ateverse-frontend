@@ -1,3 +1,4 @@
+import { AlipayCircleOutlined } from '@ant-design/icons'
 import { DEFAULT_PAGINATE_LIMIT } from 'constants/accounts'
 import { useState, useEffect } from 'react'
 import accountService from '../services/accounts'
@@ -50,10 +51,8 @@ const useAccount = () => {
 				setAccountsPagination(paginationData)
 			})
 	}
-	const selectAndUpdateAccount = (id, accountObject = {}) => {
-		let account = accounts.filter(item => item._id === id)[0]
-		setAccount({ ...account, ...accountObject })
-		return { ...account, ...accountObject }
+	const selectAndUpdateAccount = (accountObject) => {
+		setAccount(accountObject)
 	}
 
 	const getDeviceAccounts = (deviceImei) => {
