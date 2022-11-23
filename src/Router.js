@@ -8,7 +8,7 @@ import {
 
 import { Login } from './pages/auth'
 import { NewOrder, Orders } from './pages/orders'
-import { Accounts, BlockedProfiles, Profiles, Templates } from './pages/accounts'
+import { Accounts, AccountsSummary, BlockedProfiles, Profiles, Templates } from './pages/accounts'
 import { Users } from './pages/users'
 import { Detail, Devices, Processes } from './pages/devices'
 import useAuth from 'hooks/useAuth'
@@ -38,6 +38,14 @@ function Router() {
                 element={
                     <ProtectedLayout>
                         <Accounts />
+                    </ProtectedLayout>
+                }
+            />
+            <Route
+                path='/accounts-summary'
+                element={
+                    <ProtectedLayout>
+                        <AccountsSummary />
                     </ProtectedLayout>
                 }
             />

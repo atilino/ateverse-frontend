@@ -2,6 +2,7 @@ import React, { useRef } from "react"
 import { Button, Input, Space, Table as TableComponent } from "antd"
 import { SearchOutlined } from "@ant-design/icons"
 
+const INTERVAL_SIZE = 5
 
 export const TableColumn = ({ children = undefined, ...rest }) => (
   <TableComponent.Column {...rest}>
@@ -10,7 +11,12 @@ export const TableColumn = ({ children = undefined, ...rest }) => (
 )
 
 export const Table = ({ children = undefined, ...rest }) => (
-  <TableComponent {...rest}>
+  <TableComponent
+    pagination={{
+      showSizeChanger: true,
+      pageSizeOptions: [INTERVAL_SIZE, INTERVAL_SIZE * 2, INTERVAL_SIZE * 3,  INTERVAL_SIZE * 4]
+    }}
+    {...rest}>
     {children}
   </TableComponent>
 )
