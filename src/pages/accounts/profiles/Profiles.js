@@ -1,3 +1,4 @@
+'use strict'
 import { Col, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -39,11 +40,11 @@ function ProfileManager(props) {
             setUpdateModal(true)
         }
         if (index === 'delete') {
-            deleteModal('el perfil de ' + selection.network.label, 'profiles', i, () => setReload(!reload))
+            deleteModal('el perfil de ' + selection.network.name, 'profiles', i, () => setReload(!reload))
         }
     }
     const onFinish = async (values) => {
-        values.accountId = id
+        values.accountId = accountId
         const result = await accountService.updateProfileById(selected._id, values)
         if (result.error) return notification.updateError(result.status)
         notification.updateSuccess()

@@ -1,7 +1,11 @@
 import { Col, Layout, Row } from "antd"
 import { DashboardTitle } from "."
 
-export const AppHeader = () => <Layout.Header className="header" style={{ padding: 0, backgroundColor: '#fff' }} />
+export const AppHeader = ({ children }) => (
+  <Layout.Header className="header" style={{ padding: 0, backgroundColor: '#fff' }}>
+    {children}
+  </Layout.Header>
+)
 
 export const DashboardHeader = ({ title, children }) => (
   <div style={{ marginBottom: "2%" }}>

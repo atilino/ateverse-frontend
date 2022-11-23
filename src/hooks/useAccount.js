@@ -5,7 +5,11 @@ import accountService from '../services/accounts'
 import interestService from '../services/interests'
 import { resultHandler } from './helpers'
 
-const useAccount = () => {
+/**
+ * @param {object} [config]
+ * @param {('accounts' | 'accountsSummary')} config.service
+ */
+const useAccount = (config = { service: 'accounts' }) => {
 	const [accounts, setAccounts] = useState([])
 	const [accountsPagination, setAccountsPagination] = useState({
 		limit: DEFAULT_PAGINATE_LIMIT,
@@ -15,11 +19,16 @@ const useAccount = () => {
 		nextPage: null
 	})
 	const [account, setAccount] = useState({})
+	const [accountsSummary, setAccountsSummary] = useState([])
 	const [personalityInterests, setPersonalityInterests] = useState([])
 
 	useEffect(() => {
-		getAccounts()
-		getAllPersonalityInterests()
+		if (config.service === 'accounts') {
+			getAccounts()
+			getAllPersonalityInterests()
+		} else if (config.service === 'accountsSummary') {
+			listAccountsSummary()
+		}
 	}, [])
 
 	const getAccount = (id) => {
@@ -55,6 +64,15 @@ const useAccount = () => {
 		setAccount(accountObject)
 	}
 
+	const listAccountsSummary = () => {
+	return accountService
+			.listAccountsSummary()
+			.then(resultAccountsSummary => {
+				resultHandler(resultAccountsSummary, result => {
+					setAccountsSummary(result)
+				})
+			})
+	}
 	const getDeviceAccounts = (deviceImei) => {
 		return accountService
 			.getAccountsByImei(deviceImei)
@@ -125,6 +143,7 @@ const useAccount = () => {
 		accounts,
 		accountsPagination,
 		account,
+		accountsSummary,
 		getAccount,
 		getDeviceAccounts,
 		createAccount,
@@ -134,7 +153,8 @@ const useAccount = () => {
 		getAllPersonalityInterests,
 		selectAndUpdateAccount,
 		updateAccountStatus,
-		getAccounts
+		getAccounts,
+		listAccountsSummary
 	}
 }
 

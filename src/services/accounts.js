@@ -21,6 +21,13 @@ const getAccounts = async (page, limit, query) => {
 
     return (await resolver(axios.get(config.BACKEND_URL + `/accounts?page=${page}&limit=${limit}${queryString}`, headerConfig)))
 }
+
+const listAccountsSummary = async() => {
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return (await resolver(axios.get(config.BACKEND_URL + `/accounts/summary`, headerConfig)))
+}
+
 const getAccountsByImei = async (imei) => {
     const { token } = currentUser()
     headerConfig.headers['x-access-token'] = token
@@ -117,6 +124,7 @@ const getAccountLogs = async (accountId) => {
 
 export default {
     getAccounts,
+    listAccountsSummary,
     getAccountById,
     getAccountsByImei,
     getAccountLogs,

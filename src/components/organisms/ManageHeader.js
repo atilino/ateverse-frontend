@@ -28,7 +28,7 @@ function ManageHeader({ title, model, reload }) {
         </>,
         personalityTemplates: <PersonalityForm />
     }
-    const { id } = useParams()
+    const { accountId } = useParams()
 
     const toAccountObject = (object) => {
         return {
@@ -46,7 +46,7 @@ function ManageHeader({ title, model, reload }) {
 
     const onFinish = async (values) => {
         if (model === 'profiles') {
-            values.accountId = id
+            values.accountId = accountId
         }
         if (model === 'accounts') {
             if (!values.personalityTemplate) {

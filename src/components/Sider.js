@@ -48,6 +48,11 @@ function Sider(props) {
                         path: '/accounts'
                     },
                     {
+                        title: 'Resumen de cuentas',
+                        key: 'accounts-summary',
+                        path: '/accounts-summary'
+                    },
+                    {
                         title: 'Perfiles bloqueados',
                         key: 'blocked-profiles',
                         path: '/blocked-profiles'
