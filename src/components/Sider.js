@@ -24,13 +24,13 @@ function Sider(props) {
             submenu: [
                 {
                     title: 'Nueva orden',
-                    key: '',
-                    path: '/'
+                    key: 'orders/new',
+                    path: '/orders/new'
                 },
                 {
                     title: 'Mis ordenes',
-                    key: 'orders',
-                    path: '/orders'
+                    key: 'orders/my-orders',
+                    path: '/orders/my-orders'
                 },
             ]
         },
@@ -44,23 +44,23 @@ function Sider(props) {
                 submenu: [
                     {
                         title: 'Cuentas',
-                        key: 'accounts',
-                        path: '/accounts'
+                        key: 'accounts/my-accounts',
+                        path: '/accounts/my-accounts'
                     },
                     {
                         title: 'Resumen de cuentas',
-                        key: 'accounts-summary',
-                        path: '/accounts-summary'
+                        key: 'accounts/summary',
+                        path: '/accounts/summary'
                     },
                     {
                         title: 'Perfiles bloqueados',
-                        key: 'blocked-profiles',
-                        path: '/blocked-profiles'
+                        key: 'accounts/blocked-profiles',
+                        path: '/accounts/blocked-profiles'
                     },
                     {
                         title: 'Personalidades',
-                        key: 'personalities',
-                        path: '/personalities'
+                        key: 'accounts/personalities',
+                        path: '/accounts/personalities'
                     },
                 ]
             },
@@ -101,6 +101,7 @@ function Sider(props) {
             collapsedWidth="0"
         >
             <CompanyName color='#fff' />
+            {console.log(location.pathname.substring(1))}
             <Menu theme="dark" mode="inline" defaultSelectedKeys={[`${location.pathname.substring(1)}`]} defaultOpenKeys={['orders']}>
                 {
                     menu.map((item, index) => (

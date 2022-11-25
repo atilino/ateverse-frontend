@@ -6,7 +6,7 @@ import { Row } from 'antd';
 import { ManagementHeader } from './components';
 import { LineChart } from '../../components/charts';
 
-function Detail() {
+function DeviceDetail() {
     const { deviceId } = useParams()
     const { device, updateDevice } = useDevice('device', { id: deviceId })
 
@@ -82,4 +82,4 @@ function Detail() {
     )
 }
 
-export default Detail;
+export default DeviceDetail;

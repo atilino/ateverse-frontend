@@ -1,18 +1,20 @@
 import React from 'react';
 import { facebook, instagram, twitter } from 'assets/img/icons'
+import { FacebookFilled, InstagramFilled, TwitterOutlined } from '@ant-design/icons';
 
 function NetworkLogo({ networkName }) {
   const styles = {
-    maxHeight: '32px'
+    fontSize: '32px',
+    color: '#3b3b3b'
   }
   if(networkName === 'facebook') {
-    return <img src={facebook} style={styles}/>
+    return <FacebookFilled style={styles}/>
   }
   if(networkName === 'instagram') {
-    return <img src={instagram} style={styles}/>
+    return <InstagramFilled style={styles}/>
   }
   if(networkName === 'twitter') {
-    return <img src={twitter} style={styles}/>
+    return <TwitterOutlined style={styles}/>
   }
 }
 

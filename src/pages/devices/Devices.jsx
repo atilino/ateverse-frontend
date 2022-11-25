@@ -3,7 +3,6 @@ import { LoaderButton, TableColumn, DashboardHeader, CreateButton } from 'compon
 import { deleteModal, FormModal, ManageTable, TableModal } from 'components/templates'
 import { notification, SwitchButton } from 'components/primitives';
 import { tables, forms, variables, ERRORS } from 'constants/devices'
-import { DownloadOutlined } from '@ant-design/icons';
 import { ConnectionIndicator } from './components';
 
 import useDevice from 'hooks/useDevice'

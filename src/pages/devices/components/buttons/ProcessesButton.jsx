@@ -1,6 +1,6 @@
 import React from 'react';
 import { ContainerOutlined } from '@ant-design/icons';
-import CircularBorder from '../CircularBorder';
+import CircularBorder from '../../../../components/CircularBorder';
 import { Link } from 'react-router-dom';
 import { Tooltip } from 'antd';
 

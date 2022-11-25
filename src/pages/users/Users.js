@@ -4,6 +4,8 @@ import { notification } from '../../components/primitives';
 import { actions, columns } from '../../resources/tables';
 import { forms } from '../../resources/forms'
 import useUser from '../../hooks/useUser'
+import { Layout } from 'antd';
+import { AppHeader } from 'components';
 
 function UserManager() {
     const { users, user, findUser, updateUser } = useUser()
@@ -22,10 +24,10 @@ function UserManager() {
     }
     const updateSelectedUser = async (values) => {
         updateUser(user._id, values)
-        .then(() =>{
-            notification.updateSuccess()
-            setUpdateModal(false)
-        })
+            .then(() => {
+                notification.updateSuccess()
+                setUpdateModal(false)
+            })
             .catch(error => {
                 return notification.updateError(error)
 
@@ -33,28 +35,37 @@ function UserManager() {
     }
 
     return (
-        <>
-            <ManagePanel
-                title='Administrar usuarios'
-                model='users'
-                reload={()=>{}}
-                tableAtributes={{
-                    data: users,
-                    columns: columns.users,
-                    actions: actions.users,
-                    onActionClick: handleActionClick,
-                    loading: users.length ? false : true,
+        <Layout className="site-layout">
+            <AppHeader />
+            <Layout.Content
+                style={{
+                    margin: '24px 16px',
+                    padding: 24,
+                    minHeight: 280,
                 }}
-            />
-            <FormModal
-                visible={updateModal}
-                fields={forms.users}
-                selected={user}
-                onCancel={() => setUpdateModal(false)}
-                onFinish={updateSelectedUser}
-                title={`Actualizar usuario`}
-            />
-        </>
+            >
+                <ManagePanel
+                    title='Administrar usuarios'
+                    model='users'
+                    reload={() => { }}
+                    tableAtributes={{
+                        data: users,
+                        columns: columns.users,
+                        actions: actions.users,
+                        onActionClick: handleActionClick,
+                        loading: users.length ? false : true,
+                    }}
+                />
+                <FormModal
+                    visible={updateModal}
+                    fields={forms.users}
+                    selected={user}
+                    onCancel={() => setUpdateModal(false)}
+                    onFinish={updateSelectedUser}
+                    title={`Actualizar usuario`}
+                />
+            </Layout.Content>
+        </Layout>
     )
 }
 

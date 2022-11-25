@@ -1,7 +1,4 @@
-import Summary from "./Summary"
-import ReactionLogo from "./ReactionLogo"
-
-export {
-  Summary,
-  ReactionLogo
-}
+export { default as NetworkLogo } from './NetworkLogo';
+export { default as ReactionLogo } from './ReactionLogo';
+export { default as StatusIndicator } from './StatusIndicator';
+export { default as Summary } from './Summary';

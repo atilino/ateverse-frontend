@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { ManagePanel } from '../../components/templates'
+import { ManagePanel, ManageTable } from '../../components/templates'
 import { notification } from '../../components/primitives';
-import { MoreModal } from '../../components/organisms';
 import { getData } from '../../libs/dataToTable';
-import { actions } from '../../resources/tables';
 import { formatDate } from '../../libs/utils'
 import userService from '../../services/users';
 import { constants } from 'utilities/index';
-import { Summary } from './components/indicators';
+import { StatusIndicator, Summary } from './components/indicators';
 import NetworkLogo from './components/indicators/NetworkLogo';
+import { Col, Row, Tooltip } from 'antd';
+import { CircularBorder, TableColumn } from '../../components';
+import { Link } from 'react-router-dom';
+import { ProfileOutlined, RightOutlined } from '@ant-design/icons';
 
 function Orders(props) {
 
     const [reload, setReload] = useState(false)
     const [data, setData] = useState([])
-    const [modal, setModal] = useState(false)
     const [selected, setSelected] = useState({})
-    const [userData, setUserData] = useState({})
+
     let timerId
     useEffect(() => {
         if (Object.keys(selected).length) {
@@ -73,7 +74,12 @@ function Orders(props) {
             title: "Estado",
             dataIndex: "status",
             key: "status",
-            render: status => constants.ORDER_STATUS[status]
+            render: status => (
+                <Row>
+                    <StatusIndicator status={status} />
+                    {constants.ORDER_STATUS[status]}
+                </Row>
+            )
         },
         {
             title: "Fecha de entrega",
@@ -82,51 +88,35 @@ function Orders(props) {
             render: date => date === null ? 'No disponible' : formatDate(date, "dateTime")
         },
     ]
-    const modalColumns = [
-        {
-            title: 'Usuario',
-            dataIndex: 'userId',
-            key: 'userId',
-            render: id => userData.username
-        },
-        {
-            title: 'Link',
-            render: (text, { options }) => options.link && <a href={options.link} target="_blank">{options.link.slice(0, -25)}...</a>
-        },
-        ...columns,
-        {
-            title: "Fecha de creación",
-            dataIndex: "createdAt",
-            key: "createdAt",
-            render: date => date ? formatDate(date) : 'No disponible'
-        },
-    ]
+
     return (
         <>
-            <ManagePanel
-                title='Administrar ordenes'
-                customHeader={false}
-                tableAtributes={{
-                    data: data,
-                    columns: columns,
-                    actions: actions.orders,
-                    onActionClick: handleActionClick,
-                    loading: data.length ? false : true,
-                    pagination: {
-                        defaultPageSize: 10
-                    },
-                }}
-            >
+            <ManagePanel title='Administrar ordenes' customHeader={false}>
+                <Col span={24}>
+                    <ManageTable
+                        dataSource={data}
+                        columns={columns}
+                        loading={data.length ? false : true}
+                    >
+                        <TableColumn
+                            title='Administrar'
+                            align='center'
+                            render={(value, record) => (
+                                <Row align='center'>
+                                    <Tooltip title='Detalles'>
+                                        <Link to={`${record._id}`}>
+                                            <CircularBorder backgroundColor='#def4fc'>
+                                                <ProfileOutlined style={{ fontSize: '1.2rem' }} />
+                                            </CircularBorder>
+                                        </Link>
+                                    </Tooltip>
+
+                                </Row>
+                            )}
+                        />
+                    </ManageTable>
+                </Col>
             </ManagePanel>
-            {modal &&
-                <MoreModal
-                    title="Detalle de orden"
-                    visible={modal}
-                    columns={modalColumns}
-                    selected={selected}
-                    onCancel={() => setModal(false)}
-                />
-            }
         </>
     );
 }
