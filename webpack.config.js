@@ -14,10 +14,10 @@ module.exports = () => {
     return {
         entry: './src/index.js',
         output: {
-            path: path.resolve(__dirname, '/public'),
+            path: path.resolve(__dirname, 'public'),
             filename: '[name].[contenthash].js',
             clean: true,
-            publicPath: '/'
+            publicPath: path.resolve(__dirname, 'public')
         },
         resolve: {
             alias: {
