@@ -5,7 +5,7 @@ import { actions, columns } from '../../resources/tables';
 import { forms } from '../../resources/forms'
 import useUser from '../../hooks/useUser'
 import { Layout } from 'antd';
-import { AppHeader } from 'components';
+import { AppHeader } from '../../components';
 
 function UserManager() {
     const { users, user, findUser, updateUser } = useUser()
@@ -36,7 +36,9 @@ function UserManager() {
 
     return (
         <Layout className="site-layout">
-            <AppHeader />
+            <AppHeader 
+                title='Usuarios'
+            />
             <Layout.Content
                 style={{
                     margin: '24px 16px',
@@ -45,7 +47,6 @@ function UserManager() {
                 }}
             >
                 <ManagePanel
-                    title='Administrar usuarios'
                     model='users'
                     reload={() => { }}
                     tableAtributes={{

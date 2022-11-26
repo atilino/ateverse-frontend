@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { ManagePanel, ManageTable } from '../../components/templates'
+import { ManageTable } from '../../components/templates'
 import { notification } from '../../components/primitives';
 import { getData } from '../../libs/dataToTable';
-import { formatDate } from '../../libs/utils'
 import userService from '../../services/users';
 import { constants } from 'utilities/index';
-import { StatusIndicator, Summary } from './components/indicators';
+import { DeliveryDateIndicator, StatusIndicator, Summary } from './components/indicators';
 import NetworkLogo from './components/indicators/NetworkLogo';
 import { Col, Row, Tooltip } from 'antd';
 import { CircularBorder, TableColumn } from '../../components';
 import { Link } from 'react-router-dom';
-import { ProfileOutlined, RightOutlined } from '@ant-design/icons';
+import { ProfileOutlined } from '@ant-design/icons';
 
 function Orders(props) {
 
@@ -61,10 +60,12 @@ function Orders(props) {
             title: 'Tipo de orden',
             dataIndex: 'variant',
             key: 'variant',
+            responsive: ['lg'],
             render: (variant, { network }) => constants.ORDER_VARIANTS[network.name].find(v => v.id === variant).label
         },
         {
             title: 'Resumen',
+            responsive: ['lg'],
             render: (text, { network, variant, options, executed }) => {
                 const variantName = constants.ORDER_VARIANTS[network.name].find(v => v.id === variant).name
                 return <Summary variantName={variantName} interactions={options} executed={executed} />
@@ -85,38 +86,40 @@ function Orders(props) {
             title: "Fecha de entrega",
             dataIndex: "deliveryAt",
             key: "deliveryAt",
-            render: date => date === null ? 'No disponible' : formatDate(date, "dateTime")
+            render: date => <DeliveryDateIndicator deliveryDate={date} />
         },
     ]
 
     return (
         <>
-            <ManagePanel title='Administrar ordenes' customHeader={false}>
-                <Col span={24}>
-                    <ManageTable
-                        dataSource={data}
-                        columns={columns}
-                        loading={data.length ? false : true}
-                    >
-                        <TableColumn
-                            title='Administrar'
-                            align='center'
-                            render={(value, record) => (
-                                <Row align='center'>
-                                    <Tooltip title='Detalles'>
-                                        <Link to={`${record._id}`}>
-                                            <CircularBorder backgroundColor='#def4fc'>
-                                                <ProfileOutlined style={{ fontSize: '1.2rem' }} />
-                                            </CircularBorder>
-                                        </Link>
-                                    </Tooltip>
+            <Col span={24}>
+                <ManageTable
+                    dataSource={data}
+                    columns={columns}
+                    loading={data.length ? false : true}
+                    size='middle'
+                    pagination={{
+                        defaultPageSize: 5
+                    }}
+                >
+                    <TableColumn
+                        title='Administrar'
+                        align='center'
+                        render={(value, record) => (
+                            <Row align='center'>
+                                <Tooltip title='Detalles'>
+                                    <Link to={`../${record._id}`}>
+                                        <CircularBorder backgroundColor='#def4fc'>
+                                            <ProfileOutlined style={{ fontSize: '1.2rem' }} />
+                                        </CircularBorder>
+                                    </Link>
+                                </Tooltip>
 
-                                </Row>
-                            )}
-                        />
-                    </ManageTable>
-                </Col>
-            </ManagePanel>
+                            </Row>
+                        )}
+                    />
+                </ManageTable>
+            </Col>
         </>
     );
 }

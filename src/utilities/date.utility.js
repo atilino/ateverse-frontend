@@ -25,17 +25,69 @@ const formatHHMMSS = (date) => {
   const hours = formatTime(d.getHours())
   const minutes = formatTime(d.getMinutes())
   const seconds = formatTime(d.getSeconds())
-  
-  if (hours < 12) {
+
+  if (Number(hours) < 12) {
     const formated = `${hours}:${minutes}:${seconds}`
     return formated + ' AM'
-  }else {
+  } else if (Number(hours) === 12) {
+    const formated = `${hours}:${minutes}:${seconds}`
+    return formated + ' PM'
+  } else {
     const formated = `${formatTime(hours - 12)}:${minutes}:${seconds}`
     return formated + ' PM'
   }
 }
 
+const formatHHMM = (date) => {
+  const d = new Date(date)
+  const hours = formatTime(d.getHours())
+  const minutes = formatTime(d.getMinutes())
+
+  if (Number(hours) < 12) {
+    const formated = `${hours}:${minutes}`
+    return formated + ' AM'
+  } else if (Number(hours) === 12) {
+    const formated = `${hours}:${minutes}`
+    return formated + ' PM'
+  } else {
+    const formated = `${formatTime(hours - 12)}:${minutes}`
+    return formated + ' PM'
+  }
+}
+
+const formatDDMMYYYY = (date) => {
+  const convertedDate = new Date(date).toLocaleDateString()
+  return convertedDate.split('/').map(segment => {
+    if (segment < 10) {
+      return '0' + segment
+    }
+    return segment
+  }).join('/')
+}
+
 const formatTime = (time) => time < 10 ? '0' + time : String(time)
+
+/**
+ * @param {( number | Date | string)} date
+ * @return {boolean}
+ */
+const isTomorrow = (date) => {
+  const d = new Date(date)
+  const today = new Date()
+  return d.getDate() === today.getDate() + 1
+}
+
+/**
+ * @param {( number | Date | string)} date
+ * @return {boolean}
+ */
+const isToday = (date) => {
+  const d = new Date(date)
+  const today = new Date()
+  return d.getDate() === today.getDate()
+}
+
+
 
 
 export default {
@@ -44,5 +96,9 @@ export default {
   secondsToMillis,
   minutesToMillis,
   hoursToMillis,
-  formatHHMMSS
+  formatHHMMSS,
+  formatHHMM,
+  formatDDMMYYYY,
+  isTomorrow,
+  isToday,
 }

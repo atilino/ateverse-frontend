@@ -7,7 +7,6 @@ function AccountsSummary(props) {
   const { accountsSummary } = useAccount({ service: 'accountsSummary' })
   return (
     <>
-      <DashboardHeader title="Resumen de cuentas"/>
       <AccountsSummaryTable accounts={accountsSummary}/>
     </>
   );

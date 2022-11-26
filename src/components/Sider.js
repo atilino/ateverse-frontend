@@ -43,12 +43,12 @@ function Sider(props) {
                 icon: <TeamOutlined />,
                 submenu: [
                     {
-                        title: 'Cuentas',
+                        title: 'Mis cuentas',
                         key: 'accounts/my-accounts',
                         path: '/accounts/my-accounts'
                     },
                     {
-                        title: 'Resumen de cuentas',
+                        title: 'Resumen',
                         key: 'accounts/summary',
                         path: '/accounts/summary'
                     },
@@ -96,38 +96,45 @@ function Sider(props) {
         },
     )
     return (
-        <Layout.Sider
-            breakpoint="lg"
-            collapsedWidth="0"
-        >
-            <CompanyName color='#fff' />
-            {console.log(location.pathname.substring(1))}
-            <Menu theme="dark" mode="inline" defaultSelectedKeys={[`${location.pathname.substring(1)}`]} defaultOpenKeys={['orders']}>
-                {
-                    menu.map((item, index) => (
-                        <>
-                            {item.submenu ?
-                                <Menu.SubMenu key={item.key} title={item.title} icon={item.icon}>
-                                    {item.submenu.map(subitem => (
-                                        <Menu.Item key={`${subitem.key}`}>
-                                            <Link to={subitem.path} key={`${item.key}-${subitem.key}-link`}>{subitem.title}</Link>
-                                        </Menu.Item>
-                                    ))}
-                                </Menu.SubMenu>
-                                :
-                                <Menu.Item key={item.key} icon={item.icon}>
-                                    {item.key === 'logout' ?
-                                        <a onClick={logout}>{item.title}</a>
-                                        :
-                                        <Link to={item.path} key={`${item.key}-link`}>{item.title}</Link>
-                                    }
-                                </Menu.Item>
-                            }
-                        </>
-                    ))
-                }
-            </Menu>
-        </Layout.Sider>
+        <>
+            <Layout.Sider
+                breakpoint="lg"
+                collapsedWidth="0"
+                style={{
+                    position: 'fixed',
+                    zIndex: 101,
+                    height: '100%',
+                }}
+            >
+                <CompanyName color='#fff' />
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={[`${location.pathname.substring(1)}`]} defaultOpenKeys={['orders', 'accounts']}>
+                    {
+                        menu.map((item, index) => (
+                            <>
+                                {item.submenu ?
+                                    <Menu.SubMenu key={item.key} title={item.title} icon={item.icon}>
+                                        {item.submenu.map(subitem => (
+                                            <Menu.Item key={`${subitem.key}`}>
+                                                <Link to={subitem.path} key={`${item.key}-${subitem.key}-link`}>{subitem.title}</Link>
+                                            </Menu.Item>
+                                        ))}
+                                    </Menu.SubMenu>
+                                    :
+                                    <Menu.Item key={item.key} icon={item.icon}>
+                                        {item.key === 'logout' ?
+                                            <a onClick={logout}>{item.title}</a>
+                                            :
+                                            <Link to={item.path} key={`${item.key}-link`}>{item.title}</Link>
+                                        }
+                                    </Menu.Item>
+                                }
+                            </>
+                        ))
+                    }
+                </Menu>
+            </Layout.Sider>
+            <div style={{ marginRight:  window.innerWidth >= 992 ? '200px' : '0'}}/>
+        </>
     );
 }
 

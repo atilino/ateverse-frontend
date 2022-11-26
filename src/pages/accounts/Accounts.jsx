@@ -75,7 +75,7 @@ function Accounts(props) {
 
     return (
         <>
-            <ManagePanel title='Administrar cuentas' model='accounts' >
+            <ManagePanel model='accounts' >
                 <Col span={24}>
                     <AccountsTable
                         onChangeDevice={(id, account) => {

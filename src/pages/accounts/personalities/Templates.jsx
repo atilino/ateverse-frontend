@@ -55,7 +55,6 @@ function Templates(props) {
             activityDays,
             interests,
         }
-        console.log({ personality, values })
         const resultPersonality = await personalityService.updatePersonalityById(selected.personality, personality)
         if (resultPersonality.error) return notification.updateError()
         values = { ...valuesTemplate, personality: selected.personality }
@@ -95,7 +94,6 @@ function Templates(props) {
     return (
         <>
             <ManagePanel
-                title='Administrar templates de personalidades'
                 model='personalityTemplates'
                 reload={handleCloseModal}
                 tableAtributes={{

@@ -22,7 +22,7 @@ function Router() {
                 <Route index element={<Navigate to='orders/new'/>}/>
                 <Route path='orders/*' element={<OrdersLayout />}>
                     <Route index path='new' element={<NewOrder />} />
-                    <Route index path='my-orders' element={<Orders />} />
+                    <Route path='my-orders' element={<Orders />} />
                     <Route path=':orderId' element={<OrderDetail />} />
                 </Route>
                 <Route path='accounts/*' element={<AccountsLayout />}>
