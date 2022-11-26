@@ -17,7 +17,7 @@ module.exports = () => {
             path: path.resolve(__dirname, 'public'),
             filename: '[name].[contenthash].js',
             clean: true,
-            publicPath: path.resolve(__dirname, 'public')
+            publicPath: '/public'
         },
         resolve: {
             alias: {
