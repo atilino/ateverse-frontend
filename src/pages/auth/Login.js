@@ -4,13 +4,18 @@ const { Title } = Typography
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { notification, SubmitButton } from '../../components/primitives';
 import useAuth from 'hooks/useAuth';
+import { Navigate } from 'react-router-dom';
 
 const Login = () => {
-    const { login } = useAuth()
+    const { login, user } = useAuth()
 
     const onFinish = async (values) => {
         const result = await login({ email: values.email, password: values.password })
         if (result.error) return notification.loginError()
+    }
+
+    if(user) {
+        return <Navigate to='/orders/new'/>
     }
 
     return (

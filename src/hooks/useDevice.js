@@ -4,10 +4,10 @@ import deviceService from '../services/devices'
 import { resultHandler } from './helpers'
 
 /**
- * @param {( 'devices' | 'logs' | 'processes' | 'device' )} [firstLoadService]
+ * @param {( 'devices' | 'logs' | 'processes' | 'device' )} [service]
  * @param {object} [config]
  */
-const useDevice = (firstLoadService, config) => {
+const useDevice = (service, config) => {
 
     const [devices, setDevices] = useState([])
     const [device, setDevice] = useState(new Device())
@@ -15,12 +15,12 @@ const useDevice = (firstLoadService, config) => {
     const [processes, setProcesses] = useState()
 
     useEffect(async () => {
-        if (firstLoadService === 'logs') {
+        if (service === 'logs') {
             await getDeviceLogs(config)
-        } else if (firstLoadService === 'processes') {
+        } else if (service === 'processes') {
             const { id } = config
             await listDeviceProcesses(id)
-        } else if (firstLoadService === 'device') {
+        } else if (service === 'device') {
             const { id } = config
             await getDeviceById(id)
         }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { DashboardOutlined } from '@ant-design/icons';
 import { Tooltip } from 'antd';
-import CircularBorder from '../CircularBorder';
+import CircularBorder from '../../../../components/CircularBorder';
 import { Link } from 'react-router-dom';
 
 const DetailButton = ({ to }) => (

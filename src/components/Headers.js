@@ -1,10 +1,27 @@
-import { Col, Layout, Row } from "antd"
+import { Col, Layout, PageHeader, Row } from "antd"
 import { DashboardTitle } from "."
+import { PageTitle } from "./primitives"
 
-export const AppHeader = ({ children }) => (
-  <Layout.Header className="header" style={{ padding: 0, backgroundColor: '#fff' }}>
-    {children}
-  </Layout.Header>
+/**
+ * @param {import('antd').PageHeaderProps}
+ */
+export const AppHeader = ({ children, style, ...rest }) => (
+  <>
+    <PageHeader
+      style={{
+        backgroundColor: '#fff',
+        position: 'fixed',
+        zIndex: 100,
+        width: '100%',
+        boxShadow: '1px 1px 3px 1px rgba(0, 0, 0, 0.1)',
+        ...style
+      }}
+      {...rest}
+    >
+      {children}
+    </PageHeader>
+    <div style={{ marginBottom: '80px'}}/>
+  </>
 )
 
 export const DashboardHeader = ({ title, children }) => (

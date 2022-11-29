@@ -158,13 +158,6 @@ export const columns = {
     ]
 }
 export const actions = {
-    orders: [
-        {
-            title: 'Ver más',
-            dataIndex: 'more',
-            key: 'more',
-        },
-    ],
     devices: [
         {
             title: 'Actualizar',

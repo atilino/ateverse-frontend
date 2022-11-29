@@ -94,6 +94,10 @@ const ORDER_VARIANTS = {
   ]
 }
 
+const getOrderVariant = (networkName, variant) => {
+  return ORDER_VARIANTS[networkName]?.find(v => v.id === variant).label
+}
+
 export default {
   ORDER_STATUS,
   ACCOUNT_STATUS,
@@ -102,5 +106,6 @@ export default {
   ORDER_VARIANTS,
   ADMIN_PROFILE_STATUS,
   MBIT,
-  MBYTE
+  MBYTE,
+  getOrderVariant
 }

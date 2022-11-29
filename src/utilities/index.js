@@ -7,3 +7,4 @@ import constants from './constants.utility'
 export { constants }
 
 export { default as date } from './date.utility'
+export { default as word } from './word.utility'

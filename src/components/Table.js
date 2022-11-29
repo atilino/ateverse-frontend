@@ -4,6 +4,9 @@ import { SearchOutlined } from "@ant-design/icons"
 
 const INTERVAL_SIZE = 5
 
+/**
+ * @param {import('antd').TableColumnProps}
+ */
 export const TableColumn = ({ children = undefined, ...rest }) => (
   <TableComponent.Column {...rest}>
     {children}

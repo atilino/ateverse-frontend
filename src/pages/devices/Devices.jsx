@@ -3,7 +3,6 @@ import { LoaderButton, TableColumn, DashboardHeader, CreateButton } from 'compon
 import { deleteModal, FormModal, ManageTable, TableModal } from 'components/templates'
 import { notification, SwitchButton } from 'components/primitives';
 import { tables, forms, variables, ERRORS } from 'constants/devices'
-import { DownloadOutlined } from '@ant-design/icons';
 import { ConnectionIndicator } from './components';
 
 import useDevice from 'hooks/useDevice'
@@ -74,20 +73,18 @@ function Devices() {
 
     return (
         <>
-            <DashboardHeader title={variables.DASHBOARD_TITLE}>
-                <CreateButton
-                    title="Crear dispositivo"
-                    onClick={(e) => setCreateModal(true)}
-                />
-                <FormModal
-                    visible={createModal}
-                    fields={forms.CREATE_FIELDS}
-                    onCancel={handleCloseModal}
-                    onFinish={handleCreateDevice}
-                    title={`Crear dispositivo`}
-                    align="center"
-                />
-            </DashboardHeader>
+            <CreateButton
+                title="Crear dispositivo"
+                onClick={(e) => setCreateModal(true)}
+            />
+            <FormModal
+                visible={createModal}
+                fields={forms.CREATE_FIELDS}
+                onCancel={handleCloseModal}
+                onFinish={handleCreateDevice}
+                title={`Crear dispositivo`}
+                align="center"
+            />
             <ManageTable
                 loading={devices.length ? false : true}
                 columns={tables.COLUMNS.DASHBOARD}
@@ -100,7 +97,7 @@ function Devices() {
                     dataIndex="connected"
                     key="connected"
                     render={(connection, record) =>
-                        <ConnectionIndicator state={connection}/>
+                        <ConnectionIndicator state={connection} />
                     }
                     align="center"
                 />
@@ -130,7 +127,7 @@ function Devices() {
                     dataIndex="management"
                     key="management"
                     render={(value, record) => (
-                        <ManagementMenu deviceId={record._id}/>
+                        <ManagementMenu deviceId={record._id} />
                     )}
                     responsive={['md']}
                     align="center"

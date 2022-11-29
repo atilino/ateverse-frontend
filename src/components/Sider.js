@@ -9,11 +9,11 @@ import {
 import { CompanyName } from '../components/primitives'
 import { Layout, Menu } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
-import useAuth from 'hooks/useAuth';
+import { useResponsiveBreakpoints, useAuth } from 'hooks';
 
 function Sider(props) {
     const { logout, isAdmin, isModerator } = useAuth()
-
+    const { sm } = useResponsiveBreakpoints()
     const location = useLocation()
 
     const menu = [
@@ -24,13 +24,13 @@ function Sider(props) {
             submenu: [
                 {
                     title: 'Nueva orden',
-                    key: '',
-                    path: '/'
+                    key: 'orders/new',
+                    path: '/orders/new'
                 },
                 {
                     title: 'Mis ordenes',
-                    key: 'orders',
-                    path: '/orders'
+                    key: 'orders/my-orders',
+                    path: '/orders/my-orders'
                 },
             ]
         },
@@ -43,24 +43,24 @@ function Sider(props) {
                 icon: <TeamOutlined />,
                 submenu: [
                     {
-                        title: 'Cuentas',
-                        key: 'accounts',
-                        path: '/accounts'
+                        title: 'Mis cuentas',
+                        key: 'accounts/my-accounts',
+                        path: '/accounts/my-accounts'
                     },
                     {
-                        title: 'Resumen de cuentas',
-                        key: 'accounts-summary',
-                        path: '/accounts-summary'
+                        title: 'Resumen',
+                        key: 'accounts/summary',
+                        path: '/accounts/summary'
                     },
                     {
                         title: 'Perfiles bloqueados',
-                        key: 'blocked-profiles',
-                        path: '/blocked-profiles'
+                        key: 'accounts/blocked-profiles',
+                        path: '/accounts/blocked-profiles'
                     },
                     {
                         title: 'Personalidades',
-                        key: 'personalities',
-                        path: '/personalities'
+                        key: 'accounts/personalities',
+                        path: '/accounts/personalities'
                     },
                 ]
             },
@@ -96,37 +96,45 @@ function Sider(props) {
         },
     )
     return (
-        <Layout.Sider
-            breakpoint="lg"
-            collapsedWidth="0"
-        >
-            <CompanyName color='#fff' />
-            <Menu theme="dark" mode="inline" defaultSelectedKeys={[`${location.pathname.substring(1)}`]} defaultOpenKeys={['orders']}>
-                {
-                    menu.map((item, index) => (
-                        <>
-                            {item.submenu ?
-                                <Menu.SubMenu key={item.key} title={item.title} icon={item.icon}>
-                                    {item.submenu.map(subitem => (
-                                        <Menu.Item key={`${subitem.key}`}>
-                                            <Link to={subitem.path} key={`${item.key}-${subitem.key}-link`}>{subitem.title}</Link>
-                                        </Menu.Item>
-                                    ))}
-                                </Menu.SubMenu>
-                                :
-                                <Menu.Item key={item.key} icon={item.icon}>
-                                    {item.key === 'logout' ?
-                                        <a onClick={logout}>{item.title}</a>
-                                        :
-                                        <Link to={item.path} key={`${item.key}-link`}>{item.title}</Link>
-                                    }
-                                </Menu.Item>
-                            }
-                        </>
-                    ))
-                }
-            </Menu>
-        </Layout.Sider>
+        <>
+            <Layout.Sider
+                breakpoint="md"
+                collapsedWidth="0"
+                style={{
+                    position: 'fixed',
+                    zIndex: 101,
+                    height: '100%',
+                }}
+            >
+                <CompanyName color='#fff' />
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={[`${location.pathname.substring(1)}`]} defaultOpenKeys={['orders', 'accounts']}>
+                    {
+                        menu.map((item, index) => (
+                            <>
+                                {item.submenu ?
+                                    <Menu.SubMenu key={item.key} title={item.title} icon={item.icon}>
+                                        {item.submenu.map(subitem => (
+                                            <Menu.Item key={`${subitem.key}`}>
+                                                <Link to={subitem.path} key={`${item.key}-${subitem.key}-link`}>{subitem.title}</Link>
+                                            </Menu.Item>
+                                        ))}
+                                    </Menu.SubMenu>
+                                    :
+                                    <Menu.Item key={item.key} icon={item.icon}>
+                                        {item.key === 'logout' ?
+                                            <a onClick={logout}>{item.title}</a>
+                                            :
+                                            <Link to={item.path} key={`${item.key}-link`}>{item.title}</Link>
+                                        }
+                                    </Menu.Item>
+                                }
+                            </>
+                        ))
+                    }
+                </Menu>
+            </Layout.Sider>
+            <div style={{ marginRight: sm? '0' : '200px'}}/>
+        </>
     );
 }
 
