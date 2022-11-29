@@ -87,6 +87,9 @@ const isToday = (date) => {
   return d.getDate() === today.getDate()
 }
 
+const formatDDMMYYYYHHMM = (date) => {
+  return `${formatDDMMYYYY(date)} ${formatHHMM(date)} `
+}
 
 
 
@@ -99,6 +102,7 @@ export default {
   formatHHMMSS,
   formatHHMM,
   formatDDMMYYYY,
+  formatDDMMYYYYHHMM,
   isTomorrow,
   isToday,
 }

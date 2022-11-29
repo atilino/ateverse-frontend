@@ -38,14 +38,6 @@ function Orders(props) {
         return clearInterval(timerId)
     }, [reload])
 
-    const handleActionClick = (e, index, id) => {
-        e.preventDefault()
-
-        const selection = data.filter(item => item._id === id)[0]
-        setSelected(selection)
-
-        setModal(true)
-    }
     const columns = [
         {
             title: 'Red',
@@ -68,6 +60,7 @@ function Orders(props) {
             responsive: ['lg'],
             render: (text, { network, variant, options, executed }) => {
                 const variantName = constants.ORDER_VARIANTS[network.name].find(v => v.id === variant).name
+                console.log(variantName, variant, network)
                 return <Summary variantName={variantName} interactions={options} executed={executed} />
             }
         },
@@ -75,12 +68,7 @@ function Orders(props) {
             title: "Estado",
             dataIndex: "status",
             key: "status",
-            render: status => (
-                <Row>
-                    <StatusIndicator status={status} />
-                    {constants.ORDER_STATUS[status]}
-                </Row>
-            )
+            render: status => <StatusIndicator status={status} />
         },
         {
             title: "Fecha de entrega",

@@ -9,11 +9,11 @@ import {
 import { CompanyName } from '../components/primitives'
 import { Layout, Menu } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
-import useAuth from 'hooks/useAuth';
+import { useResponsiveBreakpoints, useAuth } from 'hooks';
 
 function Sider(props) {
     const { logout, isAdmin, isModerator } = useAuth()
-
+    const { sm } = useResponsiveBreakpoints()
     const location = useLocation()
 
     const menu = [
@@ -98,7 +98,7 @@ function Sider(props) {
     return (
         <>
             <Layout.Sider
-                breakpoint="lg"
+                breakpoint="md"
                 collapsedWidth="0"
                 style={{
                     position: 'fixed',
@@ -133,7 +133,7 @@ function Sider(props) {
                     }
                 </Menu>
             </Layout.Sider>
-            <div style={{ marginRight:  window.innerWidth >= 992 ? '200px' : '0'}}/>
+            <div style={{ marginRight: sm? '0' : '200px'}}/>
         </>
     );
 }

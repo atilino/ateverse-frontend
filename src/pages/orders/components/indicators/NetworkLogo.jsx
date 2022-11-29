@@ -1,21 +1,35 @@
 import React from 'react';
-import { facebook, instagram, twitter } from 'assets/img/icons'
 import { FacebookFilled, InstagramFilled, TwitterOutlined } from '@ant-design/icons';
+import { Row } from 'antd';
+import { word } from 'utilities';
 
-function NetworkLogo({ networkName }) {
+function NetworkLogo({ networkName, label=false }) {
   const styles = {
     fontSize: '32px',
-    color: '#3b3b3b'
+    color: '#3b3b3b',
   }
-  if(networkName === 'facebook') {
-    return <FacebookFilled style={styles}/>
+  if (networkName === 'instagram') {
+    return (
+      <Row align='middle' justify='space-around'>
+        <InstagramFilled style={styles} />
+        {label && word.capitalize(networkName)}
+      </Row>
+    )
   }
-  if(networkName === 'instagram') {
-    return <InstagramFilled style={styles}/>
+  if (networkName === 'twitter') {
+    return (
+      <Row align='middle' justify='space-around'>
+        <TwitterOutlined style={styles} />
+        {label && word.capitalize(networkName)}
+      </Row>
+    )
   }
-  if(networkName === 'twitter') {
-    return <TwitterOutlined style={styles}/>
-  }
+  return (
+    <Row align='middle' justify='space-around'>
+      <FacebookFilled style={styles} />
+      {(label && networkName) && word.capitalize(networkName)}
+    </Row>
+  )
 }
 
 export default NetworkLogo;

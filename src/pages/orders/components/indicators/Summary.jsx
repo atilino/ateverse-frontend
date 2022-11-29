@@ -24,6 +24,8 @@ function Summary({ variantName, interactions, executed }) {
         return <p>Grupos compartidos: {executed.groups.length}/{interactions.groups.length}</p>
       case 'report':
         return <p>Reportes: {executed.reports}/{interactions.reports}</p>
+      default:
+        return null
     }
   }
 

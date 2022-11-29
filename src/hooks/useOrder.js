@@ -5,7 +5,12 @@ import { breakStringToArray } from "../utilities/formaters.utility";
 import { resultHandler } from "./helpers";
 import useUser from './useUser';
 
-const useOrder = () => {
+/**
+ * 
+ * @param {( 'orders' | 'order' )} [service]
+ * @param {object} [config]
+ */
+const useOrder = (service, config) => {
     const { currentUser } = useUser()
     const { username } = currentUser()
     const init = {
@@ -23,22 +28,43 @@ const useOrder = () => {
         shareGroups: {},
         commentsText: [],
         priority: false,
-        options: {}
+        options: {
+            link: '',
+            reactions: 0,
+            comments: [],
+            shares: 0,
+            reactionType: 0,
+        },
+        executed: {
+            reactions: 0,
+            comments: [],
+            shares: 0
+        },
+        deliveryAt: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date()
     }
 
     const [orders, setOrders] = useState([])
     const [order, setOrder] = useState(init)
 
-    useEffect(() => {
-        orderService
+    useEffect(async () => {
+        if(service === 'order') {
+            await getOrderById(config.orderId)
+        }else {
+            await listOrders()
+        }
+    }, [])
+    
+    const listOrders = () => {
+        return orderService
             .getOrders()
             .then(response => {
                 resultHandler(response, result => setOrders(result))
             })
-    }, [])
-
+    }
     const updateLocalOrder = (orderObject) => {
-        setOrder(order => ({...order, ...orderObject }))
+        setOrder(order => ({ ...order, ...orderObject }))
     }
 
     const resetLocalOrder = () => setOrder(init)
@@ -51,12 +77,22 @@ const useOrder = () => {
             })
     }
 
+    const getOrderById = (orderId) => {
+        return orderService
+            .getOrderById(orderId)
+            .then(response => {
+                resultHandler(response, result => setOrder(result))
+            })
+    }
+
     return {
+        listOrders,
         order,
         orders,
         updateLocalOrder,
         resetLocalOrder,
         createOrder,
+        getOrderById
     }
 }
 

@@ -6,3 +6,6 @@ export { default as useOrder } from './useOrder';
 export { default as useProfiles } from './useProfiles';
 export { default as useToggle } from './useToggle';
 export { default as useUser } from './useUser';
+export { default as useWindowSize } from './useWindowSize'
+export { default as useResponsiveBreakpoints } from './useResponsiveBreakpoints'
+export { default as useAuth } from './useAuth'
