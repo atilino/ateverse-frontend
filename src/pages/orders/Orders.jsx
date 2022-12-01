@@ -60,7 +60,6 @@ function Orders(props) {
             responsive: ['lg'],
             render: (text, { network, variant, options, executed }) => {
                 const variantName = constants.ORDER_VARIANTS[network.name].find(v => v.id === variant).name
-                console.log(variantName, variant, network)
                 return <Summary variantName={variantName} interactions={options} executed={executed} />
             }
         },
