@@ -7,14 +7,14 @@ export default async function resolve(promise){
         status: null,
     }
     try{
-        const { data } = await promise
+        const data = await promise
         resolved.status = data.status
         resolved.data = data.body
         if(data.error) resolved.error = data.error
 
         if(data.error.status === 401) deleteCurrentUser()
     }catch(e){
-        resolved.error = e.response.data
+        resolved.error = e
     }
     return resolved
 }

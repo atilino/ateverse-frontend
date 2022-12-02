@@ -30,7 +30,7 @@ const loginError = () => {
     return notification.error({ message: "Usuario y/o contraseña invalidos"})
 }
 
-const error = (message, error) =>{
-    return notification.error({ message: message, description: error })
+const error = (title, description) =>{
+    return notification.error({ message: title, description })
 }
 export default { loadingError, deleteError, success, updateError, updateSuccess, createError, createSuccess, loginError, error }

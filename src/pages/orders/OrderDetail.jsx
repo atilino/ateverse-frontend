@@ -7,7 +7,8 @@ import { CheckCircleFilled } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
 import { word, constants } from '../../utilities';
 import { love, care, haha, like, angry, wow, sad } from '../../assets/img/icons'
-const reactionIcons = [love, care, haha, wow, sad, angry]
+import { EvidenceButton } from './components/buttons';
+const reactionIcons = [like, love, care, haha, wow, sad, angry]
 
 const { Item } = Descriptions
 
@@ -19,12 +20,20 @@ function OrderDetail() {
   const SUMMARY_COLUMNS = [
     {
       title: 'Cuenta',
+      align: 'end',
       render: (text, record) => record.accountId.name
     },
     {
       title: 'Evidencia',
-      dataIndex: '',
-      key: ''
+      align: 'center',
+      render: (text, record) => (
+        <EvidenceButton
+          orderId={orderId}
+          accountId={record.accountId._id}
+          accountName={record.accountId.name}
+          enabled={record.evidence}
+        />
+      )
     }
   ]
 
@@ -38,6 +47,7 @@ function OrderDetail() {
         },
         {
           title: 'Comentario',
+          align: 'center',
           render: (text, record) => record.executed?.comment
         },
         {
@@ -51,7 +61,7 @@ function OrderDetail() {
           title: 'Grupos agregados',
           render: (text, record) => (
             <List
-              dataSource={record.executed.group.map(group => group.name)}
+              dataSource={record.executed.groups.map(group => group.name)}
               size='small'
               renderItem={item => (
                 <List.Item>{item}</List.Item>
@@ -65,7 +75,7 @@ function OrderDetail() {
           title: 'Grupos donde se compartio',
           render: (text, record) => (
             <List
-              dataSource={record.executed.groups.map(group => group.name)}
+              dataSource={record.executed.groups?.map(group => group.name)}
               size='small'
               renderItem={item => (
                 <List.Item>{item}</List.Item>

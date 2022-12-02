@@ -9,6 +9,7 @@
             "constants/*": ["./src/constants/*"],
             "components/*": ["./src/components/*"],
             "utilities/*": ["./src/utilities/*"],
+            "services/*": ["./src/services/*"],
             "hooks/*": ["./src/hooks/*"],
             "models/*": ["./src/models/*"]
         }
