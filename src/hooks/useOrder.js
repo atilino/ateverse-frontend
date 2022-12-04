@@ -29,16 +29,22 @@ const useOrder = (service, config) => {
         commentsText: [],
         priority: false,
         options: {
-            link: '',
+            link: undefined,
             reactions: 0,
             comments: [],
             shares: 0,
             reactionType: 0,
+            publications: [],
+            groups: [],
+            reports: 0
         },
         executed: {
             reactions: 0,
             comments: [],
-            shares: 0
+            shares: 0,
+            publications: [],
+            groups: [],
+            reports: 0
         },
         deliveryAt: new Date(),
         createdAt: new Date(),

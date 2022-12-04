@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Select, Form } from 'antd'
-import { getRoles } from '../../services/roles';
+import { getRoles } from '../../services';
 import { notification } from '.';
 
 function RoleSelector() {
