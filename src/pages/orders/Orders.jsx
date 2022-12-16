@@ -43,13 +43,12 @@ function Orders(props) {
             title: 'Red',
             dataIndex: 'network',
             key: 'network',
-            render: network =>
-                <div style={{ textAlign: 'center' }}>
-                    <NetworkLogo networkName={network.name} />
-                </div>
+            align: 'center',
+            render: network => <NetworkLogo networkName={network.name} />
         },
         {
             title: 'Tipo de orden',
+            align: 'center',
             dataIndex: 'variant',
             key: 'variant',
             responsive: ['lg'],
@@ -57,6 +56,7 @@ function Orders(props) {
         },
         {
             title: 'Resumen',
+            align: 'center',
             responsive: ['lg'],
             render: (text, { network, variant, options, executed }) => {
                 const variantName = constants.ORDER_VARIANTS[network.name].find(v => v.id === variant).name
@@ -86,7 +86,7 @@ function Orders(props) {
                     loading={data.length ? false : true}
                     size='middle'
                     pagination={{
-                        defaultPageSize: 5
+                        defaultPageSize: 10
                     }}
                 >
                     <TableColumn
