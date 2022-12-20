@@ -7,15 +7,19 @@ import ShareGroupsInput from "./inputs/ShareGroupInput"
 import JoinGroupsInput from "./inputs/JoinGroupsInput"
 import ReactionsInput from "./inputs/ReactionsInput"
 import AvailableMessage from "./AvailableMessage"
+import FollowForm from "./forms/FollowForm"
+import DirectForm from "./forms/DirectForm"
 
 export {
     InteractionForm,
     PublicationForm,
     JoinGroupsForm,
+    FollowForm,
     ShareGroupsInput,
     ReactionsInput,
     ShareGroupsForm,
     AvailableMessage,
     JoinGroupsInput,
-    ReportsForm
+    ReportsForm,
+    DirectForm
 }

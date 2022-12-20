@@ -6,7 +6,7 @@ import userService from '../../services/users';
 import { constants } from 'utilities/index';
 import { DeliveryDateIndicator, StatusIndicator, Summary } from './components/indicators';
 import NetworkLogo from './components/indicators/NetworkLogo';
-import { Col, Row, Tooltip } from 'antd';
+import { Badge, Col, Row, Tooltip } from 'antd';
 import { CircularBorder, TableColumn } from '../../components';
 import { Link } from 'react-router-dom';
 import { ProfileOutlined } from '@ant-design/icons';
@@ -52,7 +52,14 @@ function Orders(props) {
             dataIndex: 'variant',
             key: 'variant',
             responsive: ['lg'],
-            render: (variant, { network }) => constants.ORDER_VARIANTS[network.name].find(v => v.id === variant).label
+            render: (variant, { network, options, status }) => (
+                <>
+                    {options.direct && status === 'IN_PROGRESS' &&
+                        <Badge status="processing" color='#fc6262' />
+                    }
+                    {constants.ORDER_VARIANTS[network.name].find(v => v.id === variant).label}
+                </>
+            )
         },
         {
             title: 'Resumen',
