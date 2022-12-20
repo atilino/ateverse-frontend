@@ -219,7 +219,7 @@ function OrderDetail() {
           </Row>
         </Item>
 
-        {order.variant === 0 || order.variant === 5 &&
+        {(order.variant === 0 || order.variant === 5) &&
           <>
             <Item label='Reacciones'>
               <Row justify='center' align='middle'>
@@ -256,11 +256,32 @@ function OrderDetail() {
               {order.executed.reports}/{order.options.reports}
             </Row>
           </Item>
+          || order.variant === 4 &&
+          <Item label='Seguidores'>
+            <Row justify='center' align='middle'>
+              {order.executed.followers}/{order.options.followers}
+            </Row>
+          </Item>
         }
-        {order.variant === 1 && order.network.name === 'twitter' &&
+        {order.network.name === 'twitter' &&
+          order.variant === 1 &&
           <Item label='Publicaciones'>
             <Row justify='center' align='middle'>
               {order.executed.publications.length}/{order.options.publications.length}
+            </Row>
+          </Item>
+          || order.variant === 2 &&
+          <Item label='Seguidores'>
+            <Row justify='center' align='middle'>
+              {order.executed.followers}/{order.options.followers}
+            </Row>
+          </Item>
+        }
+        {order.network.name === 'instagram' &&
+          order.variant === 1 &&
+          <Item label='Seguidores'>
+            <Row justify='center' align='middle'>
+              {order.executed.followers}/{order.options.followers}
             </Row>
           </Item>
         }
