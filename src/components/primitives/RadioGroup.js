@@ -9,11 +9,11 @@ function RadioGroup({ children, options = [], type = 'radio', direction = 'horiz
                 {options.length && options.map((option, index) => {
                     return (
                         type === 'button' ?
-                            <Radio.Button value={option[config.value]} key={index}>
+                            <Radio.Button value={option[config.value]} key={index} disabled={option.disabled || false}>
                                 {option[config.label]}
                             </Radio.Button>
                             :
-                            <Radio value={option[config.value]} key={index}>
+                            <Radio value={option[config.value]} key={index} disabled={option.disabled || false}>
                                 {option[config.label]}
                             </Radio>
                     )

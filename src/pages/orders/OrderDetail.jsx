@@ -90,7 +90,31 @@ function OrderDetail() {
           align: 'center',
           render: (text, record) => <Check state={record.executed.report} />
         }
-      ]
+      ],
+      4: [
+        {
+          title: 'Seguido',
+          align: 'center',
+          render: (text, record) => <Check state={record.executed.follower} />
+        }
+      ],
+      5: [
+        {
+          title: 'Reacción',
+          align: 'center',
+          render: (text, record) => <Check state={record.executed.reaction} />
+        },
+        {
+          title: 'Comentario',
+          align: 'center',
+          render: (text, record) => record.executed?.comment
+        },
+        {
+          title: 'Compartido',
+          align: 'center',
+          render: (text, record) => <Check state={record.executed.share} />
+        },
+      ],
     },
     twitter: {
       0: [
@@ -115,7 +139,14 @@ function OrderDetail() {
           title: 'Publicación',
           render: (text, record) => record.executed.publication
         }
-      ]
+      ],
+      2: [
+        {
+          title: 'Seguido',
+          align: 'center',
+          render: (text, record) => <Check state={record.executed.follower} />
+        }
+      ],
     },
     instagram: {
       0: [
@@ -129,7 +160,14 @@ function OrderDetail() {
           align: 'center',
           render: (text, record) => record.executed?.comment
         }
-      ]
+      ],
+      1: [
+        {
+          title: 'Seguido',
+          align: 'center',
+          render: (text, record) => <Check state={record.executed.follower} />
+        }
+      ],
     }
   }
 
@@ -176,10 +214,12 @@ function OrderDetail() {
         contentStyle={{ backgroundColor: 'white' }}
       >
         <Item label='Variante'>
-          {constants.ORDER_VARIANTS[order.network.name || 'facebook']?.find(v => v.id === (order.variant)).label}
+          <Row justify='center' align='middle'>
+            {constants.ORDER_VARIANTS[order.network.name || 'facebook']?.find(v => v.id === (order.variant)).label}
+          </Row>
         </Item>
 
-        {order.variant === 0 &&
+        {order.variant === 0 || order.variant === 5 &&
           <>
             <Item label='Reacciones'>
               <Row justify='center' align='middle'>

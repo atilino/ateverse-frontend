@@ -6,7 +6,7 @@ import userService from '../../services/users';
 import { constants } from 'utilities/index';
 import { DeliveryDateIndicator, StatusIndicator, Summary } from './components/indicators';
 import NetworkLogo from './components/indicators/NetworkLogo';
-import { Col, Row, Tooltip } from 'antd';
+import { Badge, Col, Row, Tooltip } from 'antd';
 import { CircularBorder, TableColumn } from '../../components';
 import { Link } from 'react-router-dom';
 import { ProfileOutlined } from '@ant-design/icons';
@@ -43,20 +43,27 @@ function Orders(props) {
             title: 'Red',
             dataIndex: 'network',
             key: 'network',
-            render: network =>
-                <div style={{ textAlign: 'center' }}>
-                    <NetworkLogo networkName={network.name} />
-                </div>
+            align: 'center',
+            render: network => <NetworkLogo networkName={network.name} />
         },
         {
             title: 'Tipo de orden',
+            align: 'center',
             dataIndex: 'variant',
             key: 'variant',
             responsive: ['lg'],
-            render: (variant, { network }) => constants.ORDER_VARIANTS[network.name].find(v => v.id === variant).label
+            render: (variant, { network, options, status }) => (
+                <>
+                    {options.direct && status === 'IN_PROGRESS' &&
+                        <Badge status="processing" color='#fc6262' />
+                    }
+                    {constants.ORDER_VARIANTS[network.name].find(v => v.id === variant).label}
+                </>
+            )
         },
         {
             title: 'Resumen',
+            align: 'center',
             responsive: ['lg'],
             render: (text, { network, variant, options, executed }) => {
                 const variantName = constants.ORDER_VARIANTS[network.name].find(v => v.id === variant).name
@@ -86,7 +93,7 @@ function Orders(props) {
                     loading={data.length ? false : true}
                     size='middle'
                     pagination={{
-                        defaultPageSize: 5
+                        defaultPageSize: 10
                     }}
                 >
                     <TableColumn

@@ -1,6 +1,7 @@
 const ORDER_STATUS = Object.freeze({
   CREATED: 'Creada',
   IN_PROGRESS: 'En progreso',
+  DELAYED: 'Retrasada',
   FINISHED: 'Finalizada',
   ERROR: 'Error'
 })
@@ -83,14 +84,19 @@ const ORDER_VARIANTS = {
     { id: 0, label: 'Interacción', name: 'interaction' },
     { id: 1, label: 'Agregar grupos', name: 'join-groups' },
     { id: 2, label: 'Compartir en grupos', name: 'share-groups' },
-    { id: 3, label: 'Reportar', name: 'report' }
+    { id: 3, label: 'Reportar', name: 'report' },
+    { id: 4, label: 'Seguir', name: 'follow' },
+    { id: 5, label: 'Directo', name: 'direct' }
+
   ],
   instagram: [
     { id: 0, label: 'Interacción', name: 'interaction' },
+    { id: 1, label: 'Seguir', name: 'follow' },
   ],
   twitter: [
     { id: 0, label: 'Interacción', name: 'interaction' },
-    { id: 1, label: 'Publicación', name: 'publication' }
+    { id: 1, label: 'Publicación', name: 'publication' },
+    { id: 2, label: 'Seguir', name: 'follow' },
   ]
 }
 

@@ -3,7 +3,7 @@ import React from 'react';
 import { notification, RadioGroup } from '../../components/primitives';
 import { useField, useNetwork, useOrder, useProfiles } from '../../hooks'
 import { useForm } from '../../components/Form';
-import { JoinGroupsForm, InteractionForm, PublicationForm, ShareGroupsForm, ReportsForm, AvailableMessage } from './components';
+import { JoinGroupsForm, InteractionForm, PublicationForm, ShareGroupsForm, ReportsForm, AvailableMessage, FollowForm, DirectForm } from './components';
 import { constants } from 'utilities/index';
 import OrderFactory from './application'
 
@@ -18,8 +18,8 @@ function NewOrder() {
     const { networks } = useNetwork()
     const [form] = useForm()
 
-    const variantRadio = useField({ type: "radio", defaultValue: defaults.variant })
-    const networkRadio = useField({ type: "radio", defaultValue: defaults.network })
+    const networkRadio = useField({ defaultValue: defaults.network })
+    const variantRadio = useField({ defaultValue: defaults.variant })
 
     const onFinishForm = (values) => {
         const variantId = constants.ORDER_VARIANTS[networkRadio.value].find(v => v.name === variantRadio.value).id
@@ -66,7 +66,7 @@ function NewOrder() {
             </div>
             <div style={{ display: 'flex', margin: '20px' }}>
                 <RadioGroup
-                    options={constants.ORDER_VARIANTS[networkRadio.value].map(({ name, label }) => ({ value: name, label }))}
+                    options={constants.ORDER_VARIANTS[networkRadio.value].map(({ name, label }) => ({ value: name, label, disabled: name === 'direct'? true : false }))}
                     type="button"
                     style={{ margin: 'auto' }}
                     onChange={onVariantChange}
@@ -119,6 +119,26 @@ function NewOrder() {
             }
             {variantRadio.value === 'report' &&
                 <ReportsForm
+                    initialValues={order}
+                    onValuesChange={updateLocalOrder}
+                    form={form}
+                    onFinish={onFinishForm}
+                    onError={onError}
+                />
+            }
+            {variantRadio.value === 'follow' &&
+                <FollowForm
+                    network={networkRadio.value}
+                    initialValues={order}
+                    onValuesChange={updateLocalOrder}
+                    form={form}
+                    onFinish={onFinishForm}
+                    onError={onError}
+                />
+            }
+            {variantRadio.value === 'direct' &&
+                <DirectForm
+                    network={networkRadio.value}
                     initialValues={order}
                     onValuesChange={updateLocalOrder}
                     form={form}
