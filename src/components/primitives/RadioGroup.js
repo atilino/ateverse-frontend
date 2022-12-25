@@ -1,6 +1,11 @@
 import React from 'react';
 import { Radio, Space } from 'antd'
 
+/**
+ * 
+ * @param {import('antd').RadioGroupProps} props
+ * @returns 
+ */
 function RadioGroup({ children, options = [], type = 'radio', direction = 'horizontal', config = { label: 'label', value: 'value' }, ...rest }) {
     return (
         <Radio.Group {...rest} >

@@ -1,8 +1,8 @@
 import { CommentOutlined, EditOutlined, IssuesCloseOutlined, LikeOutlined, ShareAltOutlined, UserAddOutlined, UsergroupAddOutlined } from '@ant-design/icons';
-import { Col, Row } from 'antd';
-import { Modal } from 'components/primitives';
+import { Row } from 'antd';
 import useToggle from 'hooks/useToggle';
 import React from 'react';
+import { ShareIcon } from '../../../../components';
 
 function Summary({ variantName, interactions, executed }) {
 
@@ -36,7 +36,7 @@ function Summary({ variantName, interactions, executed }) {
           <>
             <LikeOutlined style={{ color: '#0088FF' }} />
             <CommentOutlined style={{ color: '#4E4F50' }} />
-            <div>{executed.shares !== undefined && <ShareAltOutlined style={{ color: '#4E4F50' }} />}</div>
+            <div>{executed.shares !== undefined && <ShareIcon/>}</div>
           </>
         }
         actions={

@@ -7,11 +7,32 @@ const headerConfig = {
     headers: {}
 }
 
-const getOrders = async () =>{
+const getOrders = async (query) =>{
     const { token } = currentUser()
     headerConfig.headers['x-access-token'] = token
-    return await resolver(axios.get(config.BACKEND_URL + '/orders', headerConfig))
+
+    let queryString = ''
+    if(query !== undefined) {
+        queryString += '?'
+    }
+    if(query?.direct === true) {
+        queryString += 'direct=true'
+    }
+    return await resolver(axios.get(config.BACKEND_URL + '/orders' + queryString, headerConfig))
 }
+
+const patchDirectOrder = async (id, data) => {
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.patch(config.BACKEND_URL + `/orders/${id}/direct`, data, headerConfig))
+}
+
+const completeOrder = async (id) => {
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.patch(config.BACKEND_URL + `/orders/${id}/complete`, headerConfig))
+}
+
 const getOrderById = async (id) =>{
     const { token } = currentUser()
     headerConfig.headers['x-access-token'] = token
@@ -27,5 +48,7 @@ const createOrder= async (data) =>{
 export default {
     getOrders,
     getOrderById,
-    createOrder
+    createOrder,
+    patchDirectOrder,
+    completeOrder
 }

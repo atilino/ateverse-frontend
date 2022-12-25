@@ -3,12 +3,13 @@ import {
     Form,
     Button,
     Input,
-    InputNumber
+    InputNumber,
+    Checkbox
 } from 'antd'
 import { Selector } from './primitives';
 import './Form.css'
 
-export const FormLayout = ({ children, disabled = false, ...rest }) => {
+export const FormLayout = ({ children, disabled = false, noSubmit = false, ...rest  }) => {
     return (
         <Form
             labelCol={{
@@ -22,16 +23,18 @@ export const FormLayout = ({ children, disabled = false, ...rest }) => {
             {...rest}
         >
             {children}
-            <FormItem
-                wrapperCol={{
-                    offset: 8,
-                    span: 16
-                }}
-            >
-                <Button disabled={disabled} style={{ width: "50%", margin: "auto" }} type="primary" htmlType="submit">
-                    Enviar
-                </Button>
-            </FormItem>
+            {!noSubmit &&
+                <FormItem
+                    wrapperCol={{
+                        offset: 8,
+                        span: 16
+                    }}
+                >
+                    <Button disabled={disabled} style={{ width: "50%", margin: "auto" }} type="primary" htmlType="submit">
+                        Enviar
+                    </Button>
+                </FormItem>
+            }
         </Form >
     );
 }
@@ -48,8 +51,13 @@ export const FormList = ({ children, ...rest }) => (
     </Form.List>
 )
 
-export const FormInput = ({ label, name, rules, ...rest }) => (
-    <FormItem label={label} name={name} rules={rules}>
+/**
+ * 
+ * @param {import('antd').InputProps} props 
+ * @param {import('antd').FormItemProps} props.item
+ */
+export const FormInput = ({ label, name, rules, item, ...rest }) => (
+    <FormItem label={label} name={name} rules={rules} {...item}>
         <Input {...rest} />
     </FormItem>
 )
@@ -74,11 +82,29 @@ export const FormSelect = ({ label, name, rules, children, ...rest }) => (
     </FormItem>
 )
 
-export const FormButton = ({ children, ...rest }) => (
-    <FormItem>
+/**
+ * 
+ * @param {import('antd').ButtonProps} props 
+ * @returns {React.Component}}
+ */
+export const FormButton = ({ children, item, ...rest }) => (
+    <FormItem {...item}>
         <Button {...rest}>
             {children}
         </Button>
+    </FormItem>
+)
+
+/**
+ * 
+ * @param {import('antd').CheckboxProps} props 
+ * @param {import('antd').FormItemProps} props.item
+ */
+export const FormCheckbox = ({ children, label, name, rules, item, ...rest }) => (
+    <FormItem label={label} name={name} rules={rules} {...item}>
+        <Checkbox {...rest}>
+            {children}
+        </Checkbox>
     </FormItem>
 )
 

@@ -225,19 +225,19 @@ function OrderDetail() {
               <Row justify='center' align='middle'>
                 <img src={reactionIcons[order.options.reactionType]} style={{ maxWidth: '2rem', margin: '0 -1rem' }} />
                 <span style={{ margin: '0 1.5rem' }}>
-                  {order.executed.reactions}/{order.options.reactions}
+                  {order.executed.reactions}{order.variant !== 5 && '/' + order.options.reactions}
                 </span>
               </Row>
             </Item>
             <Item label='Comentarios'>
               <Row justify='center' align='middle'>
-                {order.executed.comments.length}/{order.options.comments.length}
+                {order.executed.comments.length}{order.variant !== 5 && '/' + order.options.comments.length}
               </Row>
             </Item>
             {order.network.name === 'facebook' &&
               <Item label='Compartidos'>
                 <Row justify='center' align='middle'>
-                  {order.executed.shares}/{order.options.shares}
+                  {order.executed.shares}{order.variant !== 5 && '/' + order.options.shares}
                 </Row>
               </Item>
             }
