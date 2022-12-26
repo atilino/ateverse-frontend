@@ -118,6 +118,7 @@ function FollowForm({
                                 shape='round'
                                 type="primary"
                                 htmlType="submit"
+                                disabled={profilesCount === 0}
                                 danger={order.options.direct || false}
                             >
                                 {order.options.direct ? 'Finalizar' : 'Iniciar'}
