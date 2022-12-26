@@ -4,9 +4,8 @@ import { notification, RadioGroup } from '../../components/primitives';
 import { useField, useNetwork, useOrder, useProfiles } from '../../hooks'
 import { useForm } from '../../components/Form';
 import { JoinGroupsForm, InteractionForm, PublicationForm, ShareGroupsForm, ReportsForm, AvailableMessage, FollowForm, DirectForm } from './components';
-import { constants } from 'utilities/index';
+import { constants, polling } from '../../utilities';
 import OrderFactory from './application'
-import { Badge } from 'antd';
 
 function NewOrder() {
     const defaults = {
@@ -28,14 +27,20 @@ function NewOrder() {
     const { networks } = useNetwork()
     const [form] = useForm()
 
+    const directPolling = polling(5, getDirectOrder)
+
     const networkRadio = useField({ defaultValue: defaults.network })
     const variantRadio = useField({ defaultValue: defaults.variant })
 
-    useEffect(() => {
-        if (order.options.direct) {
-            variantRadio.onChange('direct')
-        }
-    }, [order])
+    useEffect(async () => {
+        await getDirectOrder()
+            .then(directOrder => {
+                if(directOrder[0]._id){
+                    directPolling.start()
+                    variantRadio.onChange('direct')
+                }
+            })
+    }, [])
 
     const onFinishForm = (values) => {
         const variantId = constants.ORDER_VARIANTS[networkRadio.value].find(v => v.name === variantRadio.value).id
@@ -47,8 +52,11 @@ function NewOrder() {
         }
         createOrder(new OrderFactory().createNetworkOrder(networkRadio.value, createdOrder))
             .then(() => {
+                if (variantRadio.value === 'direct') {
+                    directPolling.start()
+                    return
+                }
                 notification.success('Orden creada con exito')
-                if (variantRadio.value === 'direct') return
                 resetLocalOrder()
                 form.resetFields()
             })
@@ -170,12 +178,13 @@ function NewOrder() {
                     onStart={onFinishForm}
                     onDirect={(values) => {
                         patchDirectOrder(order._id, values)
-                            .then(() => notification.success('Enviado'))
+                            .then(() => {notification.success('Enviado')})
                             .catch(error => notification.createError(error.body))
                     }}
                     onComplete={() => {
                         completeOrder(order._id)
-                            .then(() => { 
+                            .then(() => {
+                                directPolling.stop()
                                 notification.success('Orden finalizada con exito')
                                 form.resetFields()
                             })

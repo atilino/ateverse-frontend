@@ -37,7 +37,7 @@ function FollowForm({
         loadLastComments()
     }, [order])
 
-    function onLoadComments () {
+    function onLoadComments() {
         return setComments(order.options.comments)
     }
 
@@ -57,7 +57,7 @@ function FollowForm({
             >
                 <Button style={{ background: 'none', border: 'none', width: '100%' }} onClick={onLoadComments}>Ver más</Button>
             </div>
-        ) : comments.length && comments.length === order.options.comments.length ?
+        ) : comments.length && order.options.comments.length > 5 ?
             <div
                 style={{
                     textAlign: 'center',
@@ -114,7 +114,14 @@ function FollowForm({
                 >
                     <Row justify='center'>
                         <Col span={2}>
-                            <FormButton shape='round' type="primary" htmlType="submit" id='start-stop' danger={order.options.direct || false}>{order.options.direct ? 'Finalizar' : 'Iniciar'}</FormButton>
+                            <FormButton
+                                shape='round'
+                                type="primary"
+                                htmlType="submit"
+                                danger={order.options.direct || false}
+                            >
+                                {order.options.direct ? 'Finalizar' : 'Iniciar'}
+                            </FormButton>
                         </Col>
                         <Col span={14}>
                             <FormInput
@@ -158,7 +165,14 @@ function FollowForm({
                         </Row>
                         <Row style={{ margin: '15px' }} justify='center'>
                             <FormItem {...itemProps} name="reactionType">
-                                <ReactionsInput network={network} size='small' name='reactionType' />
+                                <ReactionsInput
+                                    network={network}
+                                    size='small'
+                                    name='reactionType'
+                                    onSelectedClick={(value) => {
+                                        directForm.setFields([{ name: 'reactionType', value: null}])
+                                    }}
+                                />
                             </FormItem>
                         </Row>
                         <Row justify='center' align='middle'>

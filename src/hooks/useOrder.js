@@ -103,6 +103,7 @@ const useOrder = (service, config) => {
 			.getOrders({ direct: true })
 			.then(response => {
 				resultHandler(response, ([result]) => setOrder({ ...order, ...result }))
+				return response.data
 			})
 	}
 
