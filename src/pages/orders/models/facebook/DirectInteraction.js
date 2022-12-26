@@ -36,7 +36,7 @@ class Interaction extends Order {
       shares: 0
     }
     /** @type {DirectInteractionOptions} */
-    this.options = { ...options, direct: true}
+    this.options = options
   }
 
   validate() {

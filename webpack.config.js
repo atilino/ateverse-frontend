@@ -37,8 +37,9 @@ module.exports = () => {
             static: './public',
             historyApiFallback: true,
             open: true,
-            hot: true,
             compress: true,
+            hot: false,
+            liveReload: true,
             port: 4000,
         },
         plugins: [

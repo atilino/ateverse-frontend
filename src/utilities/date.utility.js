@@ -87,6 +87,16 @@ const isToday = (date) => {
   return d.getDate() === today.getDate()
 }
 
+/**
+ * @param {( number | Date | string)} date
+ * @return {boolean}
+ */
+ const isYesterday = (date) => {
+  const d = new Date(date)
+  const today = new Date()
+  return d.getDate() === today.getDate() -1
+}
+
 const formatDDMMYYYYHHMM = (date) => {
   return `${formatDDMMYYYY(date)} ${formatHHMM(date)} `
 }
@@ -105,4 +115,5 @@ export default {
   formatDDMMYYYYHHMM,
   isTomorrow,
   isToday,
+  isYesterday
 }
