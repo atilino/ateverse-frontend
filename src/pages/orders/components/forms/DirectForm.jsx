@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FormButton, FormInput, Button, FormCheckbox, ShareIcon, useForm, FormItem } from '../../../../components';
 import FormTemplate from '../FormTemplate';
 import { useProfiles } from '../../../../hooks';
-import { Col, Form, List, Row } from 'antd';
+import { Col, Form, List, Row, Tooltip } from 'antd';
 import ReactionsInput from '../inputs/ReactionsInput'
 
 function FollowForm({
@@ -37,12 +37,14 @@ function FollowForm({
         loadLastComments()
     }, [order])
 
-    function onLoadComments() {
-        return setComments(order.options.comments)
+    function loadAllComments() {
+        return setComments([...order.options.comments].reverse())
     }
 
     function loadLastComments() {
-        return setComments(order.options.comments.slice(order.options.comments.length - 5, order.options.comments.length))
+        const initialIndex = order.options.comments.length <= 5 ? 0 : order.options.comments.length - 5
+        const lastComments = order.options.comments.slice(initialIndex, order.options.comments.length)
+        return setComments(lastComments.reverse())
     }
 
     const loadMore =
@@ -55,7 +57,7 @@ function FollowForm({
                     lineHeight: '32px',
                 }}
             >
-                <Button style={{ background: 'none', border: 'none', width: '100%' }} onClick={onLoadComments}>Ver más</Button>
+                <Button style={{ background: 'none', border: 'none', width: '100%' }} onClick={loadAllComments}>Ver más</Button>
             </div>
         ) : comments.length && order.options.comments.length > 5 ?
             <div
@@ -90,7 +92,8 @@ function FollowForm({
                         }
                         return onComplete()
                     }
-                    if (!values.comment && !values.share && !values.reactionType) {
+
+                    if (!values.comment && !values.share && values.reactionType === null) {
                         return onError('Orden vacía', 'Se debe enviar al menos una interacción')
                     }
                     onDirect({
@@ -153,34 +156,43 @@ function FollowForm({
                         noSubmit={true}
                         priority={true}
                     >
-                        <Row justify='center' span={14}>
-                            <Col span={16}>
-                                <List
-                                    loadMore={loadMore}
-                                    style={{ backgroundColor: '#ffff' }}
-                                    size="small"
-                                    dataSource={comments}
-                                    renderItem={(item) => <List.Item>{item}</List.Item>}
-                                />
-                            </Col>
-                        </Row>
                         <Row style={{ margin: '15px' }} justify='center'>
                             <FormItem {...itemProps} name="reactionType">
                                 <ReactionsInput
+                                    type='button'
                                     network={network}
                                     size='small'
                                     name='reactionType'
-                                    onSelectedClick={(value) => {
-                                        directForm.setFields([{ name: 'reactionType', value: null}])
+                                    onReactionClick={(value) => {
+                                        directForm.setFields([{ name: 'reactionType', value: Number(value) }])
+                                        directForm.submit()
                                     }}
                                 />
                             </FormItem>
                         </Row>
-                        <Row justify='center' align='middle'>
+                        <Row justify='center'>
                             <Col span={1}>
-                                <FormCheckbox item={{ ...itemProps, valuePropName: 'checked' }} name='share'>
-                                    <ShareIcon style={{ fontSize: '1.3rem' }} />
-                                </FormCheckbox>
+                                <FormItem {...itemProps} name="share">
+                                    <Tooltip title="Compartir">
+                                        <Button
+                                            shape="circle"
+                                            icon={
+                                                <ShareIcon
+                                                    style={{
+                                                        fontSize: '1.2rem',
+                                                        cursor: 'pointer',
+                                                        color: '#1990FF'
+                                                    }}
+
+                                                />
+                                            }
+                                            onClick={() => {
+                                                directForm.setFields([{ name: 'share', value: true }])
+                                                directForm.submit()
+                                            }}
+                                        />
+                                    </Tooltip>
+                                </FormItem>
                             </Col>
                             <Col span={13}>
                                 <FormInput
@@ -194,6 +206,17 @@ function FollowForm({
                                 <FormButton htmlType="submit" id='sent' size='middle' item={itemProps}>
                                     Enviar
                                 </FormButton>
+                            </Col>
+                        </Row>
+                        <Row justify='center' span={14}>
+                            <Col span={16}>
+                                <List
+                                    loadMore={loadMore}
+                                    style={{ backgroundColor: '#ffff' }}
+                                    size="small"
+                                    dataSource={comments}
+                                    renderItem={(item) => <List.Item>{item}</List.Item>}
+                                />
                             </Col>
                         </Row>
                     </FormTemplate>
