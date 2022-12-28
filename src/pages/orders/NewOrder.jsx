@@ -35,7 +35,7 @@ function NewOrder() {
     useEffect(async () => {
         await getDirectOrder()
             .then(directOrder => {
-                if(directOrder[0]._id){
+                if(directOrder[0]?._id){
                     directPolling.start()
                     variantRadio.onChange('direct')
                 }

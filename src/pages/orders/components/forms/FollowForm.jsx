@@ -2,9 +2,10 @@ import React from 'react';
 import { FormInput, FormInputNumber, FormSelect } from '../../../../components/Form';
 import FormTemplate from '../FormTemplate';
 import useProfiles from '../../../../hooks/useProfiles';
+import { constants } from '../../../../utilities';
 
 function FollowForm({ network, initialValues, onValuesChange, form, onFinish, onError }) {
-    const { profilesCount } = useProfiles({ type: 'available', network: 'facebook' })
+    const { profilesCount } = useProfiles({ type: 'available', network: network })
 
     const placeholders = {
         facebook: 'https://www.facebook.com/',
@@ -34,7 +35,7 @@ function FollowForm({ network, initialValues, onValuesChange, form, onFinish, on
                 placeholder={placeholders[network]}
                 rules={[
                     {
-                        pattern: new RegExp(placeholders[network]),
+                        pattern: constants.PATTERNS[network.toUpperCase()].MAIN,
                         required: true,
                         message: `El link debe ser de ${network}.`
                     }
