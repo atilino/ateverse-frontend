@@ -8,9 +8,10 @@ import {
 } from 'react-router-dom'
 
 import { Login } from './pages/auth'
-import { MyOrders, NewOrder, OrderDetail, Orders, OrdersLayout } from './pages/orders'
+import { NewOrder, OrderDetail, Orders, OrdersLayout } from './pages/orders'
 import { Accounts, AccountsLayout, AccountsSummary, BlockedProfiles, MyAccounts, Profiles, Templates } from './pages/accounts'
 import { Users } from './pages/users'
+import { Customers } from './pages/customers'
 import { DeviceDetail, Devices, DevicesLayout, Processes } from './pages/devices'
 import useAuth from 'hooks/useAuth'
 
@@ -19,12 +20,13 @@ function Router() {
         <Routes>
             <Route path='/login' element={<Login />} />
             <Route path='/' element={<ProtectedLayout />}>
-                <Route index element={<Navigate to='orders/new'/>}/>
+                <Route index element={<Navigate to='orders/new' />} />
                 <Route path='orders/*' element={<OrdersLayout />}>
                     <Route index path='new' element={<NewOrder />} />
                     <Route path='my-orders' element={<Orders />} />
                     <Route path=':orderId' element={<OrderDetail />} />
                 </Route>
+                <Route path='customers/*' element={<Customers />} />
                 <Route path='accounts/*' element={<AccountsLayout />}>
                     <Route index path='my-accounts' element={<Accounts />} />
                     <Route path='summary' element={<AccountsSummary />} />

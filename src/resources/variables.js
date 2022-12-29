@@ -17,6 +17,7 @@ export const spanishLabels = {
     accounts: 'cuenta',
     devices: 'dispositivo',
     users: 'usuario',
-    profiles: 'perfil'
+    profiles: 'perfil',
+    customer: 'cliente'
 }
 
