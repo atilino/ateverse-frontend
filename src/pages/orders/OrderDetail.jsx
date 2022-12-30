@@ -204,6 +204,9 @@ function OrderDetail() {
         <Item label='Estado'>
           <StatusIndicator status={order.status} />
         </Item>
+        <Item label='Cliente'>
+          {order?.customer?.name || 'Sin cliente'}
+        </Item>
       </Descriptions>
 
       <Title level={4}>Resumen de interacción</Title>

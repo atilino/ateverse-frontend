@@ -9,7 +9,7 @@ import {
 import { Selector } from './primitives';
 import './Form.css'
 
-export const FormLayout = ({ children, disabled = false, noSubmit = false, ...rest  }) => {
+export const FormLayout = ({ children, disabled = false, noSubmit = false, ...rest }) => {
     return (
         <Form
             labelCol={{
@@ -76,8 +76,8 @@ export const FormInputNumber = ({ label, name, rules, ...rest }) => (
  * @param {array} data Data of select options
  * @param {object} config Provide the select options configuration: { label = name of label property on data array, value = name of value property on data array}
  */
-export const FormSelect = ({ label, name, rules, children, ...rest }) => (
-    <FormItem label={label} name={name} rules={rules}>
+export const FormSelect = ({ label, name, rules, children, item, ...rest }) => (
+    <FormItem label={label} name={name} rules={rules} {...item}>
         <Selector {...rest} />
     </FormItem>
 )

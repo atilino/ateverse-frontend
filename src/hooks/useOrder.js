@@ -18,7 +18,7 @@ const useOrder = (service='orders', config) => {
 		network: 'facebook',
 		link: '',
 		reactions: 0,
-		type: 0,
+		reactionType: 0,
 		comments: 0,
 		commentsText: '',
 		shares: 0,
@@ -47,6 +47,7 @@ const useOrder = (service='orders', config) => {
 			groups: [],
 			reports: 0
 		},
+		customer: null,
 		deliveryAt: new Date(),
 		createdAt: new Date(),
 		updatedAt: new Date()

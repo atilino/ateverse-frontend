@@ -17,7 +17,7 @@ function PublicationForm({ maxPublications, initialValues, onValuesChange, form,
                 if (options.publications.length > maxPublications) {
                     return onError('Limite de publicaciones', 'Se excedio el limite de publicaciones permitidas')
                 }
-                onFinish({ options })
+                onFinish({ options, customer: values.customer })
             }}
         >
             <FormItem label="Publicaciones" name="publications">

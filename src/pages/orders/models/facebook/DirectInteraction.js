@@ -25,11 +25,12 @@ class Interaction extends Order {
    * @param {string} orderData.network
    * @param {number} orderData.variant
    * @param {DirectInteractionOptions} orderData.options
+   * @param {string} orderData.customer
    * @param {boolean} orderData.priority
    */
 
-  constructor({ network, variant, options, priority }) {
-    super({ network, variant, priority })
+  constructor({ network, variant, options, priority, customer }) {
+    super({ network, variant, priority, customer })
     this.executed = {
       reactions: 0,
       comments: [],

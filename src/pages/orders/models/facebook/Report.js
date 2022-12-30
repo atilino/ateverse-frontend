@@ -22,12 +22,13 @@ class Report extends Order {
    * @param {string} orderData.network
    * @param {number} orderData.variant
    * @param {ReportOptions} orderData.options
+   * @param {string} orderData.customer
    * @param {boolean} orderData.priority
    */
 
 
-  constructor({ userId, network, variant, options, priority }) {
-    super({ userId, network, variant, priority })
+  constructor({ network, variant, options, priority, customer }) {
+    super({ network, variant, priority, customer })
     /** @type {ReportOptions} */
     this.options = options
   }

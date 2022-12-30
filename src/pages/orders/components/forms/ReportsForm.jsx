@@ -39,7 +39,8 @@ function ReportsForm({ initialValues, onValuesChange, form, onFinish, onError })
                         reason: 'social',
                         reports: values['options.reports'],
                     },
-                    priority: values.priority
+                    priority: values.priority,
+                    customer: values.customer
                 })
             }}
         >
