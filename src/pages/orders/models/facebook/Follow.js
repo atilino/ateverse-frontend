@@ -18,12 +18,13 @@ class Follow extends Order {
    * @param {string} orderData.network
    * @param {number} orderData.variant
    * @param {FollowOptions} orderData.options
+   * @param {string} orderData.customer
    * @param {boolean} orderData.priority
    */
 
 
-  constructor({ network, variant, options, priority }) {
-    super({ network, variant, priority })
+  constructor({ network, variant, options, priority, customer }) {
+    super({ network, variant, priority, customer })
     this.executed = {
       followers: 0
     }

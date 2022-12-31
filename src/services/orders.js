@@ -7,7 +7,7 @@ const headerConfig = {
     headers: {}
 }
 
-const getOrders = async (query) =>{
+const listOrders = async (query) =>{
     const { token } = currentUser()
     headerConfig.headers['x-access-token'] = token
 
@@ -17,6 +17,9 @@ const getOrders = async (query) =>{
     }
     if(query?.direct === true) {
         queryString += 'direct=true'
+    }
+    if(typeof query?.link === 'string') {
+        queryString += `link=${query.link}`
     }
     return await resolver(axios.get(config.BACKEND_URL + '/orders' + queryString, headerConfig))
 }
@@ -46,7 +49,7 @@ const createOrder= async (data) =>{
 }
 
 export default {
-    getOrders,
+    listOrders,
     getOrderById,
     createOrder,
     patchDirectOrder,

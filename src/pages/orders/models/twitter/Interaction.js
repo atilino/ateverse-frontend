@@ -26,10 +26,11 @@ import { constants }  from '../../../../utilities'
    * @param {number} orderData.variant
    * @param {InteractionOptions} orderData.options
    * @param {boolean} orderData.priority
+   * @param {string} orderData.customer
    */
 
-  constructor({ network, variant, options, priority }) {
-    super({ network, variant, priority })
+  constructor({ network, variant, options, priority, customer }) {
+    super({ network, variant, priority, customer })
     /** @type {InteractionOptions} */
     this.options = options
   }

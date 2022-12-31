@@ -62,7 +62,7 @@ function InteractionForm({
                 if (!options.comments.length && !options.reactions && !options.shares && options.watchTime === 0) {
                     return onError('Orden vacía', 'Se debe enviar al menos una interacción')
                 }
-                onFinish({ options, priority: values.priority  })
+                onFinish({ options, priority: values.priority, customer: values.customer })
             }}
         >
             <FormItem label="Link" name="link" >

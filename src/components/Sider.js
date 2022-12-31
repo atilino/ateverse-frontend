@@ -5,6 +5,7 @@ import {
     TeamOutlined,
     ClusterOutlined,
     LogoutOutlined,
+    ContactsOutlined,
 } from '@ant-design/icons';
 import { CompanyName } from '../components/primitives'
 import { Layout, Menu } from 'antd'
@@ -65,6 +66,12 @@ function Sider(props) {
                 ]
             },
             {
+                title: 'Clientes',
+                key: 'customers',
+                icon: <ContactsOutlined />,
+                path: '/customers'
+            },
+            {
                 title: 'Dispositivos',
                 key: 'devices',
                 icon: <ClusterOutlined />,
@@ -74,12 +81,6 @@ function Sider(props) {
     }
     if (isAdmin) {
         menu.push(
-            // {
-            //     title: 'Redes sociales',
-            //     key: 'networks',
-            //     icon: <FacebookFilled />,
-            //     path: '/networks'
-            // },
             {
                 title: 'Usuarios',
                 key: 'users',

@@ -21,10 +21,11 @@ import Order from '../order.value'
    * @param {number} orderData.variant
    * @param {PublicationOptions} orderData.options
    * @param {boolean} orderData.priority
+   * @param {string} orderData.customer
    */
 
-  constructor({ network, variant, options, priority }) {
-    super({ network, variant, priority })
+  constructor({ network, variant, options, priority, customer }) {
+    super({ network, variant, priority, customer })
     /** @type {PublicationOptions} */
     this.options = options
   }

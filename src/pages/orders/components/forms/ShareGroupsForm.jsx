@@ -35,7 +35,7 @@ function ShareGroupsForm({ form, initialValues, onValuesChange, onFinish, onErro
                         }
                     })
                 }
-                onFinish({ options: values, priority: true })
+                onFinish({ options: values, priority: true, customer: values.customer })
             }}
         >
             <FormInput label="Link" name="link" />

@@ -14,7 +14,7 @@ import personalityService from '../../services/personalities';
 import PersonalityTemplateSelector from '../primitives/PersonalityTemplateSelector';
 import useAccount from '../../hooks/useAccount';
 
-function ManageHeader({ title, model, reload }) {
+function ManageHeader({ title, model, label, reload, onCreateSubmit, formFields }) {
     const [createModal, setCreateModal] = useState(false)
     const [requiredFields, setRequiredFields] = useState(true)
     const { createAccount } = useAccount()
@@ -45,6 +45,10 @@ function ManageHeader({ title, model, reload }) {
     }
 
     const onFinish = async (values) => {
+        if (model === undefined) {
+            onCreateSubmit(values)
+            return setCreateModal(false)
+        }
         if (model === 'profiles') {
             values.accountId = accountId
         }
@@ -100,16 +104,16 @@ function ManageHeader({ title, model, reload }) {
                     <PageTitle>{title}</PageTitle>
                 </Col>
                 <Col xl={{ span: 2, offset: 9 }}>
-                    {model !== 'orders' && <Button style={{ margin: "10px 0px" }} onClick={() => setCreateModal(true)} >Crear {spanishLabels[model]} </Button>}
+                    {model !== 'orders' && <Button style={{ margin: "10px 0px" }} onClick={() => setCreateModal(true)} >Crear {spanishLabels[model] || label} </Button>}
                 </Col>
             </Row>
             {createModal &&
                 <FormModal
                     visible={createModal}
-                    fields={forms[model]}
+                    fields={forms[model] || formFields}
                     onCancel={() => setCreateModal(false)}
-                    onFinish={(values) => onFinish(values)}
-                    title={`Crear ${spanishLabels[model]}`}
+                    onFinish={onFinish}
+                    title={`Crear ${spanishLabels[model] || label}`}
                     align="center"
                 >
                     {customForm[model]}

@@ -10,7 +10,7 @@ import useUser from './useUser';
  * @param {( 'orders' | 'order' | 'direct' )} [service]
  * @param {object} [config]
  */
-const useOrder = (service, config) => {
+const useOrder = (service='orders', config) => {
 	const { currentUser } = useUser()
 	const { username } = currentUser()
 	const init = {
@@ -18,7 +18,7 @@ const useOrder = (service, config) => {
 		network: 'facebook',
 		link: '',
 		reactions: 0,
-		type: 0,
+		reactionType: 0,
 		comments: 0,
 		commentsText: '',
 		shares: 0,
@@ -47,6 +47,7 @@ const useOrder = (service, config) => {
 			groups: [],
 			reports: 0
 		},
+		customer: null,
 		deliveryAt: new Date(),
 		createdAt: new Date(),
 		updatedAt: new Date()
@@ -66,9 +67,15 @@ const useOrder = (service, config) => {
 		}
 	}, [])
 
-	const listOrders = () => {
+	/**
+	 * 
+	 * @param {object} [query]
+	 * @param {string} query.link
+	 * @returns {Promise<Array>}
+	 */
+	const listOrders = (query) => {
 		return orderService
-			.getOrders()
+			.listOrders(query)
 			.then(response => {
 				resultHandler(response, result => setOrders(result))
 			})
@@ -100,7 +107,7 @@ const useOrder = (service, config) => {
 
 	const getDirectOrder = () => {
 		return orderService
-			.getOrders({ direct: true })
+			.listOrders({ direct: true })
 			.then(response => {
 				resultHandler(response, ([result]) => setOrder({ ...order, ...result }))
 				return response.data
@@ -111,7 +118,7 @@ const useOrder = (service, config) => {
 		return orderService
 			.patchDirectOrder(id, orderObject)
 			.then(response => {
-				resultHandler(response, result => setOrder({ ...order, ...result}))
+				resultHandler(response, result => setOrder({ ...order, ...result }))
 			})
 	}
 

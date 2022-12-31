@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { FormButton, FormInput, Button, FormCheckbox, ShareIcon, useForm, FormItem } from '../../../../components';
-import FormTemplate from '../FormTemplate';
-import { useProfiles } from '../../../../hooks';
+import { FormButton, FormInput, Button, FormCheckbox, ShareIcon, useForm, FormItem, FormLayout, FormSelect } from '../../../../components';
+import { useCustomer, useProfiles } from '../../../../hooks';
 import { Col, Form, List, Row, Tooltip } from 'antd';
 import ReactionsInput from '../inputs/ReactionsInput'
 
@@ -17,6 +16,8 @@ function FollowForm({
     onComplete
 }) {
     const { profilesCount } = useProfiles({ type: 'available', network: 'facebook' })
+    const { customers } = useCustomer()
+
     const [directForm] = useForm()
 
     const [comments, setComments] = useState([])
@@ -78,6 +79,7 @@ function FollowForm({
                 onFormFinish={(name, { values }) => {
                     if (name == 'start-stop') {
                         const orderValues = {
+                            customer: values.customer,
                             options: {
                                 link: values['options.link'],
                                 comments: [],
@@ -106,22 +108,32 @@ function FollowForm({
                 }}
             >
 
-                <FormTemplate
+                <FormLayout
                     name='start-stop'
                     disabled={profilesCount === 0}
                     form={form}
-                    initialValues={{ 'options.link': initialValues.options.link }}
+                    initialValues={{ 'options.link': initialValues.options.link, customer: initialValues.customer?.id || null }}
                     onValuesChange={onValuesChange}
-                    noSubmit={true}
-                    priority={true}
                 >
+                    <Row justify='center'>
+                        <Col offset={2} span={14}>
+                            <FormSelect
+                                item={itemProps}
+                                disabled={order.options.direct || false}
+                                label='Cliente'
+                                name='customer'
+                                data={[{ name: 'Sin cliente', _id: null }, ...customers]}
+                                config={{ label: 'name', value: '_id' }}
+                            />
+                        </Col>
+                    </Row>
                     <Row justify='center'>
                         <Col span={2}>
                             <FormButton
                                 shape='round'
                                 type="primary"
                                 htmlType="submit"
-                                disabled={profilesCount === 0}
+                                disabled={order.options.direct ? false : profilesCount === 0}
                                 danger={order.options.direct || false}
                             >
                                 {order.options.direct ? 'Finalizar' : 'Iniciar'}
@@ -145,29 +157,29 @@ function FollowForm({
                         </Col>
 
                     </Row>
-                </FormTemplate>
+                </FormLayout>
                 {order.options.direct &&
-                    <FormTemplate
+                    <FormLayout
                         name='direct'
                         disabled={profilesCount === 0}
                         form={directForm}
                         onValuesChange={onValuesChange}
                         initialValues={{ comment: null, reactionType: null, share: false }}
-                        noSubmit={true}
-                        priority={true}
                     >
                         <Row style={{ margin: '15px' }} justify='center'>
                             <FormItem {...itemProps} name="reactionType">
-                                <ReactionsInput
-                                    type='button'
-                                    network={network}
-                                    size='small'
-                                    name='reactionType'
-                                    onReactionClick={(value) => {
-                                        directForm.setFields([{ name: 'reactionType', value: Number(value) }])
-                                        directForm.submit()
-                                    }}
-                                />
+                                {profilesCount !== 0 &&
+                                    <ReactionsInput
+                                        type='button'
+                                        network={network}
+                                        size='small'
+                                        name='reactionType'
+                                        onReactionClick={(value) => {
+                                            directForm.setFields([{ name: 'reactionType', value: Number(value) }])
+                                            directForm.submit()
+                                        }}
+                                    />
+                                }
                             </FormItem>
                         </Row>
                         <Row justify='center'>
@@ -175,6 +187,7 @@ function FollowForm({
                                 <FormItem {...itemProps} name="share">
                                     <Tooltip title="Compartir">
                                         <Button
+                                            disabled={profilesCount === 0}
                                             shape="circle"
                                             icon={
                                                 <ShareIcon
@@ -203,7 +216,13 @@ function FollowForm({
                                 />
                             </Col>
                             <Col span={2}>
-                                <FormButton htmlType="submit" id='sent' size='middle' item={itemProps}>
+                                <FormButton
+                                    htmlType="submit"
+                                    id='sent'
+                                    size='middle'
+                                    item={itemProps}
+                                    disabled={profilesCount === 0}
+                                >
                                     Enviar
                                 </FormButton>
                             </Col>
@@ -219,7 +238,7 @@ function FollowForm({
                                 />
                             </Col>
                         </Row>
-                    </FormTemplate>
+                    </FormLayout>
                 }
             </Form.Provider>
         </>
