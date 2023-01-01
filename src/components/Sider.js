@@ -6,6 +6,7 @@ import {
     ClusterOutlined,
     LogoutOutlined,
     ContactsOutlined,
+    LineChartOutlined,
 } from '@ant-design/icons';
 import { CompanyName } from '../components/primitives'
 import { Layout, Menu } from 'antd'
@@ -18,6 +19,12 @@ function Sider(props) {
     const location = useLocation()
 
     const menu = [
+        {
+            title: 'Dashboard',
+            key: 'dashboard',
+            icon: <LineChartOutlined/>,
+            path: '/'
+        },
         {
             title: 'Ordenes',
             key: 'orders',
