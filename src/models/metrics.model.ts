@@ -1,6 +1,7 @@
 export interface VariantMetric {
   name: string,
-  qty: number
+  qty: number,
+  label: string
 }
 
 export interface NetworkMetric {

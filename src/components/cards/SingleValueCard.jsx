@@ -8,7 +8,7 @@ function SingleValueCard({ title, value, children }) {
       style={{ textAlign: 'center' }}
     >
         <Typography.Title level={1}>
-          {value || children}
+          {value === undefined ? children : value}
         </Typography.Title >
     </Card>
   );

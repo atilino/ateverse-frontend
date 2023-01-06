@@ -15,8 +15,12 @@ const getMetrics = async (query) => {
 
 const downloadMetrics = async (query) => {
   const { token } = currentUser()
-  headerConfig.headers['x-access-token'] = token
-  return await resolver(axios.get(config.BACKEND_URL + '/metrics/download' + queryBuilder(query), headerConfig))
+  return await axios.get(config.BACKEND_URL + '/metrics/download' + queryBuilder(query), {
+    headers: {
+      'x-access-token': token
+    },
+    responseType: 'blob'
+  })
 }
 
 const queryBuilder = ({ from, to, network, customer, type }) => {
