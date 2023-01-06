@@ -15,7 +15,7 @@ const Login = () => {
     }
 
     if(user) {
-        return <Navigate to='/orders/new'/>
+        return <Navigate to='/'/>
     }
 
     return (

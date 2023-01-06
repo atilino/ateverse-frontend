@@ -9,9 +9,8 @@ const offset = (date, offset) => {
   return new Date(d.setMilliseconds(d.getMilliseconds() + offset))
 }
 
-const YESTERDAY = 24
 const yesterday = () => {
-  return new Date(offset(Date.now(), -hoursToMillis(YESTERDAY)))
+  return new Date(offset(today, -hoursToMillis(24)))
 }
 
 const secondsToMillis = (seconds) => seconds * 1000
@@ -101,11 +100,15 @@ const formatDDMMYYYYHHMM = (date) => {
   return `${formatDDMMYYYY(date)} ${formatHHMM(date)} `
 }
 
-
+const today = () => {
+  const date = new Date()
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate())
+}
 
 export default {
   offset,
   yesterday,
+  today,
   secondsToMillis,
   minutesToMillis,
   hoursToMillis,
@@ -115,5 +118,9 @@ export default {
   formatDDMMYYYYHHMM,
   isTomorrow,
   isToday,
-  isYesterday
+  isYesterday,
+  WEEK: 7 * 24 * 60 * 60 * 1000,
+  DAY: 24 * 60 * 60 * 1000,
+  HOUR: 60 * 60 * 1000,
+  MINUTE: 60 * 1000,
 }

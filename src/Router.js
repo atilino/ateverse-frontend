@@ -12,6 +12,7 @@ import { NewOrder, OrderDetail, Orders, OrdersLayout } from './pages/orders'
 import { Accounts, AccountsLayout, AccountsSummary, BlockedProfiles, MyAccounts, Profiles, Templates } from './pages/accounts'
 import { Users } from './pages/users'
 import { Customers } from './pages/customers'
+import { Dashboard } from './pages/dashboard'
 import { DeviceDetail, Devices, DevicesLayout, Processes } from './pages/devices'
 import useAuth from 'hooks/useAuth'
 
@@ -20,7 +21,7 @@ function Router() {
         <Routes>
             <Route path='/login' element={<Login />} />
             <Route path='/' element={<ProtectedLayout />}>
-                <Route index element={<Navigate to='orders/new' />} />
+                <Route index element={<Dashboard/>} />
                 <Route path='orders/*' element={<OrdersLayout />}>
                     <Route index path='new' element={<NewOrder />} />
                     <Route path='my-orders' element={<Orders />} />
