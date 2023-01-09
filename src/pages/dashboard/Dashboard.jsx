@@ -167,7 +167,7 @@ function Dashboard(props) {
         }
       </Row>
       <Row style={{ marginTop: '1.5rem' }}>
-        <Typography.Title level={5}>Ordenes por variante</Typography.Title>
+        <Typography.Title level={5}>Interacciones</Typography.Title>
       </Row>
       <Row gutter={[10, 10]}>
         {

@@ -64,6 +64,7 @@ const useOrder = (service='orders', config) => {
 		}
 		else if (service === 'direct') {
 			await getDirectOrder()
+			await getCustomers()
 		}
 	}, [])
 

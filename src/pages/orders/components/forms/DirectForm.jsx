@@ -114,6 +114,7 @@ function FollowForm({
                     form={form}
                     initialValues={{ 'options.link': initialValues.options.link, customer: initialValues.customer?.id || null }}
                     onValuesChange={onValuesChange}
+                    noSubmit={true}
                 >
                     <Row justify='center'>
                         <Col offset={2} span={14}>
@@ -122,7 +123,7 @@ function FollowForm({
                                 disabled={order.options.direct || false}
                                 label='Cliente'
                                 name='customer'
-                                data={[{ name: 'Sin cliente', _id: null }, ...customers]}
+                                data={customers}
                                 config={{ label: 'name', value: '_id' }}
                             />
                         </Col>
@@ -165,6 +166,7 @@ function FollowForm({
                         form={directForm}
                         onValuesChange={onValuesChange}
                         initialValues={{ comment: null, reactionType: null, share: false }}
+                        noSubmit={true}
                     >
                         <Row style={{ margin: '15px' }} justify='center'>
                             <FormItem {...itemProps} name="reactionType">

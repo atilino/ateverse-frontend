@@ -6,13 +6,13 @@ import { useCustomer } from '../../../hooks';
 function FormTemplate({ priority, children, ...rest }) {
     const { customers } = useCustomer()
     return (
-        <FormLayout {...rest}>
+        <FormLayout {...rest} initialValues={{ ...rest.initialValues, customer: customers[0]?._id }}>
             <Row justify='center'>
                 <Col span={24}>
                     <FormSelect
                         label='Cliente'
                         name='customer'
-                        data={[{ name: 'Sin cliente', _id: null }, ...customers]}
+                        data={customers}
                         config={{ label: 'name', value: '_id' }}
                     />
                 </Col>
