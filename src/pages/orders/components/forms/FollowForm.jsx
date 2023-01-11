@@ -25,7 +25,8 @@ function FollowForm({ network, initialValues, onValuesChange, form, onFinish, on
                         link: values.link,
                         followers: values['options.followers'],
                     },
-                    priority: values.priority
+                    priority: values.priority,
+                    customer: values.customer
                 })
             }}
         >
