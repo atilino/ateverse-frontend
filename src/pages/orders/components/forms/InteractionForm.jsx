@@ -49,7 +49,7 @@ function InteractionForm({
                 const options = {
                     link: values.link,
                     reactions: values.reactions,
-                    reactionType: values.reactionType? values.reactionType : 0,
+                    reactionType: values.reactionType ? values.reactionType : 0,
                     comments: breakStringToArray(values.commentsText),
                     shares: values.shares,
                     watchTime: values.watchTime || 0
@@ -76,7 +76,7 @@ function InteractionForm({
             </FormItem>
 
             <FormItem label="Comentarios" name="commentsText">
-                <Input.TextArea />
+                <Input.TextArea showCount={network === 'twitter' ? true : false} maxLength={network === 'twitter' ? 280 : null} />
             </FormItem>
             {network !== 'instagram' &&
                 <FormItem label="Compartidos" name="shares">

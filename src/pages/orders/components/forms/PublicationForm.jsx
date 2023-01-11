@@ -21,7 +21,7 @@ function PublicationForm({ maxPublications, initialValues, onValuesChange, form,
             }}
         >
             <FormItem label="Publicaciones" name="publications">
-                <Input.TextArea />
+                <Input.TextArea showCount maxLength={280}/>
             </FormItem>
         </FormTemplate>
     );
