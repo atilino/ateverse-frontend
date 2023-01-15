@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Device from '../adapters/device.adapter'
 import deviceService from '../services/devices'
 import { resultHandler } from './helpers'
+/** @typedef {import("../models/device.model").Device} IDevice*/
 
 /**
  * @param {( 'devices' | 'logs' | 'processes' | 'device' )} [service]
@@ -9,7 +10,10 @@ import { resultHandler } from './helpers'
  */
 const useDevice = (service, config) => {
 
+    /** @type {[IDevice[], function]} */
     const [devices, setDevices] = useState([])
+
+    /** @type {[IDevice, function]} */
     const [device, setDevice] = useState(new Device())
     const [logs, setLogs] = useState({})
     const [processes, setProcesses] = useState()

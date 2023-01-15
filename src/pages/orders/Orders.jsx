@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ManageTable } from '../../components/templates'
-import { constants } from 'utilities/index';
+import { constants, date, polling } from '../../utilities';
 import { DeliveryDateIndicator, StatusIndicator, Summary } from './components/indicators';
 import NetworkLogo from './components/indicators/NetworkLogo';
 import { Badge, Col, Row, Tooltip } from 'antd';
@@ -59,6 +59,16 @@ function Orders(props) {
     },
   ]
 
+  const ordersPolling = polling(5, listOrders)
+
+  useEffect(() => {
+    const inProgressOrder = orders.find(o =>
+      (o.status === 'CREATED' || o.status === 'IN_PROGRESS') && new Date(o.createdAt) > date.offset(new Date(), -date.DAY)
+    )
+    if (inProgressOrder !== undefined) {
+      ordersPolling.start()
+    }
+  }, [orders])
   return (
     <>
       <Row justify='center'>

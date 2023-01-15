@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LoaderButton, TableColumn, DashboardHeader, CreateButton } from 'components'
 import { deleteModal, FormModal, ManageTable, TableModal } from 'components/templates'
 import { notification, SwitchButton } from 'components/primitives';
@@ -8,15 +8,24 @@ import { ConnectionIndicator } from './components';
 import useDevice from 'hooks/useDevice'
 import { useNavigate } from 'react-router-dom';
 import { ManagementMenu } from './components';
+import { polling } from '../../utilities';
 
 function Devices() {
 
     const navigate = useNavigate()
-    const { devices, device, findDevice, updateDevice, createDevice } = useDevice()
+    const { devices, device, findDevice, updateDevice, createDevice, listDevices } = useDevice()
 
     const [updateModal, setUpdateModal] = useState(false)
     const [createModal, setCreateModal] = useState(false)
     const [deviceAccountsModal, setDeviceAccountsModal] = useState(false)
+    const devicePolling = polling(5, listDevices)
+
+    useEffect(() => {
+        const inProgressTask = devices.find(d =>(d.status !== 'ON' && d.status !== 'OFF'))
+        if(inProgressTask !== undefined) {
+            devicePolling.start()
+        }
+    }, [devices])
 
     const handleDeviceAccountClick = (id) => {
         findDevice(id)

@@ -33,14 +33,11 @@ function NewOrder() {
     const variantRadio = useField({ defaultValue: defaults.variant })
 
     useEffect(async () => {
-        await getDirectOrder()
-            .then(directOrder => {
-                if(directOrder[0]?._id){
-                    directPolling.start()
-                    variantRadio.onChange('direct')
-                }
-            })
-    }, [])
+        if (order?._id) {
+            directPolling.start()
+            variantRadio.onChange('direct')
+        }
+    }, [order])
 
     const onFinishForm = (values) => {
         const variantId = constants.ORDER_VARIANTS[networkRadio.value].find(v => v.name === variantRadio.value).id
@@ -178,7 +175,7 @@ function NewOrder() {
                     onStart={onFinishForm}
                     onDirect={(values) => {
                         patchDirectOrder(order._id, values)
-                            .then(() => {notification.success('Enviado')})
+                            .then(() => { notification.success('Enviado') })
                             .catch(error => notification.createError(error.body))
                     }}
                     onComplete={() => {
