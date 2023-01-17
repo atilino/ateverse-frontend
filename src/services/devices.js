@@ -60,6 +60,43 @@ const listDeviceProcesses = async (id) => {
         }
     }))
 }
+
+const upgradeDevice = async (id) => {
+    const { token } = currentUser()
+    return await resolver(axios.post(config.BACKEND_URL + `/devices/${id}/upgrade`, {}, {
+        headers: {
+            'x-access-token': token
+        }
+    }))
+}
+
+const upgradeChromeDevice = async (id) => {
+    const { token } = currentUser()
+    return await resolver(axios.post(config.BACKEND_URL + `/devices/${id}/upgrade-chrome`, {}, {
+        headers: {
+            'x-access-token': token
+        }
+    }))
+}
+
+const rebootDevice = async (id) => {
+    const { token } = currentUser()
+    return await resolver(axios.post(config.BACKEND_URL + `/devices/${id}/reboot`, {}, {
+        headers: {
+            'x-access-token': token
+        }
+    }))
+}
+
+const executeDeviceCommand = async (id, command) => {
+    const { token } = currentUser()
+    return await resolver(axios.post(config.BACKEND_URL + `/devices/${id}/execute`, { command }, {
+        headers: {
+            'x-access-token': token
+        }
+    }))
+}
+
 export default {
     getDevices,
     getDeviceById,
@@ -68,5 +105,9 @@ export default {
     deleteDeviceById,
     getDeviceAccountsById,
     getDeviceLogs,
-    listDeviceProcesses
+    listDeviceProcesses,
+    upgradeDevice,
+    upgradeChromeDevice,
+    rebootDevice,
+    executeDeviceCommand
 }

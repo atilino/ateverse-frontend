@@ -62,6 +62,17 @@ export const FormInput = ({ label, name, rules, item, ...rest }) => (
     </FormItem>
 )
 
+/**
+ * 
+ * @param {import('antd').InputProps} props 
+ * @param {import('antd').FormItemProps} props.item
+ */
+export const FormTextArea = ({ label, name, rules, item, ...rest }) => (
+    <FormItem label={label} name={name} rules={rules} {...item}>
+        <Input.TextArea {...rest} />
+    </FormItem>
+)
+
 export const FormInputNumber = ({ label, name, rules, ...rest }) => (
     <FormItem label={label} name={name} rules={rules}>
         <InputNumber {...rest} />

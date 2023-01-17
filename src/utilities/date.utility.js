@@ -10,7 +10,7 @@ const offset = (date, offset) => {
 }
 
 const yesterday = () => {
-  return new Date(offset(today, -hoursToMillis(24)))
+  return new Date(offset(today(), -hoursToMillis(24)))
 }
 
 const secondsToMillis = (seconds) => seconds * 1000

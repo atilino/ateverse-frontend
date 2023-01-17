@@ -21,7 +21,7 @@ function Devices() {
     const devicePolling = polling(5, listDevices)
 
     useEffect(() => {
-        const inProgressTask = devices.find(d =>(d.status !== 'ON' && d.status !== 'OFF'))
+        const inProgressTask = devices?.find(d =>(d.status !== 'ON' && d.status !== 'OFF'))
         if(inProgressTask !== undefined) {
             devicePolling.start()
         }
@@ -95,7 +95,7 @@ function Devices() {
                 align="center"
             />
             <ManageTable
-                loading={devices.length ? false : true}
+                loading={devices?.length ? false : true}
                 columns={tables.COLUMNS.DASHBOARD}
                 dataSource={devices}
                 actions={tables.ACTIONS}

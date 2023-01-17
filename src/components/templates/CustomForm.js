@@ -1,16 +1,17 @@
 import React from 'react';
-import { Form, Input, Button, Modal, Select } from 'antd';
+import { Form, Input, Button, Select } from 'antd';
+import { useForm } from '../Form';
 
 const fieldTypes = {
     text: (atributes) => <Input {...atributes}/>,
     password: (atributes) => <Input.Password {...atributes}/>,
     number: (atributes) => <Input type="number" {...atributes}/>,
-    textarea: (atributes) => <Input.Textarea {...atributes}/>,
+    textarea: (atributes) => <Input.TextArea {...atributes}/>,
 }
 
-function CustomForm({ children, fields = [], selected = {}, onFinish, }) {
+function CustomForm({ children, fields = [], selected = {}, onFinish, form, defaultValue }) {
     return (
-        <Form onFinish={onFinish} initialValues={selected}>
+        <Form onFinish={onFinish} initialValues={selected} form={form} defaultValue={defaultValue}>
             {fields.length > 0 && fields.map((field = { atributes: {} }) => (
                 <Form.Item
                     label={field.label}

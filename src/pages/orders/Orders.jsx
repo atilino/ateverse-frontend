@@ -62,7 +62,7 @@ function Orders(props) {
   const ordersPolling = polling(5, listOrders)
 
   useEffect(() => {
-    const inProgressOrder = orders.find(o =>
+    const inProgressOrder = orders?.find(o =>
       (o.status === 'CREATED' || o.status === 'IN_PROGRESS') && new Date(o.createdAt) > date.offset(new Date(), -date.DAY)
     )
     if (inProgressOrder !== undefined) {

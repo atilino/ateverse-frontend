@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDevice } from 'hooks/index';
 import { useParams } from 'react-router-dom';
-import { constants, date } from 'utilities/index';
+import { constants, date } from '../../utilities/index';
 import { Row } from 'antd';
 import { ManagementHeader } from './components';
 import { LineChart } from '../../components/charts';
