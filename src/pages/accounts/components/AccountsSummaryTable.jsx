@@ -1,6 +1,6 @@
 import { Table } from 'components/Table';
 import React from 'react';
-import { constants } from 'utilities/index';
+import { PROFILE_STATUS } from '../profiles'
 
 function AccountsSummaryTable({ accounts }) {
 
@@ -57,7 +57,7 @@ function AccountsSummaryTable({ accounts }) {
     },
   ]
 
-  const statusRender = (status) => constants.ADMIN_PROFILE_STATUS.find(s => s.name === status)?.label
+  const statusRender = (status) =>  PROFILE_STATUS.find(s => s.name === status)?.label
 
   return (
     accounts.length !== 0 &&

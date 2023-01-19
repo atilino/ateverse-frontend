@@ -7,11 +7,11 @@ import { ManageHeader } from '../../../components/organisms';
 import { notification, Selector } from '../../../components/primitives';
 import { deleteModal, FormModal, ManageTable } from '../../../components/templates';
 import { forms } from '../../../resources/forms';
-import { actions, columns } from '../../../resources/tables';
+import { actions } from '../../../resources/tables';
 import { TableColumn } from 'components/Table';
-import { constants } from 'utilities/index';
 import { useProfiles } from 'hooks';
-import useAuth from 'hooks/useAuth';
+import { COLUMNS, PROFILE_STATUS } from './constants'
+import { List } from "antd"
 
 function ProfileManager(props) {
     const { accountId } = useParams()
@@ -21,8 +21,6 @@ function ProfileManager(props) {
     const [updateModal, setUpdateModal] = useState(false)
     const [selected, setSelected] = useState({})
     const { updateProfileStatus } = useProfiles()
-
-    const { isAdmin } = useAuth()
 
     useEffect(async () => {
         const result = await accountService.getProfilesByAccountId(accountId)
@@ -70,7 +68,18 @@ function ProfileManager(props) {
                 <Col span={24}>
                     <ManageTable
                         loading={data.length ? false : true}
-                        columns={columns.profiles}
+                        columns={[
+                            ...COLUMNS,
+                            {
+                                title: 'Grupos',
+                                key: 'addedGroups',
+                                dataIndex: 'addedGroups',
+                                render: groups =>
+                                    <List>
+                                        {groups?.map(({ name }) => <List.Item>{name}</List.Item>)}
+                                    </List>
+                            }
+                        ]}
                         dataSource={data}
                         actions={actions.profiles}
                         onActionClick={handleActionClick}
@@ -83,7 +92,7 @@ function ProfileManager(props) {
                             render={(value, record) => (
                                 <Selector
                                     value={value}
-                                    data={isAdmin ? constants.ADMIN_PROFILE_STATUS : constants.PROFILE_STATUS }
+                                    data={PROFILE_STATUS}
                                     style={{ width: '12rem' }}
                                     onChange={(status) => onStatusChange(record._id, status)}
                                 />

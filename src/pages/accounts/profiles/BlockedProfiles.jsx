@@ -1,56 +1,17 @@
 import React from 'react';
-import { PageTitle, Selector } from '../../../components/primitives'
-import { ManagePanel, ManageTable } from '../../../components/templates';
+import { Selector } from '../../../components/primitives'
+import { ManageTable } from '../../../components/templates';
 import useProfiles from '../../../hooks/useProfiles';
 import useNetwork from '../../../hooks/useNetwork';
 import { TableColumn } from 'components/Table';
-import { constants } from 'utilities/index';
-import useAuth from 'hooks/useAuth';
+import { COLUMNS, PROFILE_STATUS } from './constants';
 
 function BlockedProfiles() {
 
   const defaultValue = 'facebook'
   const { profiles, getBlockedProfiles, updateProfileStatus } = useProfiles({ type: 'blocked', network: defaultValue })
   const { networks } = useNetwork()
-  const { isAdmin } = useAuth()
-  const columns = [
-    {
-      title: 'Dispositivo',
-      key: 'device',
-      dataIndex: ['accountId', 'deviceId', 'imei'],
-      render: imei => imei || 'No asignado'
-    },
-    {
-      title: 'Red social',
-      dataIndex: 'network',
-      key: 'network',
-      render: network => network?.name
-    },
-    {
-      title: 'Nombre',
-      dataIndex: 'accountId',
-      key: 'accountId',
-      responsive: ['md'],
-      render: account => account?.name || 'No existe'
-    },
-    {
-      title: 'Usuario',
-      dataIndex: 'username',
-      key: 'username',
-      responsive: ['md'],
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
-    },
-    {
-      title: 'Contraseña',
-      dataIndex: 'password',
-      key: 'password',
-      responsive: ['md'],
-    }
-  ]
+
   return (
     <>
       <Selector
@@ -61,7 +22,7 @@ function BlockedProfiles() {
       />
       <ManageTable
         dataSource={profiles}
-        columns={columns}
+        columns={COLUMNS}
         loading={profiles.length ? false : true}
         pagination={{
           defaultPageSize: 10
@@ -75,7 +36,7 @@ function BlockedProfiles() {
           render={(value, record) => (
             <Selector
               value={value}
-              data={isAdmin ? constants.ADMIN_PROFILE_STATUS : constants.PROFILE_STATUS}
+              data={PROFILE_STATUS}
               style={{ width: '12rem' }}
               onChange={status => {
                 updateProfileStatus(record._id, status)
