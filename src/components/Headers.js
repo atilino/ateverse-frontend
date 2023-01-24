@@ -1,6 +1,5 @@
-import { Col, Layout, PageHeader, Row } from "antd"
-import { DashboardTitle } from "."
-import { PageTitle } from "./primitives"
+import { Col, PageHeader, Row } from "antd"
+import { DashboardTitle } from "./titles"
 
 /**
  * @param {import('antd').PageHeaderProps}

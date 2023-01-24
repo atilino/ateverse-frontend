@@ -4,15 +4,18 @@ import { constants, date, polling } from '../../utilities';
 import { DeliveryDateIndicator, StatusIndicator, Summary } from './components/indicators';
 import NetworkLogo from './components/indicators/NetworkLogo';
 import { Badge, Col, Row, Tooltip } from 'antd';
-import { CircularBorder, FilterSearchInput, TableColumn } from '../../components';
-import { Link } from 'react-router-dom';
+import { CircularBorder, FilterSearchInput, Label, Selector, TableColumn } from '../../components';
+import { Link, useSearchParams } from 'react-router-dom';
 import { ProfileOutlined } from '@ant-design/icons';
-import { useOrder } from '../../hooks';
+import { useNetwork, useOrder } from '../../hooks';
 
 function Orders(props) {
 
   const { orders, listOrders } = useOrder()
+  const { networks } = useNetwork()
+  const [search, setSearch] = useSearchParams()
 
+  search
   const columns = [
     {
       title: 'Red',
@@ -20,6 +23,11 @@ function Orders(props) {
       key: 'network',
       align: 'center',
       render: network => <NetworkLogo networkName={network.name} />
+    },
+    {
+      title: 'Cliente',
+      dataIndex: ['customer', 'name'],
+      align: 'center'
     },
     {
       title: 'Tipo de orden',
@@ -72,18 +80,83 @@ function Orders(props) {
   return (
     <>
       <Row justify='center'>
-        <FilterSearchInput
-          onSubmit={({ filter, value }) => {
-            if (value.length > 0) {
-              return listOrders({
-                [filter]: value
+        <Col span={2} style={{ padding: '.4rem' }}>
+          <Row justify='end'>
+            <Label>
+              Red:
+            </Label>
+          </Row>
+        </Col>
+        <Col span={4} >
+          <Selector
+            data={[
+              {
+                _id: 'all',
+                label: 'Todas'
+              },
+              ...networks
+            ]}
+            config={{
+              value: '_id',
+              label: 'label'
+            }}
+            defaultValue={search.get('network') || 'all'}
+            onChange={network => {
+
+              if(network !== 'all') {
+                setSearch(current => ({ ...current, network }))
+                return listOrders({
+                  link: search.get('link'),
+                  customer: search.get('customer'),
+                  network
+                })
+              }
+              listOrders({
+                link: search.get('link'),
+                customer: search.get('customer'),
               })
-            }
-            listOrders()
-          }}
-          filters={[{ label: 'Link', value: 'link' }]}
-          defaultFilter='link'
-        />
+              setSearch(current => ({ ...current }))
+            }}
+            style={{ width: '80%' }}
+          />
+        </Col>
+        <Col span={12}>
+          <FilterSearchInput
+            onSubmit={({ filter, value }) => {
+              if (value.length > 0) {
+                listOrders({
+                  link: search.get('link'),
+                  customer: search.get('customer'),
+                  network: search.get('network'),
+                  [filter]: value
+                })
+
+              return search.set(filter, value)
+              }
+              listOrders({
+                link: search.get('link'),
+                customer: search.get('customer'),
+                network: search.get('network'),
+                [filter]: undefined
+              })
+              return search.delete(filter)
+            }}
+            onFilterChange={filter => {
+              search.delete(filter)
+              return listOrders({
+                link: search.get('link'),
+                customer: search.get('customer'),
+                network: search.get('network'),
+                [filter]: undefined
+              })
+            }}
+            filters={[
+              { label: 'Link', value: 'link' },
+              { label: 'Cliente', value: 'customer' }
+            ]}
+            defaultFilter='link'
+          />
+        </Col>
       </Row>
       <Row>
         <Col span={24}>

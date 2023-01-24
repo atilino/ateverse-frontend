@@ -71,6 +71,9 @@ const useOrder = (service='orders', config) => {
 	 * 
 	 * @param {object} [query]
 	 * @param {string} query.link
+	 * @param {string} query.network
+	 * @param {string} query.customer
+	 * @param {number} query.variant
 	 * @returns {Promise<Array>}
 	 */
 	const listOrders = (query) => {

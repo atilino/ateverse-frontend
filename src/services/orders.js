@@ -19,7 +19,20 @@ const listOrders = async (query) =>{
         queryString += 'direct=true'
     }
     if(typeof query?.link === 'string') {
+        if(queryString !== '?') queryString += '&'
         queryString += `link=${query.link}`
+    }
+    if(typeof query?.customer === 'string') {
+        if(queryString !== '?') queryString += '&'
+        queryString += `customer=${query.customer}`
+    }
+    if(typeof query?.network === 'string') {
+        if(queryString !== '?') queryString += '&'
+        queryString += `network=${query.network}`
+    }
+    if(typeof query?.variant === 'number') {
+        if(queryString !== '?') queryString += '&'
+        queryString += `variant=${query.variant}`
     }
     return await resolver(axios.get(config.BACKEND_URL + '/orders' + queryString, headerConfig))
 }

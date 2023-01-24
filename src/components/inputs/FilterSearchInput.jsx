@@ -1,4 +1,4 @@
-import { Col, Input } from 'antd';
+import { Input } from 'antd';
 import React from 'react';
 import { Selector } from '../primitives';
 import { useField } from '../../hooks';
@@ -15,10 +15,9 @@ import { useField } from '../../hooks';
  * @param {string} props.defaultFilter
  * @returns {React.Component}
  */
-function FilterSearchInput({ onSubmit, filters, defaultFilter }) {
+function FilterSearchInput({ onSubmit, filters, defaultFilter, onFilterChange }) {
 
   const filterSelector = useField({ type: 'select', defaultValue: defaultFilter })
-
   const style = {
     marginBottom: '1.5rem',
   }
@@ -42,7 +41,10 @@ function FilterSearchInput({ onSubmit, filters, defaultFilter }) {
   const selectFilter = (
     <Selector
       data={filters}
-      onChange={filterSelector.onChange}
+      onChange={(value) => { 
+        onFilterChange(filterSelector.value)
+        filterSelector.onChange(value)
+      }}
       defaultValue={defaultFilter}
       config={{
         value: 'value',
@@ -51,17 +53,13 @@ function FilterSearchInput({ onSubmit, filters, defaultFilter }) {
     />
   )
   return (
-    <>
-      <Col span={12}>
-        <Input
-          placeholder='Buscar'
-          addonBefore={selectFilter}
-          style={style}
-          onChange={handleChange}
-          onKeyPress={handleKeyPress}
-        />
-      </Col>
-    </>
+    <Input
+      placeholder='Buscar'
+      addonBefore={selectFilter}
+      style={style}
+      onChange={handleChange}
+      onKeyPress={handleKeyPress}
+    />
   );
 }
 
