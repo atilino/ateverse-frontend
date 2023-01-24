@@ -179,7 +179,7 @@ function Orders(props) {
                   link: search.get('link'),
                   customer: search.get('customer'),
                   network: search.get('network'),
-                  variant: Number(search.get('variant')) - 1,
+                  variant: search.get('variant') ? Number(search.get('variant')) - 1 : null,
                   [filter]: value
                 })
                 search.set(filter, value)
@@ -188,7 +188,7 @@ function Orders(props) {
                   link: search.get('link'),
                   customer: search.get('customer'),
                   network: search.get('network'),
-                  variant: Number(search.get('variant')) - 1
+                  variant: search.get('variant') ? Number(search.get('variant')) - 1 : null
                 })
                 search.delete(filter)
               }
@@ -201,7 +201,7 @@ function Orders(props) {
                 link: search.get('link'),
                 customer: search.get('customer'),
                 network: search.get('network'),
-                variant: Number(search.get('variant')) - 1,
+                variant: search.get('variant') ? Number(search.get('variant')) - 1 : null,
                 [filter]: undefined
               })
             }}
