@@ -77,6 +77,7 @@ const useOrder = (service='orders', config) => {
 	 * @returns {Promise<Array>}
 	 */
 	const listOrders = (query) => {
+		console.log(query)
 		return orderService
 			.listOrders(query)
 			.then(response => {

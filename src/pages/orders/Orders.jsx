@@ -15,7 +15,6 @@ function Orders(props) {
   const { networks } = useNetwork()
   const [search, setSearch] = useSearchParams()
 
-  search
   const columns = [
     {
       title: 'Red',
@@ -77,6 +76,58 @@ function Orders(props) {
       ordersPolling.start()
     }
   }, [orders])
+
+  const onNetworkChange = (network) => {
+    if (network !== 'all') {
+      search.set('network', network)
+      listOrders({
+        link: search.get('link'),
+        customer: search.get('customer'),
+        variant: search.get('variant'),
+        network
+      })
+    }else {
+      listOrders({
+        link: search.get('link'),
+        customer: search.get('customer'),
+        link: search.get('variant'),
+      })
+      search.delete('network')
+    }
+    setSearch(search)
+  }
+
+  const onVariantChange = (variant) => {
+    if (variant === 'all') {
+      listOrders({
+        link: search.get('link'),
+        customer: search.get('customer'),
+        network: search.get('network')
+      })
+      search.delete('variant')
+    }else {
+      search.set('variant', variant)
+      listOrders({
+        link: search.get('link'),
+        customer: search.get('customer'),
+        network: search.get('network'),
+        variant: Number(variant - 1)
+      })
+    }
+    setSearch(search)
+  }
+
+  const variantsData = () => {
+    const allField = {
+      name: 'all',
+      label: 'Todas'
+    }
+    if (search.get('network') && networks.length) {
+      const networkName = networks.find(network => network._id === search.get('network'))?.name
+      return [allField, ...constants.ORDER_VARIANTS[networkName].map(({ id, label }) => ({ value: id, label }))]
+    }
+    return [allField]
+  }
   return (
     <>
       <Row justify='center'>
@@ -101,26 +152,26 @@ function Orders(props) {
               label: 'label'
             }}
             defaultValue={search.get('network') || 'all'}
-            onChange={network => {
-
-              if(network !== 'all') {
-                setSearch(current => ({ ...current, network }))
-                return listOrders({
-                  link: search.get('link'),
-                  customer: search.get('customer'),
-                  network
-                })
-              }
-              listOrders({
-                link: search.get('link'),
-                customer: search.get('customer'),
-              })
-              setSearch(current => ({ ...current }))
-            }}
+            onChange={onNetworkChange}
             style={{ width: '80%' }}
           />
         </Col>
-        <Col span={12}>
+        <Col span={2} style={{ padding: '.4rem' }}>
+          <Row justify='end'>
+            <Label>
+              Tipo:
+            </Label>
+          </Row>
+        </Col>
+        <Col span={4} >
+          <Selector
+            data={variantsData()}
+            defaultValue={search.get('variant') || 'all'}
+            onChange={onVariantChange}
+            style={{ width: '80%' }}
+          />
+        </Col>
+        <Col span={10}>
           <FilterSearchInput
             onSubmit={({ filter, value }) => {
               if (value.length > 0) {
@@ -128,25 +179,29 @@ function Orders(props) {
                   link: search.get('link'),
                   customer: search.get('customer'),
                   network: search.get('network'),
+                  variant: Number(search.get('variant')) - 1,
                   [filter]: value
                 })
-
-              return search.set(filter, value)
+                search.set(filter, value)
+              }else {
+                listOrders({
+                  link: search.get('link'),
+                  customer: search.get('customer'),
+                  network: search.get('network'),
+                  variant: Number(search.get('variant')) - 1
+                })
+                search.delete(filter)
               }
-              listOrders({
-                link: search.get('link'),
-                customer: search.get('customer'),
-                network: search.get('network'),
-                [filter]: undefined
-              })
-              return search.delete(filter)
+              setSearch(search)
             }}
             onFilterChange={filter => {
               search.delete(filter)
+              setSearch(search)
               return listOrders({
                 link: search.get('link'),
                 customer: search.get('customer'),
                 network: search.get('network'),
+                variant: Number(search.get('variant')) - 1,
                 [filter]: undefined
               })
             }}
