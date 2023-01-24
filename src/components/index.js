@@ -1,7 +1,6 @@
 export * from "./Form";
 export * from "./Table"
 export * from './buttons'
-export * from './Titles'
 export * from './Headers'
 export * from './Icons'
 export { default as Indicator } from './Indicator'
@@ -12,3 +11,4 @@ export * from './modals'
 export { default as PageLayout } from './PageLayout'
 export * from './cards'
 export * from './charts'
+export * from './titles'

@@ -29,43 +29,6 @@ const MBIT = 125000
 
 const MBYTE = 8000000
 
-const ADMIN_PROFILE_STATUS = Object.freeze([
-  {
-    name: 'DISABLED',
-    label: 'Deshabilitado',
-  },
-  {
-    name: 'ENABLED',
-    label: 'Habilitado',
-  },
-  {
-    name: 'BLOCKED',
-    label: 'Bloqueado',
-  },
-  {
-    name: 'VERIFICATION',
-    label: 'Verificación pendiente',
-  },
-  {
-    name: 'LOGIN_ERROR',
-    label: 'Error de login',
-  },
-  {
-    name: 'SUSPENDED',
-    label: 'Suspendido',
-  },
-  {
-    name: 'BAD_CREDENTIALS',
-    label: 'Credenciales invalidas',
-  },
-  {
-    name: 'LOGOUT_ERROR',
-    label: 'Error de logout'
-  },
-])
-
-const PROFILE_STATUS = ADMIN_PROFILE_STATUS.filter(status => status.name === 'ENABLED' || status.name === 'DISABLED')
-
 const PATTERNS = Object.freeze({
   FACEBOOK: {
     MAIN: /(?:(?:http|https):\/\/)?(?:www.)?facebook.com\/?/,
@@ -107,10 +70,8 @@ const getOrderVariant = (networkName, variant) => {
 export default {
   ORDER_STATUS,
   ACCOUNT_STATUS,
-  PROFILE_STATUS,
   PATTERNS,
   ORDER_VARIANTS,
-  ADMIN_PROFILE_STATUS,
   MBIT,
   MBYTE,
   getOrderVariant

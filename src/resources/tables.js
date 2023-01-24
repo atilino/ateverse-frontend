@@ -100,38 +100,6 @@ export const columns = {
             render: interests => interests.map(interest => interest.label + ', ')
         }
     ],
-    profiles: [
-        {
-            title: 'Red social',
-            dataIndex: 'network',
-            key: 'network',
-            render: network => network?.name
-        },
-        {
-            title: 'Nombre',
-            dataIndex: 'accountId',
-            key: 'accountId',
-            responsive: ['md'],
-            render: account => account?.name || 'No existe'
-        },
-        {
-            title: 'Usuario',
-            dataIndex: 'username',
-            key: 'username',
-            responsive: ['md'],
-        },
-        {
-            title: 'Email',
-            dataIndex: 'email',
-            key: 'email',
-        },
-        {
-            title: 'Contraseña',
-            dataIndex: 'password',
-            key: 'password',
-            responsive: ['md'],
-        }
-    ],
     networks: [
         {
             title: 'Nombre',
