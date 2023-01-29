@@ -3,7 +3,7 @@ import React from 'react'
 
 function Label(props) {
   return (
-    <Typography.Text>
+    <Typography.Text {...props} style={{ ...props.style, marginRight: '.5rem'}}>
       {props.children}
     </Typography.Text>
   );

@@ -11,4 +11,4 @@ export { default as useResponsiveBreakpoints } from './useResponsiveBreakpoints'
 export { default as useAuth } from './useAuth'
 export { default as useCustomer } from './useCustomer'
 export { default as useMetrics } from './useMetrics'
-
+export { default as useInterval } from './useInterval'

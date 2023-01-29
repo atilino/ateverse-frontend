@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import Device from '../adapters/device.adapter'
 import deviceService from '../services/devices'
 import { resultHandler } from './helpers'
+import { DEFAULT_PAGINATE_LIMIT } from '../constants/devices'
+
 /** @typedef {import("../models/device.model").Device} IDevice*/
 
 /**
@@ -17,6 +19,13 @@ const useDevice = (service, config) => {
     const [device, setDevice] = useState(new Device())
     const [logs, setLogs] = useState({})
     const [processes, setProcesses] = useState()
+    const [pagination, setPagination] = useState({
+        limit: DEFAULT_PAGINATE_LIMIT,
+        page: 1,
+        totalPages: 1,
+        totalResults: 0,
+        nextPage: null
+    })
 
     useEffect(async () => {
         if (service === 'logs') {
@@ -33,11 +42,24 @@ const useDevice = (service, config) => {
         }
     }, [])
 
-    const listDevices = () => {
+    /**
+     * @param {number} page
+     * @param {number} limit
+     * @param {object} filters
+     * @param {number} [filters.imei]
+     * @param {number} [filters.status]
+     * @param {string} [filters.switch]
+     * @param {number} [filters.connected]
+     * @param {number} [filters.upgradeable]
+     * @returns {Promise}
+     */
+    const listDevices = (page, limit, filters) => {
         return deviceService
-            .getDevices()
+            .listDevices(page, limit, filters)
             .then(resultDevices => {
-                setDevices(resultDevices.data)
+                const { data: { results, ...paginationData } } = resultDevices
+                setDevices(results)
+                setPagination(paginationData)
             })
     }
 
@@ -116,7 +138,8 @@ const useDevice = (service, config) => {
         deleteDevice,
         findDevice,
         getDeviceLogs,
-        listDeviceProcesses
+        listDeviceProcesses,
+        pagination
     }
 }
 
