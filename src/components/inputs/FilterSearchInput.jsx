@@ -16,7 +16,7 @@ import { useSearchParams } from 'react-router-dom';
  * @param {string} props.defaultFilter
  * @returns {React.Component}
  */
-function FilterSearchInput({ onSubmit, filters, defaultFilter, onFilterChange, ...rest }) {
+function FilterSearchInput({ onSubmit, filters, defaultFilter, onFilterChange=()=>{}, ...rest }) {
 
   const filterSelector = useField({ type: 'select', defaultValue: defaultFilter })
   const [search, setSearch] = useSearchParams()
