@@ -1,24 +1,15 @@
 /**
  * @param {number} interval Seconds
  * @param {Promise<Function>} callback
+ * @param {any} args
  */
 export default (interval, callback) => {
-  let intervalId = null
-  let started = false
-
-  function start() {
-    if(intervalId !== null) stop()
-    intervalId = setTimeout(async () => {
-      await callback()
+  function start(...args) {
+    return setTimeout(async () => {
+      await callback(...args)
     }, interval * 1000)
   }
-
-  function stop() {
-    clearTimeout(intervalId)
-    interval = null
-  }
   return {
-    start,
-    stop
+    start
   }
 }

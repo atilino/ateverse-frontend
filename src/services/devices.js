@@ -2,15 +2,37 @@ import axios from 'axios'
 import config from '../config'
 import resolver from './resolver'
 import { currentUser } from '../libs/userInfo'
+import { DEFAULT_PAGINATE_LIMIT } from '../constants/accounts'
 
 const headerConfig = {
     headers: {}
 }
 
-const getDevices = async () => {
+const listDevices = async (page, limit, query) => {
     const { token } = currentUser()
     headerConfig.headers['x-access-token'] = token
-    return await resolver(axios.get(config.BACKEND_URL + '/devices', headerConfig))
+
+    page = page || 1
+    limit = limit || DEFAULT_PAGINATE_LIMIT
+
+    let queryString = ''
+    if(typeof query?.status === 'string') {
+        queryString += `&status=${query.status}`
+    }
+    if(typeof query?.imei === 'string') {
+        queryString += `&imei=${query.imei}`
+    }
+    if(typeof query?.switch === 'boolean') {
+        queryString += `&switch=${query.switch}`
+    }
+    if(typeof query?.connected === 'boolean') {
+        queryString += `&connected=${query.connected}`
+    }
+    if(typeof query?.upgradeable === 'boolean') {
+        queryString += `&upgradeable=${query.upgradeable}`
+    }
+
+    return await resolver(axios.get(config.BACKEND_URL + `/devices?page=${page}&limit=${limit}${queryString}`, headerConfig))
 }
 const getDeviceById = async (id) => {
     const { token } = currentUser()
@@ -98,7 +120,7 @@ const executeDeviceCommand = async (id, command) => {
 }
 
 export default {
-    getDevices,
+    listDevices,
     getDeviceById,
     updateDeviceById,
     createDevice,

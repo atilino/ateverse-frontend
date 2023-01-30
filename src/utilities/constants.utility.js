@@ -67,6 +67,11 @@ const getOrderVariant = (networkName, variant) => {
   return ORDER_VARIANTS[networkName]?.find(v => v.id === variant).label
 }
 
+const BOOLEAN = {
+  'true': true,
+  'false': false
+}
+
 export default {
   ORDER_STATUS,
   ACCOUNT_STATUS,
@@ -74,5 +79,6 @@ export default {
   ORDER_VARIANTS,
   MBIT,
   MBYTE,
-  getOrderVariant
+  getOrderVariant,
+  BOOLEAN
 }

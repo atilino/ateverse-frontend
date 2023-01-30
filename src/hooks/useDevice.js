@@ -2,13 +2,19 @@ import { useEffect, useState } from 'react'
 import Device from '../adapters/device.adapter'
 import deviceService from '../services/devices'
 import { resultHandler } from './helpers'
+import { DEFAULT_PAGINATE_LIMIT } from '../constants/devices'
+import usePagination from './usePagination'
+import { useSearchParams } from 'react-router-dom'
+import { constants } from '../utilities'
+
 /** @typedef {import("../models/device.model").Device} IDevice*/
 
 /**
  * @param {( 'devices' | 'logs' | 'processes' | 'device' )} [service]
  * @param {object} [config]
+ * @param {boolean} [config.initialPagination]
  */
-const useDevice = (service, config) => {
+const useDevice = (service, config = { initialPagination: false }) => {
 
     /** @type {[IDevice[], function]} */
     const [devices, setDevices] = useState([])
@@ -17,6 +23,12 @@ const useDevice = (service, config) => {
     const [device, setDevice] = useState(new Device())
     const [logs, setLogs] = useState({})
     const [processes, setProcesses] = useState()
+    const [pagination, setPagination] = usePagination({
+        page: 1,
+        limit: DEFAULT_PAGINATE_LIMIT,
+        initialPagination: config.initialPagination
+    })
+    const [search] = useSearchParams()
 
     useEffect(async () => {
         if (service === 'logs') {
@@ -33,11 +45,32 @@ const useDevice = (service, config) => {
         }
     }, [])
 
-    const listDevices = () => {
+    /**
+     * @param {number} page
+     * @param {number} limit
+     * @param {object} filters
+     * @param {number} [filters.imei]
+     * @param {number} [filters.status]
+     * @param {string} [filters.switch]
+     * @param {number} [filters.connected]
+     * @param {number} [filters.upgradeable]
+     * @returns {Promise}
+     */
+    const listDevices = (page, limit, filters) => {
+        filters = {
+            imei: search.get('imei'),
+            status: search.get('status'),
+            switch: constants.BOOLEAN[search.get('switch')],
+            connected: constants.BOOLEAN[search.get('connected')],
+            upgradeable: constants.BOOLEAN[search.get('upgradeable')],
+            ...filters
+        }
         return deviceService
-            .getDevices()
+            .listDevices(page, limit, filters)
             .then(resultDevices => {
-                setDevices(resultDevices.data)
+                const { data: { results, ...paginationData } } = resultDevices
+                setDevices(results)
+                setPagination(paginationData)
             })
     }
 
@@ -116,7 +149,8 @@ const useDevice = (service, config) => {
         deleteDevice,
         findDevice,
         getDeviceLogs,
-        listDeviceProcesses
+        listDeviceProcesses,
+        pagination
     }
 }
 

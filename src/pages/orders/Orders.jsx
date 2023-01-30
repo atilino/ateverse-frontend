@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ManageTable } from '../../components/templates'
-import { constants, date, polling } from '../../utilities';
+import { constants, date } from '../../utilities';
 import { DeliveryDateIndicator, StatusIndicator, Summary } from './components/indicators';
 import NetworkLogo from './components/indicators/NetworkLogo';
 import { Badge, Col, Row, Tooltip } from 'antd';
 import { CircularBorder, FilterSearchInput, Label, Selector, TableColumn } from '../../components';
 import { Link, useSearchParams } from 'react-router-dom';
 import { ProfileOutlined } from '@ant-design/icons';
-import { useNetwork, useOrder } from '../../hooks';
+import { useInterval, useNetwork, useOrder } from '../../hooks';
 
 function Orders(props) {
 
-  const { orders, listOrders } = useOrder()
+  const { orders, listOrders, pagination } = useOrder('orders', { initialPagination: true })
   const { networks } = useNetwork()
   const [search, setSearch] = useSearchParams()
 
@@ -66,61 +66,31 @@ function Orders(props) {
     },
   ]
 
-  const ordersPolling = polling(5, listOrders)
-
-  useEffect(() => {
-    const inProgressOrder = orders?.find(o =>
-      (o.status === 'CREATED' || o.status === 'IN_PROGRESS') && new Date(o.createdAt) > date.offset(new Date(), -date.DAY)
-    )
+  useInterval(() => {
+    const inProgressOrder = orders?.find(o => (o.status === 'CREATED' || o.status === 'IN_PROGRESS') && new Date(o.createdAt) > date.offset(new Date(), -date.DAY))
     if (inProgressOrder !== undefined) {
-      ordersPolling.start()
+      listOrders(pagination.page, pagination.limit)
     }
-  }, [orders])
+  }, 5)
 
   const onNetworkChange = (network) => {
-    if (network !== 'all') {
-      search.set('network', network)
-      listOrders({
-        link: search.get('link'),
-        customer: search.get('customer'),
-        variant: search.get('variant'),
-        network
-      })
-    }else {
-      listOrders({
-        link: search.get('link'),
-        customer: search.get('customer'),
-        link: search.get('variant'),
-      })
-      search.delete('network')
-    }
+    search.set('network', network)
+    listOrders(pagination.page, pagination.limit, { network: network === 'all' ? undefined : network })
+    network === 'all' && search.delete('network')
     setSearch(search)
   }
 
   const onVariantChange = (variant) => {
-    if (variant === 'all') {
-      listOrders({
-        link: search.get('link'),
-        customer: search.get('customer'),
-        network: search.get('network')
-      })
-      search.delete('variant')
-    }else {
-      search.set('variant', variant)
-      listOrders({
-        link: search.get('link'),
-        customer: search.get('customer'),
-        network: search.get('network'),
-        variant: Number(variant - 1)
-      })
-    }
+    variant !== 'all' && search.set('variant', variant)
+    variant === 'all' && search.delete('variant')
+    listOrders(pagination.page, pagination.limit, { variant: variant === 'all' ? undefined : Number(variant - 1) })
     setSearch(search)
   }
 
   const variantsData = () => {
     const allField = {
       name: 'all',
-      label: 'Todas'
+      label: 'Todos'
     }
     if (search.get('network') && networks.length) {
       const networkName = networks.find(network => network._id === search.get('network'))?.name
@@ -131,85 +101,43 @@ function Orders(props) {
   return (
     <>
       <Row justify='center'>
-        <Col span={2} style={{ padding: '.4rem' }}>
-          <Row justify='end'>
-            <Label>
-              Red:
-            </Label>
-          </Row>
-        </Col>
-        <Col span={4} >
-          <Selector
-            data={[
-              {
-                _id: 'all',
-                label: 'Todas'
-              },
-              ...networks
-            ]}
-            config={{
-              value: '_id',
-              label: 'label'
-            }}
-            defaultValue={search.get('network') || 'all'}
-            onChange={onNetworkChange}
-            style={{ width: '80%' }}
-          />
-        </Col>
-        <Col span={2} style={{ padding: '.4rem' }}>
-          <Row justify='end'>
-            <Label>
-              Tipo:
-            </Label>
-          </Row>
-        </Col>
-        <Col span={4} >
-          <Selector
-            data={variantsData()}
-            defaultValue={search.get('variant') || 'all'}
-            onChange={onVariantChange}
-            style={{ width: '80%' }}
-          />
-        </Col>
-        <Col span={10}>
+        <Col span={16} md={16} xs={24}>
           <FilterSearchInput
-            onSubmit={({ filter, value }) => {
-              if (value.length > 0) {
-                listOrders({
-                  link: search.get('link'),
-                  customer: search.get('customer'),
-                  network: search.get('network'),
-                  variant: search.get('variant') ? Number(search.get('variant')) - 1 : null,
-                  [filter]: value
-                })
-                search.set(filter, value)
-              }else {
-                listOrders({
-                  link: search.get('link'),
-                  customer: search.get('customer'),
-                  network: search.get('network'),
-                  variant: search.get('variant') ? Number(search.get('variant')) - 1 : null
-                })
-                search.delete(filter)
-              }
-              setSearch(search)
-            }}
-            onFilterChange={filter => {
-              search.delete(filter)
-              setSearch(search)
-              return listOrders({
-                link: search.get('link'),
-                customer: search.get('customer'),
-                network: search.get('network'),
-                variant: search.get('variant') ? Number(search.get('variant')) - 1 : null,
-                [filter]: undefined
-              })
-            }}
+            onSubmit={({ filter, value }) => listOrders(pagination.page, pagination.limit, { [filter]: value.length > 0 ? value : undefined })}
             filters={[
               { label: 'Link', value: 'link' },
               { label: 'Cliente', value: 'customer' }
             ]}
             defaultFilter='link'
+          />
+        </Col>
+      </Row>
+      <Row justify='center' align='middle' style={{ marginBottom: '1.5rem' }} wrap={true}>
+        <Col md={{ pull: 1 }} xs={{ pull: 0 }} style={{ marginBottom: '.5rem' }}>
+          <Label>
+            Red:
+          </Label>
+        </Col>
+        <Col md={{ span: 4, pull: 1}} xs={{ span: 18, pull: 0 }} style={{ marginBottom: '.5rem' }} >
+          <Selector
+            data={[{ _id: 'all', label: 'Todas' }, ...networks]}
+            config={{ value: '_id', label: 'label' }}
+            defaultValue={search.get('network') || 'all'}
+            onChange={onNetworkChange}
+            style={{ width: '100%' }}
+          />
+        </Col>
+        <Col xs={{ push: 0 }} md={{ push: 1 }}  style={{ marginBottom: '.5rem' }}>
+          <Label>
+            Tipo:
+          </Label>
+        </Col>
+        <Col md={{ span: 4, push: 1}} xs={{ span: 18, push: 0 }}  style={{ marginBottom: '.5rem' }}>
+          <Selector
+            data={variantsData()}
+            defaultValue={search.get('variant') || 'all'}
+            onChange={onVariantChange}
+            style={{ width: '100%' }}
           />
         </Col>
       </Row>
@@ -221,7 +149,14 @@ function Orders(props) {
             loading={orders.length ? false : true}
             size='middle'
             pagination={{
-              defaultPageSize: 10
+              current: pagination.page,
+              pageSize: pagination.limit,
+              pageSizeOptions: [5, 10, 20],
+              showSizeChanger: true,
+              total: pagination.totalResults,
+              showTotal: (total, [from, to]) => `${from} a ${to} de ${total} ordenes encontradas`,
+              onChange: page => page !== pagination.page && listOrders(page, pagination.limit),
+              onShowSizeChange: (current, limit) => listOrders(current, limit),
             }}
           >
             <TableColumn

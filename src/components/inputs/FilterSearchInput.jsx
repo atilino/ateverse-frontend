@@ -2,6 +2,7 @@ import { Input } from 'antd';
 import React from 'react';
 import { Selector } from '../primitives';
 import { useField } from '../../hooks';
+import { useSearchParams } from 'react-router-dom';
 
 /**
  * @callback onSubmitCallback
@@ -15,9 +16,10 @@ import { useField } from '../../hooks';
  * @param {string} props.defaultFilter
  * @returns {React.Component}
  */
-function FilterSearchInput({ onSubmit, filters, defaultFilter, onFilterChange }) {
+function FilterSearchInput({ onSubmit, filters, defaultFilter, onFilterChange=()=>{}, ...rest }) {
 
   const filterSelector = useField({ type: 'select', defaultValue: defaultFilter })
+  const [search, setSearch] = useSearchParams()
   const style = {
     marginBottom: '1.5rem',
   }
@@ -32,6 +34,12 @@ function FilterSearchInput({ onSubmit, filters, defaultFilter, onFilterChange })
   }
 
   const handleChange = ({ target }) => {
+    if (target.value.length > 0) {
+      search.set(filterSelector.value, target.value)
+    } else {
+      search.delete(filterSelector.value)
+    }
+    setSearch(search)
     onSubmit({
       filter: filterSelector.value,
       value: target.value
@@ -41,8 +49,9 @@ function FilterSearchInput({ onSubmit, filters, defaultFilter, onFilterChange })
   const selectFilter = (
     <Selector
       data={filters}
-      onChange={(value) => { 
+      onChange={(value) => {
         onFilterChange(filterSelector.value)
+        search.delete(filterSelector.value)
         filterSelector.onChange(value)
       }}
       defaultValue={defaultFilter}
@@ -59,6 +68,8 @@ function FilterSearchInput({ onSubmit, filters, defaultFilter, onFilterChange })
       style={style}
       onChange={handleChange}
       onKeyPress={handleKeyPress}
+      defaultValue={search.get(defaultFilter) || ''}
+      {...rest}
     />
   );
 }

@@ -1,31 +1,36 @@
-import { useEffect, useState } from 'react';
-import { LoaderButton, TableColumn, DashboardHeader, CreateButton } from 'components'
+import { useState } from 'react';
+import { TableColumn, CreateButton, FilterSearchInput, Label } from '../../components'
 import { deleteModal, FormModal, ManageTable, TableModal } from 'components/templates'
-import { notification, SwitchButton } from 'components/primitives';
-import { tables, forms, variables, ERRORS } from 'constants/devices'
-import { ConnectionIndicator } from './components';
-
-import useDevice from 'hooks/useDevice'
+import { notification, Selector, SwitchButton } from '../../components/primitives';
+import { tables, forms, ERRORS, DEVICE_STATUS } from 'constants/devices'
 import { useNavigate } from 'react-router-dom';
-import { ManagementMenu } from './components';
-import { polling } from '../../utilities';
+import { ManagementMenu, ConnectionIndicator, SwitchFiltersPanel, StatusSelector } from './components';
+import { Col, Row } from 'antd';
+import { useInterval, useDevice } from '../../hooks';
 
 function Devices() {
 
     const navigate = useNavigate()
-    const { devices, device, findDevice, updateDevice, createDevice, listDevices } = useDevice()
+    const {
+        devices,
+        device,
+        findDevice,
+        updateDevice,
+        createDevice,
+        listDevices,
+        pagination
+    } = useDevice('devices', { initialPagination: true })
 
     const [updateModal, setUpdateModal] = useState(false)
     const [createModal, setCreateModal] = useState(false)
     const [deviceAccountsModal, setDeviceAccountsModal] = useState(false)
-    const devicePolling = polling(5, listDevices)
 
-    useEffect(() => {
-        const inProgressTask = devices?.find(d =>(d.status !== 'ON' && d.status !== 'OFF'))
-        if(inProgressTask !== undefined) {
-            devicePolling.start()
+    useInterval(() => {
+        const inProgressTask = devices?.find(d => (d.status !== 'ON' && d.status !== 'OFF'))
+        if (inProgressTask !== undefined) {
+            listDevices(pagination.page, pagination.limit)
         }
-    }, [devices])
+    }, 5)
 
     const handleDeviceAccountClick = (id) => {
         findDevice(id)
@@ -82,10 +87,41 @@ function Devices() {
 
     return (
         <>
-            <CreateButton
-                title="Crear dispositivo"
-                onClick={(e) => setCreateModal(true)}
-            />
+            <Row justify='center' align='middle'>
+                <Col span={16} md={16} xs={24}>
+                    <FilterSearchInput
+                        onSubmit={({ filter, value }) => listDevices(pagination.page, pagination.limit, { [filter]: value.length > 0 ? value : undefined })}
+                        filters={[
+                            { label: 'IMEI', value: 'imei' },
+                        ]}
+                        defaultFilter='imei'
+                    />
+                </Col>
+            </Row>
+            <Row justify='center' align='middle' style={{ marginBottom: '1.5rem' }} wrap={true}>
+                <StatusSelector
+                    urlEncode={true}
+                    onChange={status => listDevices(pagination.page, pagination.limit, { status: status === 'all' ? undefined : status })}
+                    span={6}
+                    xs={18}
+                    md={6}
+                />
+                <SwitchFiltersPanel
+                    onChange={filters => {
+                        listDevices(pagination.page, pagination.limit, filters)
+                    }}
+                    onEnabledChange={isEnabled => listDevices(pagination.page, pagination.limit, { switch: isEnabled ? false : undefined, connected: isEnabled ? false : undefined })}
+                />
+            </Row>
+            <Row align='middle' justify='start'>
+                <Col span={4} pull={2} md={4} xs={{ span: 24, pull: 0 }}>
+                    <CreateButton
+                        title="Crear dispositivo"
+                        onClick={(e) => setCreateModal(true)}
+                        style={{ margin: '1rem 0' }}
+                    />
+                </Col>
+            </Row>
             <FormModal
                 visible={createModal}
                 fields={forms.CREATE_FIELDS}
@@ -100,6 +136,16 @@ function Devices() {
                 dataSource={devices}
                 actions={tables.ACTIONS}
                 onActionClick={handleActionClick}
+                pagination={{
+                    current: pagination.page,
+                    pageSize: pagination.limit,
+                    pageSizeOptions: [5, 10, 20],
+                    showSizeChanger: true,
+                    total: pagination.totalResults,
+                    showTotal: (total, [from, to]) => `${from} a ${to} de ${total} dispositivos encontrados`,
+                    onChange: page => page !== pagination.page && listDevices(page, pagination.limit),
+                    onShowSizeChange: (current, limit) => listDevices(current, limit),
+                }}
             >
                 <TableColumn
                     title="Conexión"

@@ -1,5 +1,7 @@
 import constants from '.'
 
+export const DEFAULT_PAGINATE_LIMIT = 5
+
 export const DEVICE_STATUS = Object.freeze({
     ON: 'En servicio',
     OFF: 'Suspendido',
