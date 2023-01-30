@@ -88,7 +88,7 @@ function Devices() {
     return (
         <>
             <Row justify='center' align='middle'>
-                <Col span={16}>
+                <Col span={16} md={16} xs={24}>
                     <FilterSearchInput
                         onSubmit={({ filter, value }) => listDevices(pagination.page, pagination.limit, { [filter]: value.length > 0 ? value : undefined })}
                         filters={[
@@ -98,13 +98,14 @@ function Devices() {
                     />
                 </Col>
             </Row>
-            <Row justify='center' align='middle' style={{ marginBottom: '.5rem' }}>
-                <Col span={8}>
-                    <StatusSelector
-                        urlEncode={true}
-                        onChange={status => listDevices(pagination.page, pagination.limit, { status: status === 'all' ? undefined : status })}
-                    />
-                </Col>
+            <Row justify='center' align='middle' style={{ marginBottom: '1.5rem' }} wrap={true}>
+                <StatusSelector
+                    urlEncode={true}
+                    onChange={status => listDevices(pagination.page, pagination.limit, { status: status === 'all' ? undefined : status })}
+                    span={6}
+                    xs={18}
+                    md={6}
+                />
                 <SwitchFiltersPanel
                     onChange={filters => {
                         listDevices(pagination.page, pagination.limit, filters)
@@ -112,11 +113,15 @@ function Devices() {
                     onEnabledChange={isEnabled => listDevices(pagination.page, pagination.limit, { switch: isEnabled ? false : undefined, connected: isEnabled ? false : undefined })}
                 />
             </Row>
-            <CreateButton
-                title="Crear dispositivo"
-                onClick={(e) => setCreateModal(true)}
-                style={{ margin: '1rem 0' }}
-            />
+            <Row align='middle' justify='start'>
+                <Col span={4} pull={2} md={4} xs={{ span: 24, pull: 0 }}>
+                    <CreateButton
+                        title="Crear dispositivo"
+                        onClick={(e) => setCreateModal(true)}
+                        style={{ margin: '1rem 0' }}
+                    />
+                </Col>
+            </Row>
             <FormModal
                 visible={createModal}
                 fields={forms.CREATE_FIELDS}

@@ -20,7 +20,7 @@ import { constants } from '../../../utilities';
  * @param {function} props.onEnabledChange
 */
 function SwitchFiltersPanel({ onChange, onEnabledChange }) {
-  
+
   const [search, setSearch] = useSearchParams()
   const isEnabled = search.get('switch') || search.get('connected')
 
@@ -46,7 +46,7 @@ function SwitchFiltersPanel({ onChange, onEnabledChange }) {
   }
   return (
     <>
-      <Col offset={1} span={1}>
+      <Col offset={1} span={1} xs={3} md={1} style={{ margin: '.5rem 0'}}>
         <Tooltip title='Habilitar filtros'>
           <Checkbox style={{ margin: '0 1rem' }} checked={filterEnabled.value} onChange={e => {
             filterEnabled.onChange(e)
@@ -65,11 +65,11 @@ function SwitchFiltersPanel({ onChange, onEnabledChange }) {
           }} />
         </Tooltip>
       </Col>
-      <Col span={3}>
+      <Col span={3} xs={10} md={3}>
         <Label style={{ color: filterEnabled.value ? 'black' : 'gray' }}>Encendido</Label>
         <SwitchButton state={switchFilter.value} id='switch' onChange={checked => onChangeFilter(checked, 'switch')} disabled={!filterEnabled.value} />
       </Col>
-      <Col span={3}>
+      <Col span={3} xs={10} md={3}>
         <Label style={{ color: filterEnabled.value ? 'black' : 'gray' }}>Conectado</Label>
         <SwitchButton state={connectedFilter.value} id='connected' onChange={checked => onChangeFilter(checked, 'connected')} disabled={!filterEnabled.value} />
       </Col>

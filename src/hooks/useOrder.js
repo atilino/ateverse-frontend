@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react"
+import { useSearchParams } from "react-router-dom";
 import orderService from '../services/orders'
-import { filterUndefined } from "../utilities";
-import { breakStringToArray } from "../utilities/formaters.utility";
 import { resultHandler } from "./helpers";
+import usePagination from "./usePagination";
 import useUser from './useUser';
+import { DEFAULT_PAGINATE_LIMIT } from "../constants/orders";
 
 /**
  * 
  * @param {( 'orders' | 'order' | 'direct' )} [service]
  * @param {object} [config]
  */
-const useOrder = (service='orders', config) => {
+const useOrder = (service = 'orders', config) => {
 	const { currentUser } = useUser()
 	const { username } = currentUser()
 	const init = {
@@ -55,12 +56,17 @@ const useOrder = (service='orders', config) => {
 
 	const [orders, setOrders] = useState([])
 	const [order, setOrder] = useState(init)
+	const [pagination, setPagination] = usePagination({
+		page: 1,
+		limit: DEFAULT_PAGINATE_LIMIT
+	})
+	const [search] = useSearchParams()
 
 	useEffect(async () => {
 		if (service === 'order') {
 			await getOrderById(config.orderId)
 		} else if (service === 'orders') {
-			await listOrders()
+			await listOrders(pagination.page, pagination.limit)
 		}
 		else if (service === 'direct') {
 			await getDirectOrder()
@@ -76,12 +82,20 @@ const useOrder = (service='orders', config) => {
 	 * @param {number} query.variant
 	 * @returns {Promise<Array>}
 	 */
-	const listOrders = (query) => {
-		console.log(query)
+	const listOrders = (page, limit, query) => {
+		query = {
+			link: search.get('link'),
+			customer: search.get('customer'),
+			network: search.get('network'),
+			variant: search.get('variant') ? Number(search.get('variant')) - 1 : null,
+			...query
+		}
 		return orderService
-			.listOrders(query)
-			.then(response => {
-				resultHandler(response, result => setOrders(result))
+			.listOrders(page, limit, query)
+			.then(resultOrders => {
+				const { data: { results, ...paginationData } } = resultOrders
+				setOrders(results)
+				setPagination(paginationData)
 			})
 	}
 	const updateLocalOrder = (orderObject) => {
@@ -142,7 +156,8 @@ const useOrder = (service='orders', config) => {
 		getOrderById,
 		getDirectOrder,
 		patchDirectOrder,
-		completeOrder
+		completeOrder,
+		pagination
 	}
 }
 

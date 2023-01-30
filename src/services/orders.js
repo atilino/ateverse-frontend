@@ -2,19 +2,20 @@ import axios from 'axios'
 import config from '../config'
 import resolver from './resolver'
 import { currentUser } from '../libs/userInfo'
+import { DEFAULT_PAGINATE_LIMIT } from '../constants/orders'
 
 const headerConfig = {
     headers: {}
 }
 
-const listOrders = async (query) =>{
+const listOrders = async (page, limit, query) =>{
     const { token } = currentUser()
     headerConfig.headers['x-access-token'] = token
 
+    page = page || 1
+    limit = limit || DEFAULT_PAGINATE_LIMIT
+
     let queryString = ''
-    if(query !== undefined) {
-        queryString += '?'
-    }
     if(query?.direct === true) {
         queryString += 'direct=true'
     }
@@ -34,7 +35,7 @@ const listOrders = async (query) =>{
         if(queryString !== '?') queryString += '&'
         queryString += `variant=${query.variant}`
     }
-    return await resolver(axios.get(config.BACKEND_URL + '/orders' + queryString, headerConfig))
+    return await resolver(axios.get(config.BACKEND_URL + `/orders?page=${page}&limit=${limit}${queryString}`, headerConfig))
 }
 
 const patchDirectOrder = async (id, data) => {

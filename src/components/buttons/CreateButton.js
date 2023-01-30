@@ -3,7 +3,7 @@ import Button from './Button'
 
 function CreateButton({ title, children, ...rest }) {
   return (
-    <Button {...rest} >
+    <Button {...rest} type="primary" shape="round" >
       {title || children}
     </Button>
   );

@@ -16,7 +16,7 @@ import { useSearchParams } from 'react-router-dom';
  * @param {string} props.defaultFilter
  * @returns {React.Component}
  */
-function FilterSearchInput({ onSubmit, filters, defaultFilter, onFilterChange }) {
+function FilterSearchInput({ onSubmit, filters, defaultFilter, onFilterChange, ...rest }) {
 
   const filterSelector = useField({ type: 'select', defaultValue: defaultFilter })
   const [search, setSearch] = useSearchParams()
@@ -34,9 +34,9 @@ function FilterSearchInput({ onSubmit, filters, defaultFilter, onFilterChange })
   }
 
   const handleChange = ({ target }) => {
-    if(target.value.length > 0) {
+    if (target.value.length > 0) {
       search.set(filterSelector.value, target.value)
-    }else {
+    } else {
       search.delete(filterSelector.value)
     }
     setSearch(search)
@@ -63,12 +63,13 @@ function FilterSearchInput({ onSubmit, filters, defaultFilter, onFilterChange })
   )
   return (
     <Input
-      defaultValue={search.get('imei') || ''}
       placeholder='Buscar'
       addonBefore={selectFilter}
       style={style}
       onChange={handleChange}
       onKeyPress={handleKeyPress}
+      defaultValue={search.get(defaultFilter) || ''}
+      {...rest}
     />
   );
 }
