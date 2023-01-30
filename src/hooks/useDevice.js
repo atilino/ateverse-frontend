@@ -3,6 +3,9 @@ import Device from '../adapters/device.adapter'
 import deviceService from '../services/devices'
 import { resultHandler } from './helpers'
 import { DEFAULT_PAGINATE_LIMIT } from '../constants/devices'
+import usePagination from './usePagination'
+import { useSearchParams } from 'react-router-dom'
+import { constants } from '../utilities'
 
 /** @typedef {import("../models/device.model").Device} IDevice*/
 
@@ -19,13 +22,11 @@ const useDevice = (service, config) => {
     const [device, setDevice] = useState(new Device())
     const [logs, setLogs] = useState({})
     const [processes, setProcesses] = useState()
-    const [pagination, setPagination] = useState({
-        limit: DEFAULT_PAGINATE_LIMIT,
+    const [pagination, setPagination] = usePagination({
         page: 1,
-        totalPages: 1,
-        totalResults: 0,
-        nextPage: null
+        limit: DEFAULT_PAGINATE_LIMIT
     })
+    const [search] = useSearchParams()
 
     useEffect(async () => {
         if (service === 'logs') {
@@ -54,6 +55,15 @@ const useDevice = (service, config) => {
      * @returns {Promise}
      */
     const listDevices = (page, limit, filters) => {
+        console.log( search.get('status'))
+        filters = {
+            imei: search.get('imei'),
+            status: search.get('status'),
+            switch: constants.BOOLEAN[search.get('switch')],
+            connected: constants.BOOLEAN[search.get('connected')],
+            upgradeable: constants.BOOLEAN[search.get('upgradeable')],
+            ...filters
+        }
         return deviceService
             .listDevices(page, limit, filters)
             .then(resultDevices => {

@@ -4,8 +4,8 @@ import { deleteModal, FormModal, ManageTable, TableModal } from 'components/temp
 import { notification, Selector, SwitchButton } from '../../components/primitives';
 import { tables, forms, ERRORS, DEVICE_STATUS } from 'constants/devices'
 import { useNavigate } from 'react-router-dom';
-import { ManagementMenu, ConnectionIndicator, SwitchFiltersPanel } from './components';
-import { Checkbox, Col, Row } from 'antd';
+import { ManagementMenu, ConnectionIndicator, SwitchFiltersPanel, StatusSelector } from './components';
+import { Col, Row } from 'antd';
 import { useInterval, useDevice } from '../../hooks';
 
 function Devices() {
@@ -90,7 +90,7 @@ function Devices() {
             <Row justify='center' align='middle'>
                 <Col span={16}>
                     <FilterSearchInput
-                        onSubmit={({ filter, value }) => listDevices(pagination.page, pagination.limit, { [filter]: value })}
+                        onSubmit={({ filter, value }) => listDevices(pagination.page, pagination.limit, { [filter]: value.length > 0 ? value : undefined })}
                         filters={[
                             { label: 'IMEI', value: 'imei' },
                         ]}
@@ -100,29 +100,16 @@ function Devices() {
             </Row>
             <Row justify='center' align='middle' style={{ marginBottom: '.5rem' }}>
                 <Col span={8}>
-                    <Label>Estado</Label>
-                    <Selector
-                        style={{ width: '80%' }}
-                        data={[{ label: 'Todos', name: 'all' }, ...Object.entries(DEVICE_STATUS).map(([key, value]) => ({ label: value, name: key }))]}
-                        defaultValue='all'
-                        onChange={status => {
-                            if (status === 'all') {
-                                return listDevices(pagination.page, pagination.limit)
-                            }
-                            listDevices(pagination.page, pagination.limit, { status })
-                        }}
+                    <StatusSelector
+                        urlEncode={true}
+                        onChange={status => listDevices(pagination.page, pagination.limit, { status: status === 'all' ? undefined : status })}
                     />
                 </Col>
                 <SwitchFiltersPanel
                     onChange={filters => {
                         listDevices(pagination.page, pagination.limit, filters)
                     }}
-                    onEnabledChange={isEnabled => {
-                        if (isEnabled) {
-                            return listDevices(pagination.page, pagination.limit, { switch: false, connected: false })
-                        }
-                        listDevices(pagination.page, pagination.limit)
-                    }}
+                    onEnabledChange={isEnabled => listDevices(pagination.page, pagination.limit, { switch: isEnabled ? false : undefined, connected: isEnabled ? false : undefined })}
                 />
             </Row>
             <CreateButton

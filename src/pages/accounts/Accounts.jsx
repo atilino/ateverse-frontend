@@ -93,7 +93,6 @@ function Accounts(props) {
                             modals.update.toggle()
                         }}
                         onPersonalityClick={(id, account) => {
-                            console.log(account)
                             selectAndUpdateAccount(account)
                             modals.personality.toggle()
                         }}

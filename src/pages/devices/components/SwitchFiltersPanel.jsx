@@ -3,6 +3,8 @@ import React from 'react';
 import { useField } from '../../../hooks'
 import { SwitchButton } from '../../../components/primitives';
 import { Label } from '../../../components';
+import { useSearchParams } from 'react-router-dom';
+import { constants } from '../../../utilities';
 
 /**
  * @typedef callback
@@ -18,13 +20,25 @@ import { Label } from '../../../components';
  * @param {function} props.onEnabledChange
 */
 function SwitchFiltersPanel({ onChange, onEnabledChange }) {
-  const filterEnabled = useField({ defaultValue: false })
-  const switchFilter = useField({ defaultValue: false })
-  const connectedFilter = useField({ defaultValue: false })
+  
+  const [search, setSearch] = useSearchParams()
+  const isEnabled = search.get('switch') || search.get('connected')
+
+  const filterEnabled = useField({ defaultValue: isEnabled ? true : false })
+  const switchFilter = useField({ defaultValue:   constants.BOOLEAN[search.get('switch')] || false })
+  const connectedFilter = useField({ defaultValue: constants.BOOLEAN[search.get('connected')]|| false })
 
   const onChangeFilter = (checked, filter) => {
-    filter === 'switch' && switchFilter.onChange(checked)
-    filter === 'connected' && connectedFilter.onChange(checked)
+    if (filter === 'switch') {
+      switchFilter.onChange(checked)
+      search.set('switch', checked)
+    }
+    if (filter === 'connected') {
+      connectedFilter.onChange(checked)
+      search.set('connected', checked)
+    }
+
+    setSearch(search)
     onChange({
       switch: filter === 'switch' ? checked : switchFilter.value,
       connected: filter === 'connected' ? checked : connectedFilter.value
@@ -35,10 +49,19 @@ function SwitchFiltersPanel({ onChange, onEnabledChange }) {
       <Col offset={1} span={1}>
         <Tooltip title='Habilitar filtros'>
           <Checkbox style={{ margin: '0 1rem' }} checked={filterEnabled.value} onChange={e => {
-            onEnabledChange(!filterEnabled.value)
             filterEnabled.onChange(e)
             switchFilter.value === true && switchFilter.onChange(false)
             connectedFilter.value === true && connectedFilter.onChange(false)
+
+            if(!filterEnabled.value === false) {
+              search.delete('switch')
+              search.delete('connected')
+            }else {
+              search.set('switch', switchFilter.value)
+              search.set('connected', connectedFilter.value)
+            }
+            setSearch(search)
+            onEnabledChange(!filterEnabled.value)
           }} />
         </Tooltip>
       </Col>
