@@ -1,11 +1,12 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { notification, RadioGroup } from '../../components/primitives';
-import { useField, useNetwork, useOrder, useProfiles } from '../../hooks'
+import { useField, useInterval, useNetwork, useOrder, useProfiles } from '../../hooks'
 import { useForm } from '../../components/Form';
 import { JoinGroupsForm, InteractionForm, PublicationForm, ShareGroupsForm, ReportsForm, AvailableMessage, FollowForm, DirectForm } from './components';
-import { constants, polling } from '../../utilities';
+import { constants } from '../../utilities';
 import OrderFactory from './application'
+import { useEffect } from 'react';
 
 function NewOrder() {
     const defaults = {
@@ -27,17 +28,12 @@ function NewOrder() {
     const { networks } = useNetwork()
     const [form] = useForm()
 
-    const directPolling = polling(5, getDirectOrder)
-
     const networkRadio = useField({ defaultValue: defaults.network })
     const variantRadio = useField({ defaultValue: defaults.variant })
 
-    useEffect(async () => {
-        if (order?._id) {
-            directPolling.start()
-            variantRadio.onChange('direct')
-        }
-    }, [order])
+    useInterval(() => order?._id && getDirectOrder(), 5)
+
+    useEffect(() => order?.options.direct === true && variantRadio.onChange('direct'), [order])
 
     const onFinishForm = (values) => {
         const variantId = constants.ORDER_VARIANTS[networkRadio.value].find(v => v.name === variantRadio.value).id
@@ -50,8 +46,7 @@ function NewOrder() {
         createOrder(new OrderFactory().createNetworkOrder(networkRadio.value, createdOrder))
             .then(() => {
                 if (variantRadio.value === 'direct') {
-                    directPolling.start()
-                    return
+                    getDirectOrder()
                 }
                 notification.success('Orden creada con exito')
                 resetLocalOrder()
@@ -66,7 +61,7 @@ function NewOrder() {
         resetLocalOrder()
         form.resetFields()
         if (value.target.value === 'direct') {
-            await getDirectOrder()
+            getDirectOrder()
         }
         variantRadio.onChange(value)
     }

@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ManageTable } from '../../components/templates'
-import { constants, date, polling } from '../../utilities';
+import { constants, date } from '../../utilities';
 import { DeliveryDateIndicator, StatusIndicator, Summary } from './components/indicators';
 import NetworkLogo from './components/indicators/NetworkLogo';
 import { Badge, Col, Row, Tooltip } from 'antd';
 import { CircularBorder, FilterSearchInput, Label, Selector, TableColumn } from '../../components';
 import { Link, useSearchParams } from 'react-router-dom';
 import { ProfileOutlined } from '@ant-design/icons';
-import { useNetwork, useOrder } from '../../hooks';
+import { useInterval, useNetwork, useOrder } from '../../hooks';
 
 function Orders(props) {
 
-  const { orders, listOrders, pagination } = useOrder()
+  const { orders, listOrders, pagination } = useOrder('orders', { initialPagination: true })
   const { networks } = useNetwork()
   const [search, setSearch] = useSearchParams()
 
@@ -66,16 +66,12 @@ function Orders(props) {
     },
   ]
 
-  const ordersPolling = polling(5, listOrders)
-
-  useEffect(() => {
-    const inProgressOrder = orders?.find(o =>
-      (o.status === 'CREATED' || o.status === 'IN_PROGRESS') && new Date(o.createdAt) > date.offset(new Date(), -date.DAY)
-    )
+  useInterval(() => {
+    const inProgressOrder = orders?.find(o => (o.status === 'CREATED' || o.status === 'IN_PROGRESS') && new Date(o.createdAt) > date.offset(new Date(), -date.DAY))
     if (inProgressOrder !== undefined) {
-      ordersPolling.start()
+      listOrders(pagination.page, pagination.limit)
     }
-  }, [orders])
+  }, 5)
 
   const onNetworkChange = (network) => {
     search.set('network', network)
@@ -117,12 +113,12 @@ function Orders(props) {
         </Col>
       </Row>
       <Row justify='center' align='middle' style={{ marginBottom: '1.5rem' }} wrap={true}>
-        <Col pull={1} xs={{ pull: 0 }} style={{ marginBottom: '.5rem'}}>
+        <Col md={{ pull: 1 }} xs={{ pull: 0 }} style={{ marginBottom: '.5rem' }}>
           <Label>
             Red:
           </Label>
         </Col>
-        <Col span={4} pull={1} md={4} xs={{ span: 18, pull: 0 }} style={{ marginBottom: '.5rem'}} >
+        <Col md={{ span: 4, pull: 1}} xs={{ span: 18, pull: 0 }} style={{ marginBottom: '.5rem' }} >
           <Selector
             data={[{ _id: 'all', label: 'Todas' }, ...networks]}
             config={{ value: '_id', label: 'label' }}
@@ -131,12 +127,12 @@ function Orders(props) {
             style={{ width: '100%' }}
           />
         </Col>
-        <Col push={1} xs={{ push: 0 }}>
+        <Col xs={{ push: 0 }} md={{ push: 1 }}  style={{ marginBottom: '.5rem' }}>
           <Label>
             Tipo:
           </Label>
         </Col>
-        <Col span={4} push={1} md={4} xs={{ span: 18, push: 0 }}>
+        <Col md={{ span: 4, push: 1}} xs={{ span: 18, push: 0 }}  style={{ marginBottom: '.5rem' }}>
           <Selector
             data={variantsData()}
             defaultValue={search.get('variant') || 'all'}

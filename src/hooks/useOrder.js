@@ -10,8 +10,9 @@ import { DEFAULT_PAGINATE_LIMIT } from "../constants/orders";
  * 
  * @param {( 'orders' | 'order' | 'direct' )} [service]
  * @param {object} [config]
+ * @param {boolean} [config.initialPagination]
  */
-const useOrder = (service = 'orders', config) => {
+const useOrder = (service = 'orders', config = { initialPagination: false }) => {
 	const { currentUser } = useUser()
 	const { username } = currentUser()
 	const init = {
@@ -58,7 +59,8 @@ const useOrder = (service = 'orders', config) => {
 	const [order, setOrder] = useState(init)
 	const [pagination, setPagination] = usePagination({
 		page: 1,
-		limit: DEFAULT_PAGINATE_LIMIT
+		limit: DEFAULT_PAGINATE_LIMIT,
+		initialPagination: config.initialPagination
 	})
 	const [search] = useSearchParams()
 
@@ -109,7 +111,6 @@ const useOrder = (service = 'orders', config) => {
 			.createOrder(orderObject)
 			.then(response => {
 				resultHandler(response, result => {
-					console.log(result)
 					setOrder(result)
 				})
 			})
@@ -125,7 +126,7 @@ const useOrder = (service = 'orders', config) => {
 
 	const getDirectOrder = () => {
 		return orderService
-			.listOrders({ direct: true })
+			.getDirectOrder()
 			.then(response => {
 				resultHandler(response, ([result]) => setOrder({ ...order, ...result }))
 				return response.data

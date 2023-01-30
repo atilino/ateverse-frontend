@@ -12,8 +12,9 @@ import { constants } from '../utilities'
 /**
  * @param {( 'devices' | 'logs' | 'processes' | 'device' )} [service]
  * @param {object} [config]
+ * @param {boolean} [config.initialPagination]
  */
-const useDevice = (service, config) => {
+const useDevice = (service, config = { initialPagination: false }) => {
 
     /** @type {[IDevice[], function]} */
     const [devices, setDevices] = useState([])
@@ -24,7 +25,8 @@ const useDevice = (service, config) => {
     const [processes, setProcesses] = useState()
     const [pagination, setPagination] = usePagination({
         page: 1,
-        limit: DEFAULT_PAGINATE_LIMIT
+        limit: DEFAULT_PAGINATE_LIMIT,
+        initialPagination: config.initialPagination
     })
     const [search] = useSearchParams()
 
@@ -55,7 +57,6 @@ const useDevice = (service, config) => {
      * @returns {Promise}
      */
     const listDevices = (page, limit, filters) => {
-        console.log( search.get('status'))
         filters = {
             imei: search.get('imei'),
             status: search.get('status'),
