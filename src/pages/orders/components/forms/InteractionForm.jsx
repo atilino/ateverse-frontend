@@ -76,7 +76,7 @@ function InteractionForm({
             </FormItem>
 
             <FormItem label="Comentarios" name="commentsText">
-                <Input.TextArea showCount={network === 'twitter' ? true : false} maxLength={network === 'twitter' ? 280 : null} />
+                <Input.TextArea/>
             </FormItem>
             {network !== 'instagram' &&
                 <FormItem label="Compartidos" name="shares">
