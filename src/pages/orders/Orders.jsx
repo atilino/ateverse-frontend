@@ -7,14 +7,14 @@ import { Badge, Col, Row, Tooltip } from 'antd';
 import { CircularBorder, FilterSearchInput, Label, Selector, TableColumn } from '../../components';
 import { Link, useSearchParams } from 'react-router-dom';
 import { ProfileOutlined } from '@ant-design/icons';
-import { useInterval, useNetwork, useOrder } from '../../hooks';
+import { useInterval, useNetwork, useOrder, useResponsiveBreakpoints } from '../../hooks';
 
 function Orders(props) {
 
   const { orders, listOrders, pagination } = useOrder('orders', { initialPagination: true })
   const { networks } = useNetwork()
   const [search, setSearch] = useSearchParams()
-
+  const { sm } = useResponsiveBreakpoints()
   const columns = [
     {
       title: 'Red',
@@ -33,7 +33,6 @@ function Orders(props) {
       align: 'center',
       dataIndex: 'variant',
       key: 'variant',
-      responsive: ['lg'],
       render: (variant, { network, options, status }) => (
         <>
           {options.direct && status === 'IN_PROGRESS' &&
@@ -56,12 +55,14 @@ function Orders(props) {
       title: "Estado",
       dataIndex: "status",
       key: "status",
+      responsive: ['lg'],
       render: status => <StatusIndicator status={status} />
     },
     {
       title: "Fecha de entrega",
       dataIndex: "deliveryAt",
       key: "deliveryAt",
+      responsive: ['lg'],
       render: date => <DeliveryDateIndicator deliveryDate={date} />
     },
   ]
@@ -154,7 +155,7 @@ function Orders(props) {
               pageSizeOptions: [5, 10, 20],
               showSizeChanger: true,
               total: pagination.totalResults,
-              showTotal: (total, [from, to]) => `${from} a ${to} de ${total} ordenes encontradas`,
+              showTotal: (total, [from, to]) => `${from} a ${to} de ${total} ${sm ? '' : 'ordenes encontradas'}`,
               onChange: page => page !== pagination.page && listOrders(page, pagination.limit),
               onShowSizeChange: (current, limit) => listOrders(current, limit),
             }}
