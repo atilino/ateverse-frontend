@@ -6,8 +6,7 @@ import { ManageTable } from 'components/templates';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { constants } from 'utilities/index';
-import useAccount from 'hooks/useAccount';
-import useAuth from 'hooks/useAuth';
+import { useAccount, useAuth, useResponsiveBreakpoints } from '../../../hooks'
 
 
 const ACTIONS = [
@@ -47,8 +46,9 @@ function AccountsTable({
   onStatusChange
 }) {
 
+  const { xs } = useResponsiveBreakpoints()
   const { isAdmin } = useAuth()
-  const { accounts, accountsPagination, getAccounts } = useAccount()
+  const { accounts, pagination, getAccounts } = useAccount({ service: 'accounts' }, { limit: xs ? 10 : 5 })
 
   const COLUMNS = [
     {
@@ -59,8 +59,8 @@ function AccountsTable({
       responsive: ['md'],
       ...searchProps({
         index: 'imei',
-        onSearch: (value) => getAccounts(1, accountsPagination.limit, { imei: value }),
-        onReset: () => getAccounts()
+        onSearch: (value) => getAccounts(pagination.page, pagination.limit, { imei: value }),
+        onReset: () => getAccounts(pagination.page, pagination.limit)
       })
     },
     {
@@ -69,8 +69,8 @@ function AccountsTable({
       key: 'name',
       ...searchProps({
         index: 'nombre',
-        onSearch: (value) => getAccounts(1, accountsPagination.limit, { name: value }),
-        onReset: () => getAccounts()
+        onSearch: (value) => getAccounts(pagination.page, pagination.limit, { name: value }),
+        onReset: () => getAccounts(pagination.page, pagination.limit)
       })
     },
     {
@@ -80,8 +80,8 @@ function AccountsTable({
       responsive: ['md'],
       ...searchProps({
         index: 'telefono',
-        onSearch: (value) => getAccounts(1, accountsPagination.limit, { phone: value }),
-        onReset: () => getAccounts()
+        onSearch: (value) => getAccounts(pagination.page, pagination.limit, { phone: value }),
+        onReset: () => getAccounts(pagination.page, pagination.limit)
       })
     },
     {
@@ -111,15 +111,16 @@ function AccountsTable({
       dataSource={accounts}
       onActionClick={handleAction}
       pagination={{
-        current: accountsPagination.page,
-        pageSize: accountsPagination.limit,
+        current: pagination.page,
+        pageSize: pagination.limit,
         pageSizeOptions: [5, 10, 20],
         showSizeChanger: true,
-        total: accountsPagination.totalResults,
-        showTotal: (total, [from, to]) => `${from} a ${to} de ${total} cuentas encontradas`,
-        onChange: page => page !== accountsPagination.page && getAccounts(page, accountsPagination.limit),
+        total: pagination.totalResults,
+        showTotal: (total, [from, to]) => `${from} a ${to} de ${total} ${xs ? '' : 'cuentas encontradas'}`,
+        onChange: page => page !== pagination.page && getAccounts(page, pagination.limit),
         onShowSizeChange: (current, limit) => getAccounts(current, limit),
       }}
+      actionResponsive={['md']}
     >
       <TableColumn
         title='Personalidad'
@@ -134,6 +135,7 @@ function AccountsTable({
             Ver
           </a>
         )}
+        responsive={['md']}
       />
       <TableColumn
         title='Estado'

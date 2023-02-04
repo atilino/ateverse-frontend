@@ -8,8 +8,8 @@ import { notification, Selector } from '../../../components/primitives';
 import { deleteModal, FormModal, ManageTable } from '../../../components/templates';
 import { forms } from '../../../resources/forms';
 import { actions } from '../../../resources/tables';
-import { TableColumn } from 'components/Table';
-import { useProfiles } from 'hooks';
+import { TableColumn } from '../../../components/Table';
+import { useProfiles } from '../../../hooks';
 import { COLUMNS, PROFILE_STATUS } from './constants'
 import { List } from "antd"
 

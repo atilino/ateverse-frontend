@@ -4,19 +4,19 @@ import { useState, useEffect } from 'react'
 import accountService from '../services/accounts'
 import interestService from '../services/interests'
 import { resultHandler } from './helpers'
+import usePagination from './usePagination'
 
 /**
  * @param {object} [config]
  * @param {('accounts' | 'accountsSummary')} config.service
+ * @param {object} [settings]
  */
-const useAccount = (config = { service: 'accounts' }) => {
+const useAccount = (config = { service: 'accounts' }, settings) => {
 	const [accounts, setAccounts] = useState([])
-	const [accountsPagination, setAccountsPagination] = useState({
-		limit: DEFAULT_PAGINATE_LIMIT,
+	const [pagination, setPagination] = usePagination({
+		limit: settings?.limit || DEFAULT_PAGINATE_LIMIT,
 		page: 1,
-		totalPages: 1,
-		totalResults: 0,
-		nextPage: null
+		initialPagination: true
 	})
 	const [account, setAccount] = useState({})
 	const [accountsSummary, setAccountsSummary] = useState([])
@@ -24,7 +24,7 @@ const useAccount = (config = { service: 'accounts' }) => {
 
 	useEffect(() => {
 		if (config.service === 'accounts') {
-			getAccounts()
+			getAccounts(pagination.page, settings?.limit || pagination.limit)
 			getAllPersonalityInterests()
 		} else if (config.service === 'accountsSummary') {
 			listAccountsSummary()
@@ -57,7 +57,7 @@ const useAccount = (config = { service: 'accounts' }) => {
 			.then(resultAccounts => {
 				const { data: { results, ...paginationData } } = resultAccounts
 				setAccounts(results)
-				setAccountsPagination(paginationData)
+				setPagination(paginationData)
 			})
 	}
 	const selectAndUpdateAccount = (accountObject) => {
@@ -141,7 +141,7 @@ const useAccount = (config = { service: 'accounts' }) => {
 	}
 	return {
 		accounts,
-		accountsPagination,
+		pagination,
 		account,
 		accountsSummary,
 		getAccount,

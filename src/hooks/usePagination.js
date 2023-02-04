@@ -2,19 +2,20 @@ import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
 
 export default function usePagination({ page = 0, limit = 10, initialPagination = false }) {
+  const [search, setSearch] = useSearchParams({ page, limit })
+
   const [pagination, setPagination] = useState({
-    page,
-    limit,
+    page: search.get('page') || page,
+    limit: search.get('limit') || limit,
     totalPages: 1,
     totalResults: 0,
     nextPage: null
   })
-  const [search, setSearch] = useSearchParams({ page, limit })
 
   useEffect(() => {
     if (initialPagination) {
-      search.set('page', search.get('page') || page)
-      search.set('limit', search.get('limit') || limit)
+      search.set('page', page)
+      search.set('limit', limit)
       setSearch(search)
     }
   }, [])

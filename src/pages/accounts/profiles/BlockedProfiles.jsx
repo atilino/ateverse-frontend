@@ -33,6 +33,7 @@ function BlockedProfiles() {
           dataIndex='status'
           key='status'
           align="center"
+          responsive={['md']}
           render={(value, record) => (
             <Selector
               value={value}

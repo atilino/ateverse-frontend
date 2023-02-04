@@ -10,7 +10,8 @@ export const COLUMNS = [
     title: 'Red social',
     dataIndex: 'network',
     key: 'network',
-    render: network => network?.name
+    render: network => network?.name,
+    responsive: ['md']
   },
   {
     title: 'Nombre',

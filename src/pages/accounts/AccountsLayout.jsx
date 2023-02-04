@@ -7,7 +7,7 @@ function AccountsLayout(props) {
   return (
     <Layout className="site-layout">
       <AppHeader 
-        title='Usuarios'
+        title='Cuentas'
         subTitle={<Subtitle/>}
       />
       <Layout.Content

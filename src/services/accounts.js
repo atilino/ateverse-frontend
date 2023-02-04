@@ -11,9 +11,13 @@ const headerConfig = {
 
 const getAccounts = async (page, limit, query) => {
     const { token } = currentUser()
+    console.log({page})
+
     headerConfig.headers['x-access-token'] = token
     page = page || 1
     limit = limit || DEFAULT_PAGINATE_LIMIT
+
+    console.log({page})
 
     let queryString = ''
     if (query?.name) queryString += `&name=${query.name}`

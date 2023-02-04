@@ -10,7 +10,7 @@ function ManageTable({
     onActionClick,
     size = "small",
     pagination = {},
-    actionResponsive,
+    actionResponsive=null,
     ...rest
 }) {
 
