@@ -44,47 +44,54 @@ function Dashboard(props) {
 
   return (
     <PageLayout title='Dashboard'>
-      <Row align='middle'>
-        <Col span={4}>
+      <Row align='middle' gutter={[10, 10]}>
+        <Col md={4} xs={24}>
           <Typography.Title level={3}>Métricas</Typography.Title>
         </Col>
-        <Col span={4}>
+        <Col md={4} xs={12}>
           <DownloadButton filename={generateReportName()} ext='pdf' onDownload={() => download('simplified')}>
             Reporte basico
           </DownloadButton>
         </Col>
-        <Col span={4}>
+        <Col md={4} xs={12}>
           <DownloadButton filename={generateReportName()} ext='pdf' onDownload={() => download('detailed')}>
             Reporte detallado
           </DownloadButton>
         </Col>
-        <Col span={3}>
+        <Col md={3} xs={12}>
           <Typography.Text> Red </Typography.Text>
           <Selector
             data={[{ label: 'Todas', name: 'Todas' }, ...networks]}
             onChange={networkSelector.onChange}
             config={{ value: 'name', label: 'label' }}
             defaultValue={networkSelector.value}
+            style={{
+              width: '70%'
+            }}
           />
         </Col>
-        <Col span={3}>
+        <Col md={3} xs={12}>
           <Typography.Text> Cliente </Typography.Text>
           <Selector
             data={[{ name: 'Todos' }, ...customers]}
             onChange={customerSelector.onChange}
             config={{ value: 'name', label: 'name' }}
             defaultValue={customerSelector.value}
+            style={{
+              width: '60%'
+            }}
           />
         </Col>
-        <Col span={6}>
+        <Col md={6} xs={24}>
           <DatePicker.RangePicker
             onChange={datePicker.onChange}
             defaultValue={datePicker.value}
+            style={{ width: '100%' }}
           />
         </Col>
       </Row>
       <Row gutter={[10, 10]} style={{ marginTop: '1.5rem' }}>
-        <Col span={6}>
+        <Col md={6} xs={24}>
           <BarChart
             labels={[]}
             datasets={[{
@@ -104,7 +111,7 @@ function Dashboard(props) {
             width='100%'
           />
         </Col>
-        <Col span={12}>
+        <Col md={12} xs={24}>
           <DoughnutChart
             labels={metrics.taskOrders.map(variantMetric => variantMetric.label)}
             datasets={[{
@@ -127,7 +134,7 @@ function Dashboard(props) {
             width='100%'
           />
         </Col>
-        <Col span={6}>
+        <Col md={6} xs={24}>
           <BarChart
             labels={[]}
             datasets={[{
@@ -155,12 +162,12 @@ function Dashboard(props) {
         {
           metrics.networkOrders.map(networkMetric => (
             networkSelector.value === 'Todas' ?
-              <Col span={6} key={networkMetric.name}>
+              <Col md={6} xs={12} key={networkMetric.name}>
                 <SingleValueCard title={networkMetric.label} value={networkMetric.qty} />
               </Col>
               :
               networkSelector.value === networkMetric.name &&
-              <Col span={6} key={networkMetric.name}>
+              <Col md={6} xs={12} key={networkMetric.name}>
                 <SingleValueCard title={networkMetric.label} value={networkMetric.qty} />
               </Col>
           ))
@@ -172,7 +179,7 @@ function Dashboard(props) {
       <Row gutter={[10, 10]}>
         {
           metrics.taskOrders.map(variantMetric => (
-            <Col span={6} key={variantMetric.name}>
+            <Col md={6} xs={12} key={variantMetric.name}>
               <SingleValueCard title={variantMetric.label} value={variantMetric.qty} />
             </Col>
           ))
@@ -184,7 +191,7 @@ function Dashboard(props) {
       <Row gutter={[10, 10]}>
         {
           metrics.customerOrders.map(customerMetric => (
-            <Col span={6} key={customerMetric.name}>
+            <Col md={6} xs={12} key={customerMetric.name}>
               <SingleValueCard title={customerMetric.name} value={customerMetric.qty} />
             </Col>
           ))
