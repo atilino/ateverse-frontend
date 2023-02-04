@@ -8,12 +8,18 @@ export default async function resolve(promise){
     }
     try{
         const data = await promise
+
+        if(data === undefined) {
+            deleteCurrentUser()
+            window.location.reload()
+            return resolved
+        }
+
         resolved.status = data.status
         resolved.data = data.body
         if(data.error) resolved.error = data.error
-
-        if(data.error.status === 401) deleteCurrentUser()
     }catch(e){
+        console.log(e)
         resolved.error = e
     }
     return resolved

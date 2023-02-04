@@ -10,6 +10,7 @@ function ManageTable({
     onActionClick,
     size = "small",
     pagination = {},
+    actionResponsive,
     ...rest
 }) {
 
@@ -31,7 +32,7 @@ function ManageTable({
                             }
                         </Space>
                     )}
-
+                    responsive={actionResponsive}
                 />
             }
         </Table>

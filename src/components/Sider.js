@@ -11,7 +11,7 @@ import {
 import { CompanyName } from '../components/primitives'
 import { Layout, Menu } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
-import { useResponsiveBreakpoints, useAuth } from 'hooks';
+import { useResponsiveBreakpoints, useAuth } from '../hooks';
 
 function Sider(props) {
     const { logout, isAdmin, isModerator } = useAuth()

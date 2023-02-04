@@ -146,6 +146,7 @@ function Devices() {
                     onChange: page => page !== pagination.page && listDevices(page, pagination.limit),
                     onShowSizeChange: (current, limit) => listDevices(current, limit),
                 }}
+                actionResponsive={['md']}
             >
                 <TableColumn
                     title="Conexión"
@@ -155,6 +156,7 @@ function Devices() {
                         <ConnectionIndicator state={connection} />
                     }
                     align="center"
+                    responsive={['md']}
                 />
                 <TableColumn
                     title="Switch"

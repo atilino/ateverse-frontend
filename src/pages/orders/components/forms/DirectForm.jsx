@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FormButton, FormInput, Button, FormCheckbox, ShareIcon, useForm, FormItem, FormLayout, FormSelect } from '../../../../components';
-import { useCustomer, useProfiles } from '../../../../hooks';
+import { useCustomer, useProfiles, useResponsiveBreakpoints } from '../../../../hooks';
 import { Col, Form, List, Row, Tooltip } from 'antd';
 import ReactionsInput from '../inputs/ReactionsInput'
 
@@ -17,7 +17,7 @@ function FollowForm({
 }) {
     const { profilesCount } = useProfiles({ type: 'available', network: 'facebook' })
     const { customers } = useCustomer()
-
+    const { xs } = useResponsiveBreakpoints()
     const [directForm] = useForm()
 
     const [comments, setComments] = useState([])
@@ -109,6 +109,7 @@ function FollowForm({
             >
 
                 <FormLayout
+                    style={{ width: '100%' }}
                     name='start-stop'
                     disabled={profilesCount === 0}
                     form={form}
@@ -117,7 +118,7 @@ function FollowForm({
                     noSubmit={true}
                 >
                     <Row justify='center'>
-                        <Col offset={2} span={14}>
+                        <Col md={{ span: 14, offset: 2 }} xs={24}>
                             <FormSelect
                                 item={itemProps}
                                 disabled={order.options.direct || false}
@@ -129,18 +130,20 @@ function FollowForm({
                         </Col>
                     </Row>
                     <Row justify='center'>
-                        <Col span={2}>
-                            <FormButton
-                                shape='round'
-                                type="primary"
-                                htmlType="submit"
-                                disabled={order.options.direct ? false : profilesCount === 0}
-                                danger={order.options.direct || false}
-                            >
-                                {order.options.direct ? 'Finalizar' : 'Iniciar'}
-                            </FormButton>
-                        </Col>
-                        <Col span={14}>
+                        {!xs &&
+                            <Col md={2}>
+                                <FormButton
+                                    shape='round'
+                                    type="primary"
+                                    htmlType="submit"
+                                    disabled={order.options.direct ? false : profilesCount === 0}
+                                    danger={order.options.direct || false}
+                                >
+                                    {order.options.direct ? 'Finalizar' : 'Iniciar'}
+                                </FormButton>
+                            </Col>
+                        }
+                        <Col md={14} xs={24}>
                             <FormInput
                                 item={itemProps}
                                 label="Link"
@@ -156,11 +159,24 @@ function FollowForm({
                                 disabled={order.options.direct || false}
                             />
                         </Col>
-
+                        {xs &&
+                            <Col xs={24}>
+                                <FormButton
+                                    shape='round'
+                                    type="primary"
+                                    htmlType="submit"
+                                    disabled={order.options.direct ? false : profilesCount === 0}
+                                    danger={order.options.direct || false}
+                                >
+                                    {order.options.direct ? 'Finalizar' : 'Iniciar'}
+                                </FormButton>
+                            </Col>
+                        }
                     </Row>
                 </FormLayout>
                 {order.options.direct &&
                     <FormLayout
+                        style={{ width: '100%' }}
                         name='direct'
                         disabled={profilesCount === 0}
                         form={directForm}
@@ -185,7 +201,7 @@ function FollowForm({
                             </FormItem>
                         </Row>
                         <Row justify='center'>
-                            <Col span={1}>
+                            <Col md={1} xs={3}>
                                 <FormItem {...itemProps} name="share">
                                     <Tooltip title="Compartir">
                                         <Button
@@ -209,7 +225,7 @@ function FollowForm({
                                     </Tooltip>
                                 </FormItem>
                             </Col>
-                            <Col span={13}>
+                            <Col md={13} xs={15}>
                                 <FormInput
                                     item={itemProps}
                                     size='middle'
@@ -217,7 +233,7 @@ function FollowForm({
                                     placeholder="Comenta algo..."
                                 />
                             </Col>
-                            <Col span={2}>
+                            <Col md={2} xs={6}>
                                 <FormButton
                                     htmlType="submit"
                                     id='sent'
@@ -230,7 +246,7 @@ function FollowForm({
                             </Col>
                         </Row>
                         <Row justify='center' span={14}>
-                            <Col span={16}>
+                            <Col md={16} xs={24}>
                                 <List
                                     loadMore={loadMore}
                                     style={{ backgroundColor: '#ffff' }}

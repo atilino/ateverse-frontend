@@ -19,5 +19,6 @@ export const setCurrentUser = ({ username, email, roles, token }) =>{
 }
 
 export const deleteCurrentUser = () => {
-    sessionStorage.removeItem('user')
+    console.log('delete current user')
+    localStorage.setItem('user', null)
 }
