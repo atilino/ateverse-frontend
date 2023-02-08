@@ -111,7 +111,6 @@ function NewOrder() {
                         />
                     </Row>
                     <Row justify='center' style={{ marginBottom: '1rem' }}>
-                        :
                         <RadioGroup
                             options={constants.ORDER_VARIANTS[networkRadio.value].map(({ name, label }) => ({ value: name, label }))}
                             type="button"

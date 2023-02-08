@@ -8,8 +8,7 @@ import { constants } from '../../../../utilities'
 /**
  * @typedef {object} ShareGroupsOptions
  * @prop {string} link
- * @prop {string} profileId
- * @prop {Array<{ name: string, comment: string }>} groups
+ * @prop {Array<{ groupId: string, comment: string }>} groups
  */
 /** @implements {IOrder} */
 class ShareGroups extends Order {
@@ -33,8 +32,7 @@ class ShareGroups extends Order {
   validate() {
     if (this.variant !== 2) return false
     if (typeof this.network !== 'string') return false
-    if (typeof this.options.profileId !== 'string') return false
-    if (this.options.groups.filter(g => typeof g.comment !== 'string' || typeof g.name !== 'string').length) return false
+    if (this.options.groups.filter(g => typeof g.comment !== 'string' || typeof g.groupId !== 'string').length) return false
     if(typeof this.options.link !== 'string' || !constants.PATTERNS.FACEBOOK.GROUPS.test(this.options.link)) return false
     return true
 

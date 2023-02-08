@@ -4,7 +4,7 @@ import React from 'react';
 import { FormItem, FormList } from '../../../../components/Form';
 import { Selector } from '../../../../components/primitives';
 
-function ShareGroupsInput({ groups }) {
+function ShareGroupsInput({ groups, selectedGroups }) {
     return (
         <FormList name="groups">
             {(fields, { add, remove }) => (
@@ -13,14 +13,15 @@ function ShareGroupsInput({ groups }) {
                         <div key={key} style={{ display: 'flex', justifyContent: 'start' }}>
                             <FormItem
                                 {...restField}
-                                name={[name, 'name']}
+                                name={[name, 'groupId']}
                                 rules={[{ required: true, message: 'Se necesita un grupo' }]}
                                 style={{ width: '50%', marginRigth: '2%', marginBottom: '2%' }}
                             >
                                 <Selector
                                     data={groups}
                                     placeholder="Selecciona un grupo"
-                                    config={{ label: 'name', value: 'name' }}
+                                    config={{ label: 'name', value: '_id' }}
+                                    onChange={() => groups}
                                 />
                             </FormItem>
                             <FormItem

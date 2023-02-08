@@ -114,10 +114,10 @@ const getAvailableProfiles = async (network) => {
     headerConfig.headers['x-access-token'] = token
     return (await resolver(axios.get(config.BACKEND_URL + `/accounts/${network}/available`, headerConfig)))
 }
-const getProfileGroups = async (id) => {
+const listProfilesGroups = async (id) => {
     const { token } = currentUser()
     headerConfig.headers['x-access-token'] = token
-    return (await resolver(axios.get(config.BACKEND_URL + `/accounts/profiles/${id}/groups`, headerConfig)))
+    return (await resolver(axios.get(config.BACKEND_URL + `/accounts/profiles/groups`, headerConfig)))
 }
 
 //Account logs
@@ -144,7 +144,7 @@ export default {
     deleteProfileById,
     getAvailableProfiles,
     getActiveProfiles,
-    getProfileGroups,
+    listProfilesGroups,
     updateAccountStatus,
     updateProfileStatus
 }

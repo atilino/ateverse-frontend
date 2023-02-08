@@ -4,11 +4,11 @@ import FormTemplate from '../FormTemplate';
 import { ShareGroupsInput } from '..'
 import useProfiles from '../../../../hooks/useProfiles';
 import { validateLink } from '../../utilities';
-import { filterUndefined } from 'utilities/index';
+import { haveRepeatedValueByKey, filterUndefined } from '../../../../utilities';
 
 function ShareGroupsForm({ form, initialValues, onValuesChange, onFinish, onError }) {
 
-    const { profiles, groups, getProfileGroups } = useProfiles({ type: 'active', network: 'facebook' })
+    const { profiles, groups, filterProfilesGroups } = useProfiles({ type: 'groups', network: 'facebook' })
     return (
         <FormTemplate
             priority
@@ -16,44 +16,21 @@ function ShareGroupsForm({ form, initialValues, onValuesChange, onFinish, onErro
             form={form}
             initialValues={initialValues}
             onValuesChange={values => {
-                const { profileId, groups } = values
-
-                if (profileId) getProfileGroups(profileId)
-                if (groups) {
-                    groups = filterUndefined(groups)
-                }
-                onValuesChange({ shareGroups: values })
+                onValuesChange({ options: { groups: values.groups } })
             }}
             onFinish={values => {
-
                 if (!validateLink('facebook', values.link)) return onError('URL no valida', 'Compruebe su link')
-                if (values.groups) {
-                    values.groups = values.groups.map(group => {
-                        return {
-                            name: group.name,
-                            comment: group.comment ? group.comment : ''
-                        }
-                    })
+                if (haveRepeatedValueByKey(values.groups, 'groupId')) {
+                    return onError('Grupos repetidos', 'Algunos grupos ya se encuentran seleccionados')
                 }
-                onFinish({ options: values, priority: true, customer: values.customer })
+                onFinish({
+                    options: values.groups.map(group => ({ ...group, comment: group.comment || '' })),
+                    priority: true,
+                    customer: values.customer
+                })
             }}
         >
             <FormInput label="Link" name="link" />
-            <FormSelect
-                label="Perfil"
-                name="profileId"
-                data={profiles}
-                config={{
-                    label: "accountId name",
-                    value: "_id"
-                }}
-                rules={[
-                    {
-                        required: true,
-                        message: 'Se requiere seleccionar un perfil'
-                    },
-                ]}
-            />
             <FormItem
                 label="Grupos"
                 name="groups"
@@ -63,7 +40,7 @@ function ShareGroupsForm({ form, initialValues, onValuesChange, onFinish, onErro
                         message: 'Se requiere seleccionar un grupo'
                     },
                 ]}>
-                <ShareGroupsInput groups={groups} />
+                <ShareGroupsInput groups={groups} selectedGroups={initialValues.options.groups} />
             </FormItem>
         </FormTemplate>
     );
