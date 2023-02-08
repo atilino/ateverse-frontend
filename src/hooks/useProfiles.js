@@ -12,6 +12,10 @@ const useProfiles = ({ type = 'all', network = 'facebook' } = {}) => {
         if (type === 'blocked') getBlockedProfiles(network)
         if (type === 'available') getAvailableProfiles(network)
         if (type === 'active') getActiveProfiles(network)
+        if (type === 'groups') {
+            listProfilesGroups()
+            getActiveProfiles(network)
+        }
     }, [])
 
     const getAllProfiles = async (network) => {
@@ -23,13 +27,19 @@ const useProfiles = ({ type = 'all', network = 'facebook' } = {}) => {
             })
     }
 
-    const getProfileGroups = async (id) => {
+    const listProfilesGroups = async () => {
         accountService
-            .getProfileGroups(id)
+            .listProfilesGroups()
             .then(result => {
                 if (result.error) throw Error(result.error)
                 else setGroups(result.data)
             })
+    }
+
+    const filterProfilesGroups = (_id) => {
+        const filtered = groups.filter(group => group._id!== _id)
+        setGroups(filtered)
+        return filtered
     }
 
     const getBlockedProfiles = async (network) => {
@@ -111,11 +121,12 @@ const useProfiles = ({ type = 'all', network = 'facebook' } = {}) => {
         getBlockedProfiles,
         getAvailableProfiles,
         getActiveProfiles,
-        getProfileGroups,
+        listProfilesGroups,
         createProfile,
         updateProfile,
         updateProfileStatus,
-        deleteProfile
+        deleteProfile,
+        filterProfilesGroups
     }
 }
 
