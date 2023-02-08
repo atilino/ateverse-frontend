@@ -9,6 +9,7 @@ import ReactionsInput from "./inputs/ReactionsInput"
 import AvailableMessage from "./AvailableMessage"
 import FollowForm from "./forms/FollowForm"
 import DirectForm from "./forms/DirectForm"
+export * from './inputs'
 
 export {
     InteractionForm,
