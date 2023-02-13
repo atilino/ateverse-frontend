@@ -170,6 +170,7 @@ function NewOrder() {
                 }
                 {variantRadio.value === 'report' &&
                     <ReportsForm
+                        network={networkRadio.value}
                         initialValues={order}
                         onValuesChange={updateLocalOrder}
                         form={form}

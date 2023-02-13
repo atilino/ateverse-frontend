@@ -55,6 +55,7 @@ const ORDER_VARIANTS = {
   instagram: [
     { id: 0, label: 'Interacción', name: 'interaction' },
     { id: 1, label: 'Seguir', name: 'follow' },
+    { id: 2, label: 'Reportar', name: 'report' },
   ],
   twitter: [
     { id: 0, label: 'Interacción', name: 'interaction' },
