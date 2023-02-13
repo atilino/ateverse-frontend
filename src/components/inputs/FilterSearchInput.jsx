@@ -13,6 +13,7 @@ import { useSearchParams } from 'react-router-dom';
  * @param {object} props
  * @param {onSubmitCallback} props.onSubmit
  * @param {Array<{ label: string, value: string }>} props.filters
+ * @param {string} props.value
  * @param {string} props.defaultFilter
  * @returns {React.Component}
  */
@@ -65,6 +66,7 @@ function FilterSearchInput({ onSubmit, filters, defaultFilter, onFilterChange=()
     <Input
       placeholder='Buscar'
       addonBefore={selectFilter}
+      value={search.get(filterSelector.value)}
       style={style}
       onChange={handleChange}
       onKeyPress={handleKeyPress}

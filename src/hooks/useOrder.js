@@ -147,6 +147,17 @@ const useOrder = (service = 'orders', config = { initialPagination: false }) => 
 			.then(resetLocalOrder)
 	}
 
+	const updateOrder = (id, orderObject) => {
+		return orderService
+			.updateOrder(id, orderObject)
+			.then(response => {
+				resultHandler(response, result => {
+					setOrder(result)
+					setOrders(orders.map(order => order._id === id ? { ...order, ...result } : order))
+				})
+			})
+	}
+
 	return {
 		listOrders,
 		order,
@@ -158,7 +169,8 @@ const useOrder = (service = 'orders', config = { initialPagination: false }) => 
 		getDirectOrder,
 		patchDirectOrder,
 		completeOrder,
-		pagination
+		pagination,
+		updateOrder
 	}
 }
 

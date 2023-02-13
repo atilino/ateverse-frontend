@@ -168,6 +168,13 @@ function OrderDetail() {
           render: (text, record) => <Check state={record.executed.follower} />
         }
       ],
+      2: [
+        {
+          title: 'Reporte',
+          align: 'center',
+          render: (text, record) => <Check state={record.executed.report} />
+        }
+      ],
     }
   }
 
@@ -246,7 +253,7 @@ function OrderDetail() {
             }
           </>
         }
-        {order.network.name === 'facebook' &&
+        {order.network.name === 'facebook' && (
           (order.variant === 1 || order.variant === 2) &&
           <Item label='Grupos'>
             <Row justify='center' align='middle'>
@@ -265,8 +272,8 @@ function OrderDetail() {
               {order.executed.followers}/{order.options.followers}
             </Row>
           </Item>
-        }
-        {order.network.name === 'twitter' &&
+        )}
+        {order.network.name === 'twitter' && (
           order.variant === 1 &&
           <Item label='Publicaciones'>
             <Row justify='center' align='middle'>
@@ -279,15 +286,21 @@ function OrderDetail() {
               {order.executed.followers}/{order.options.followers}
             </Row>
           </Item>
-        }
-        {order.network.name === 'instagram' &&
+        )}
+        {order.network.name === 'instagram' && (
           order.variant === 1 &&
           <Item label='Seguidores'>
             <Row justify='center' align='middle'>
               {order.executed.followers}/{order.options.followers}
             </Row>
           </Item>
-        }
+          || order.variant === 2 &&
+          <Item label='Reportes'>
+            <Row justify='center' align='middle'>
+              {order.executed.reports}/{order.options.reports}
+            </Row>
+          </Item>
+        )}
 
       </Descriptions>
       {!sm &&

@@ -68,11 +68,18 @@ const createOrder = async (data) => {
     return await resolver(axios.post(config.BACKEND_URL + '/orders', data, headerConfig))
 }
 
+const updateOrder = async (id, data) => {
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return await resolver(axios.patch(config.BACKEND_URL + `/orders/${id}`, data, headerConfig))
+}
+
 export default {
     listOrders,
     getOrderById,
     createOrder,
     patchDirectOrder,
     completeOrder,
-    getDirectOrder
+    getDirectOrder,
+    updateOrder
 }
