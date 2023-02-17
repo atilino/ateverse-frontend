@@ -24,6 +24,9 @@ function StatusIndicator({ status }) {
       {status === 'ERROR' &&
         <CloseCircleFilled style={{ color: '#fc6262', margin: '0 0.5rem' }} />
       }
+      {status === 'CANCELED' &&
+        <CloseCircleFilled style={{ color: '#fc6262', margin: '0 0.5rem' }} />
+      }
       {constants.ORDER_STATUS[status]}
     </Row>
   );

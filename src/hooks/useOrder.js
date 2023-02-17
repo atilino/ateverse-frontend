@@ -158,6 +158,17 @@ const useOrder = (service = 'orders', config = { initialPagination: false }) => 
 			})
 	}
 
+	const cancelOrder = (id) => {
+		return orderService
+      .cancelOrder(id)
+      .then(response => {
+				resultHandler(response, result => {
+					setOrder(result)
+					setOrders(orders.map(order => order._id === id ? { ...order, ...result } : order))
+				})
+			})
+	}
+
 	return {
 		listOrders,
 		order,
@@ -170,7 +181,8 @@ const useOrder = (service = 'orders', config = { initialPagination: false }) => 
 		patchDirectOrder,
 		completeOrder,
 		pagination,
-		updateOrder
+		updateOrder,
+		cancelOrder
 	}
 }
 
