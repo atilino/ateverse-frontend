@@ -3,7 +3,8 @@ const ORDER_STATUS = Object.freeze({
   IN_PROGRESS: 'En progreso',
   DELAYED: 'Retrasada',
   FINISHED: 'Finalizada',
-  ERROR: 'Error'
+  ERROR: 'Error',
+  CANCELED: 'Cancelada',
 })
 
 const ACCOUNT_STATUS = Object.freeze([

@@ -10,7 +10,7 @@ function ManageTable({
     onActionClick,
     size = "small",
     pagination = {},
-    actionResponsive=null,
+    actionResponsive = null,
     ...rest
 }) {
 
@@ -27,7 +27,26 @@ function ManageTable({
                     render={(text, record) => (
                         <Space size="small" direction="vertical">
                             {actions.map((action, index) => (
-                                <a key={index} onClick={e => onActionClick(e, action.dataIndex, record._id, record)}>{action.title}</a>
+                                action.render ?
+                                    <a
+                                        key={index}
+                                        style={{
+                                            'pointerEvents': action?.disabled(record) === true? 'none' : 'auto',
+                                            ...action.style
+                                        }}
+                                        onClick={e => onActionClick(e, action.dataIndex, record._id, record)}
+                                    >
+                                        {action.render(action, record)}
+                                    </a>
+                                    :
+                                    <a
+                                        disabled={action.disabled ? action.disabled(record): false}
+                                        key={index}
+                                        style={action.style}
+                                        onClick={e => onActionClick(e, action.dataIndex, record._id, record)}
+                                    >
+                                        {action.title}
+                                    </a>
                             ))
                             }
                         </Space>

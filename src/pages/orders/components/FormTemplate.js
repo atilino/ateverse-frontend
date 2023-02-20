@@ -22,11 +22,6 @@ function FormTemplate({ priority, children, ...rest }) {
                 </Col>
             </Row>
             {children}
-            {!priority &&
-                <FormItem label="Prioritaria" name="priority" valuePropName="checked">
-                    <Checkbox />
-                </FormItem>
-            }
         </FormLayout>
     );
 }
