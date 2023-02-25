@@ -175,6 +175,32 @@ function OrderDetail() {
           render: (text, record) => <Check state={record.executed.report} />
         }
       ],
+    },
+    tiktok: {
+      0: [
+        {
+          title: 'Reacción',
+          align: 'center',
+          render: (text, record) => <Check state={record.executed.reaction} />
+        },
+        {
+          title: 'Comentario',
+          align: 'center',
+          render: (text, record) => record.executed?.comment
+        },
+        {
+          title: 'Compartido',
+          align: 'center',
+          render: (text, record) => <Check state={record.executed.share} />
+        },
+      ],
+      1: [
+        {
+          title: 'Seguido',
+          align: 'center',
+          render: (text, record) => <Check state={record.executed.follower} />
+        }
+      ],
     }
   }
 

@@ -4,14 +4,8 @@ import FormTemplate from '../FormTemplate';
 import useProfiles from '../../../../hooks/useProfiles';
 import { constants } from '../../../../utilities';
 
-function FollowForm({ network, initialValues, onValuesChange, form, onFinish, onError }) {
+function FollowForm({ network, placeholders, initialValues, onValuesChange, form, onFinish, onError }) {
     const { profilesCount } = useProfiles({ type: 'available', network: network })
-
-    const placeholders = {
-        facebook: 'https://www.facebook.com/',
-        twitter: 'https://www.twitter.com/',
-        instagram: 'https://www.instagram.com/',
-    }
 
     return (
         <FormTemplate

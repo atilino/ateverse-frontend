@@ -41,6 +41,9 @@ const PATTERNS = Object.freeze({
   INSTAGRAM: {
     MAIN: /(?:(?:http|https):\/\/)?(?:www.)?instagram.com\/?/
   },
+  TIKTOK: {
+    MAIN: /(?:(?:http|https):\/\/)?(?:www.)?tiktok.com\/?/
+  }
 })
 
 const ORDER_VARIANTS = {
@@ -62,6 +65,10 @@ const ORDER_VARIANTS = {
     { id: 0, label: 'Interacción', name: 'interaction' },
     { id: 1, label: 'Publicación', name: 'publication' },
     { id: 2, label: 'Seguir', name: 'follow' },
+  ],
+  tiktok: [
+    { id: 0, label: 'Interacción', name: 'interaction' },
+    { id: 1, label: 'Seguir', name: 'follow' },
   ]
 }
 

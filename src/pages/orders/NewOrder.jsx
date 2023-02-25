@@ -15,6 +15,13 @@ function NewOrder() {
         variant: 'interaction'
     }
 
+    const placeholders = {
+        facebook: 'https://www.facebook.com/',
+        twitter: 'https://www.twitter.com/',
+        instagram: 'https://www.instagram.com/',
+        tiktok: 'https://www.tiktok.com/',
+    }
+
     const {
         order,
         createOrder,
@@ -33,6 +40,7 @@ function NewOrder() {
     const networkRadio = useField({ defaultValue: defaults.network })
     const variantRadio = useField({ defaultValue: defaults.variant })
 
+    
     useInterval(() => order?._id && getDirectOrder(), 5)
 
     useEffect(() => order?.options.direct === true && variantRadio.onChange('direct'), [order])
@@ -130,6 +138,7 @@ function NewOrder() {
             <Row justify='center'>
                 {variantRadio.value === 'interaction' &&
                     <InteractionForm
+                        placeholders={placeholders}
                         maxInteraction={profilesCount}
                         network={networkRadio.value}
                         initialValues={order}
@@ -180,6 +189,7 @@ function NewOrder() {
                 }
                 {variantRadio.value === 'follow' &&
                     <FollowForm
+                        placeholders={placeholders}
                         network={networkRadio.value}
                         initialValues={order}
                         onValuesChange={updateLocalOrder}
@@ -193,6 +203,7 @@ function NewOrder() {
                         network={networkRadio.value}
                         initialValues={order}
                         onValuesChange={updateLocalOrder}
+                        placeholders={placeholders}
                         form={form}
                         onStart={onFinishForm}
                         onDirect={(values) => {

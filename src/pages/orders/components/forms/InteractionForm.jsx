@@ -16,18 +16,12 @@ function InteractionForm({
     form,
     onFinish,
     onError,
-    maxInteraction
+    maxInteraction,
+    placeholders
 }) {
     const [options, setOptions] = useState({
         live: false
     })
-
-    const placeholders = {
-        facebook: 'https://www.facebook.com/',
-        twitter: 'https://www.twitter.com/',
-        instagram: 'https://www.instagram.com/',
-    }
-
 
     return (
         <FormTemplate

@@ -8,6 +8,7 @@ import sad from './sad.png'
 import facebook from './facebook.png'
 import instagram from './instagram.png'
 import twitter from './twitter.png'
+import tiktok from './tiktok.png'
 
 export {
     love,
@@ -20,4 +21,5 @@ export {
     facebook,
     instagram,
     twitter,
+    tiktok,
 }

@@ -13,7 +13,8 @@ function FollowForm({
     onStart,
     onError,
     onDirect,
-    onComplete
+    onComplete,
+    placeholders
 }) {
     const { profilesCount } = useProfiles({ type: 'available', network: 'facebook' })
     const { customers } = useCustomer()
@@ -21,12 +22,6 @@ function FollowForm({
     const [directForm] = useForm()
 
     const [comments, setComments] = useState([])
-
-    const placeholders = {
-        facebook: 'https://www.facebook.com/',
-        twitter: 'https://www.twitter.com/',
-        instagram: 'https://www.instagram.com/',
-    }
 
     const itemProps = {
         wrapperCol: {
