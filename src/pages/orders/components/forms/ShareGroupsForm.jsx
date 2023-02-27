@@ -24,7 +24,10 @@ function ShareGroupsForm({ form, initialValues, onValuesChange, onFinish, onErro
                     return onError('Grupos repetidos', 'Algunos grupos ya se encuentran seleccionados')
                 }
                 onFinish({
-                    options: values.groups.map(group => ({ ...group, comment: group.comment || '' })),
+                    options: {
+                        groups: values.groups.map(group => ({ ...group, comment: group.comment || '' })),
+                        link: values.link
+                    },
                     priority: true,
                     customer: values.customer
                 })
