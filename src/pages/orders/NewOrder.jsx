@@ -1,13 +1,14 @@
 
 import React from 'react';
 import { notification, RadioGroup, Selector } from '../../components/primitives';
-import { useField, useInterval, useNetwork, useOrder, useProfiles, useResponsiveBreakpoints } from '../../hooks'
+import { useCustomer, useField, useInterval, useNetwork, useOrder, useProfiles, useResponsiveBreakpoints } from '../../hooks'
 import { useForm } from '../../components/Form';
 import { JoinGroupsForm, InteractionForm, PublicationForm, ShareGroupsForm, ReportsForm, AvailableMessage, FollowForm, DirectForm } from './components';
 import { constants } from '../../utilities';
 import OrderFactory from './application'
 import { useEffect } from 'react';
 import { Row } from 'antd';
+import { useSearchParams } from 'react-router-dom';
 
 function NewOrder() {
     const defaults = {
@@ -21,7 +22,9 @@ function NewOrder() {
         instagram: 'https://www.instagram.com/',
         tiktok: 'https://www.tiktok.com/',
     }
-
+	const [search] = useSearchParams()
+    const templateId = search.get('templateId')
+    
     const {
         order,
         createOrder,
@@ -30,23 +33,37 @@ function NewOrder() {
         getDirectOrder,
         patchDirectOrder,
         completeOrder
-    } = useOrder('direct')
+    } = useOrder( templateId? 'order' : 'direct', { orderId: templateId })
 
     const { profilesCount, getAvailableProfiles, profiles } = useProfiles({ type: 'available', network: defaults.network })
     const { networks } = useNetwork()
     const [form] = useForm()
     const { sm } = useResponsiveBreakpoints()
+    const { customers } = useCustomer()
 
     const networkRadio = useField({ defaultValue: defaults.network })
     const variantRadio = useField({ defaultValue: defaults.variant })
 
-    
-    useInterval(() => order?._id && getDirectOrder(), 5)
 
-    useEffect(() => order?.options.direct === true && variantRadio.onChange('direct'), [order])
+    useInterval(() => order?.options.direct === true && getDirectOrder(), 5)
+
+    useEffect(() => {
+        order?.options.direct === true && variantRadio.onChange('direct')
+        if (templateId && order._id) {
+            const variant = constants.getOrderVariant(order.network.name, order.variant)
+            networkRadio.onChange(order.network.name)
+            variantRadio.onChange(variant.name)
+            order.customer = order.customer._id
+            getAvailableProfiles(order.network.name, templateId)
+        }
+        if(customers.length) {
+            order.customer = customers[0]._id
+        }
+        form.setFieldsValue(order)
+    },[order, customers])
 
     const onFinishForm = (values) => {
-        const variantId = constants.ORDER_VARIANTS[networkRadio.value].find(v => v.name === variantRadio.value).id
+        const variantId = getOr.id
         const networkId = networks.find(n => n.name === networkRadio.value)._id
         const createdOrder = {
             ...values,
@@ -116,6 +133,8 @@ function NewOrder() {
                             onChange={onNetworkChange}
                             value={networkRadio.value}
                             defaultValue={networkRadio.defaultValue}
+
+                            disabled={templateId !== null}
                         />
                     </Row>
                     <Row justify='center' style={{ marginBottom: '1rem' }}>
@@ -126,6 +145,7 @@ function NewOrder() {
                             onChange={onVariantChange}
                             value={variantRadio.value}
                             defaultValue={variantRadio.defaultValue}
+                            disabled={templateId !== null}
                         />
                     </Row>
                 </>
@@ -146,6 +166,7 @@ function NewOrder() {
                         form={form}
                         onFinish={onFinishForm}
                         onError={onError}
+                        isTemplate={templateId !== null}
                     />
                 }
                 {variantRadio.value === 'join-groups' &&
@@ -165,6 +186,7 @@ function NewOrder() {
                         form={form}
                         onFinish={onFinishForm}
                         onError={onError}
+                        isTemplate={templateId !== null}
                     />
                 }
                 {variantRadio.value === 'share-groups' &&
@@ -175,6 +197,7 @@ function NewOrder() {
                         form={form}
                         onFinish={onFinishForm}
                         onError={onError}
+                        isTemplate={templateId !== null}
                     />
                 }
                 {variantRadio.value === 'report' &&
@@ -185,6 +208,7 @@ function NewOrder() {
                         form={form}
                         onFinish={onFinishForm}
                         onError={onError}
+                        isTemplate={templateId !== null}
                     />
                 }
                 {variantRadio.value === 'follow' &&
@@ -196,6 +220,7 @@ function NewOrder() {
                         form={form}
                         onFinish={onFinishForm}
                         onError={onError}
+                        isTemplate={templateId !== null}
                     />
                 }
                 {variantRadio.value === 'direct' &&

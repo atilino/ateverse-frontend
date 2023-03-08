@@ -62,6 +62,7 @@ function RadioInput({
             <>
 
                 <img
+                    key={0}
                     id={0}
                     src={like}
                     style={iconStyle} o
@@ -71,6 +72,7 @@ function RadioInput({
                     Object.entries(reactionIcons).map((icon, index) => (
 
                         <img
+                            key={index + 1}
                             id={index + 1}
                             src={icon[1]}
                             style={iconStyle}

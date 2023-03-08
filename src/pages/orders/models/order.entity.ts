@@ -3,5 +3,6 @@ export interface IOrder {
   options: object;
   variant: number;
   priority?: boolean;
-  validate()
+  customer: string;
+  validate(): boolean;
 }

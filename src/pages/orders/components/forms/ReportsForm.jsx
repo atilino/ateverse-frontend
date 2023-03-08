@@ -4,7 +4,15 @@ import FormTemplate from '../FormTemplate';
 import useProfiles from '../../../../hooks/useProfiles';
 import { constants } from '../../../../utilities';
 
-function ReportsForm({ network, initialValues, onValuesChange, form, onFinish, onError }) {
+function ReportsForm({
+        network,
+        initialValues,
+        onValuesChange,
+        form,
+        onFinish,
+        onError,
+        isTemplate
+    }) {
     const { profilesCount } = useProfiles({ type: 'available', network })
 
     const _REPORT_TYPES = [
@@ -62,7 +70,9 @@ function ReportsForm({ network, initialValues, onValuesChange, form, onFinish, o
                         required: true,
                         message: `El link debe ser de ${network}.`
                     }
-                ]} />
+                ]}
+                disabled={isTemplate}
+            />
             <FormSelect label="Tipo de reporte" name="options.type" data={network === 'facebook' ? _REPORT_TYPES : _REPORT_TYPES.slice(0, 2)} />
 
             <FormInputNumber

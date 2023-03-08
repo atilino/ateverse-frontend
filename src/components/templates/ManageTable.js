@@ -25,24 +25,28 @@ function ManageTable({
                     title="Acción"
                     key="action"
                     render={(text, record) => (
-                        <Space size="small" direction="vertical">
+                        <Space size="small" direction="vertical" align='start'>
                             {actions.map((action, index) => (
                                 action.render ?
                                     <a
                                         key={index}
                                         style={{
-                                            'pointerEvents': action?.disabled(record) === true? 'none' : 'auto',
+                                            'pointerEvents': action?.disabled && action?.disabled(record) === true? 'none' : 'auto',
                                             ...action.style
                                         }}
                                         onClick={e => onActionClick(e, action.dataIndex, record._id, record)}
+                                        disabled={action?.disabled ? action?.disabled(record): false}
                                     >
                                         {action.render(action, record)}
                                     </a>
                                     :
                                     <a
-                                        disabled={action.disabled ? action.disabled(record): false}
+                                        disabled={action?.disabled ? action?.disabled(record): false}
                                         key={index}
-                                        style={action.style}
+                                        style={{
+                                            'pointerEvents': action?.disabled && action?.disabled(record) === true? 'none' : 'auto',
+                                            ...action.style
+                                        }}
                                         onClick={e => onActionClick(e, action.dataIndex, record._id, record)}
                                     >
                                         {action.title}

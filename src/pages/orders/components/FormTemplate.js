@@ -1,6 +1,6 @@
-import { Checkbox, Col, Row } from 'antd';
+import { Col, Row } from 'antd';
 import React from 'react';
-import { FormItem, FormLayout, FormSelect } from '../../../components/Form';
+import { FormLayout, FormSelect } from '../../../components/Form';
 import { useCustomer } from '../../../hooks';
 
 function FormTemplate({ priority, children, ...rest }) {
@@ -9,7 +9,6 @@ function FormTemplate({ priority, children, ...rest }) {
         <FormLayout
             {...rest}
             style={{ width: '100%', ...rest.style }}
-            initialValues={{ ...rest.initialValues, customer: customers[0]?._id }}
         >
             <Row justify='center'>
                 <Col span={24}>

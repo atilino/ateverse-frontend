@@ -73,7 +73,7 @@ const ORDER_VARIANTS = {
 }
 
 const getOrderVariant = (networkName, variant) => {
-  return ORDER_VARIANTS[networkName]?.find(v => v.id === variant).label
+  return ORDER_VARIANTS[networkName]?.find(v => v.id === variant)
 }
 
 const BOOLEAN = {
