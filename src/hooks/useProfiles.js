@@ -51,9 +51,9 @@ const useProfiles = ({ type = 'all', network = 'facebook' } = {}) => {
             })
     }
 
-    const getAvailableProfiles = async (network) => {
+    const getAvailableProfiles = async (network, templateId) => {
         accountService
-            .getAvailableProfiles(network)
+            .getAvailableProfiles(network, templateId)
             .then(result => {
                 if (result.error) throw Error(result.error)
                 else setProfilesCount(result.data)

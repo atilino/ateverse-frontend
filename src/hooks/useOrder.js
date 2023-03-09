@@ -11,24 +11,17 @@ import { DEFAULT_PAGINATE_LIMIT } from "../constants/orders";
  * @param {( 'orders' | 'order' | 'direct' )} [service]
  * @param {object} [config]
  * @param {boolean} [config.initialPagination]
+ * @param {string} [config.orderId]
  */
-const useOrder = (service = 'orders', config = { initialPagination: false }) => {
+const useOrder = (service = 'orders', config) => {
 	const { currentUser } = useUser()
 	const { username } = currentUser()
 	const init = {
 		userId: username,
-		network: 'facebook',
-		link: '',
-		reactions: 0,
-		reactionType: 0,
-		comments: 0,
-		commentsText: '',
-		shares: 0,
+		network: {
+			name: 'facebook'
+		},
 		variant: 0,
-		publications: '',
-		joinGroups: {},
-		shareGroups: {},
-		commentsText: [],
 		priority: false,
 		options: {
 			link: undefined,
@@ -39,7 +32,8 @@ const useOrder = (service = 'orders', config = { initialPagination: false }) => 
 			publications: [],
 			groups: [],
 			reports: 0,
-			direct: false
+			direct: false,
+			watchTime: 0
 		},
 		executed: {
 			reactions: 0,
@@ -50,6 +44,7 @@ const useOrder = (service = 'orders', config = { initialPagination: false }) => 
 			reports: 0
 		},
 		customer: null,
+		templateId: null,
 		deliveryAt: new Date(),
 		createdAt: new Date(),
 		updatedAt: new Date()
@@ -60,7 +55,7 @@ const useOrder = (service = 'orders', config = { initialPagination: false }) => 
 	const [pagination, setPagination] = usePagination({
 		page: 1,
 		limit: DEFAULT_PAGINATE_LIMIT,
-		initialPagination: config.initialPagination
+		initialPagination: config?.initialPagination ?? false
 	})
 	const [search] = useSearchParams()
 

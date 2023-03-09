@@ -7,10 +7,15 @@ import {
   Summary,
 } from "./components/indicators";
 import NetworkLogo from "./components/indicators/NetworkLogo";
-import { Badge, Col, Modal, Row, Tooltip } from "antd";
-import { CircularBorder, notification, TableColumn } from "../../components";
-import { Link } from "react-router-dom";
-import { CloseCircleFilled, ExclamationCircleOutlined, ProfileOutlined } from "@ant-design/icons";
+import { Badge, Col, Row, Tooltip } from "antd";
+import {
+  CircularBorder,
+  ConfirmModal,
+  notification,
+  TableColumn,
+} from "../../components";
+import { Link, useNavigate } from "react-router-dom";
+import { CloseCircleFilled, ProfileOutlined } from "@ant-design/icons";
 import {
   useCustomer,
   useInterval,
@@ -18,6 +23,8 @@ import {
   useResponsiveBreakpoints,
 } from "../../hooks";
 import { FilterOrdersInput } from "./components";
+
+const { getOrderVariant } = constants;
 
 function Orders() {
   const {
@@ -27,10 +34,12 @@ function Orders() {
     pagination,
     updateOrder,
     updateLocalOrder,
-    cancelOrder
+    cancelOrder,
   } = useOrder("orders", { initialPagination: true });
   const { customers } = useCustomer();
   const [updateModal, setUpdateModal] = useState(false);
+  const navigate = useNavigate();
+
   const formFields = [
     {
       label: "Cliente",
@@ -73,10 +82,7 @@ function Orders() {
           {options.direct && status === "IN_PROGRESS" && (
             <Badge status="processing" color="#fc6262" />
           )}
-          {
-            constants.ORDER_VARIANTS[network.name].find((v) => v.id === variant)
-              .label
-          }
+          {getOrderVariant(network.name, variant).label}
         </>
       ),
     },
@@ -84,18 +90,13 @@ function Orders() {
       title: "Resumen",
       align: "center",
       responsive: ["lg"],
-      render: (text, { network, variant, options, executed }) => {
-        const variantName = constants.ORDER_VARIANTS[network.name].find(
-          (v) => v.id === variant
-        ).name;
-        return (
-          <Summary
-            variantName={variantName}
-            interactions={options}
-            executed={executed}
-          />
-        );
-      },
+      render: (text, { network, variant, options, executed }) => (
+        <Summary
+          variantName={getOrderVariant(network.name, variant).name}
+          interactions={options}
+          executed={executed}
+        />
+      ),
     },
     {
       title: "Estado",
@@ -113,8 +114,14 @@ function Orders() {
     },
   ];
 
-  const cancelableSatus = ["CREATED", "IN_PROGRESS"]
+  const cancelableSatus = ["CREATED", "IN_PROGRESS"];
 
+  const renderCreateAgainAction = (networkName, variant) => {
+    return (
+      getOrderVariant(networkName, variant).name !== "direct" &&
+      getOrderVariant(networkName, variant).name !== "join-groups"
+    );
+  };
   const actions = [
     {
       title: "Actualizar",
@@ -126,14 +133,29 @@ function Orders() {
       dataIndex: "cancel",
       key: "cancel",
       render: ({ title }, { status }) => (
-          <Row align="middle" justify="space-around">
-            <CloseCircleFilled style={{ color: cancelableSatus.includes(status) ? '#fc6262' : 'gray'}} />
-            <span style={{ color: cancelableSatus.includes(status) ? '#fc6262' : 'gray', marginLeft: ".2rem" }}>
-              {title}
-            </span>
-          </Row>
+        <Row align="middle" justify="space-around">
+          <CloseCircleFilled
+            style={{
+              color: cancelableSatus.includes(status) ? "#fc6262" : "gray",
+            }}
+          />
+          <span
+            style={{
+              color: cancelableSatus.includes(status) ? "#fc6262" : "gray",
+              marginLeft: ".2rem",
+            }}
+          >
+            {title}
+          </span>
+        </Row>
       ),
       disabled: ({ status }) => !cancelableSatus.includes(status),
+    },
+    {
+      title: "Crear de otra véz",
+      dataIndex: "create-again",
+      key: "create-again",
+      render: ({ title }, { network, variant }) => renderCreateAgainAction(network.name, variant) ? title : null
     },
   ];
 
@@ -149,25 +171,24 @@ function Orders() {
   }, 5);
 
   const handleActionClick = (e, action, id, data) => {
-    if(action === "update") {
+    if (action === "update") {
       setUpdateModal(true);
       updateLocalOrder(data);
     }
 
-    if(action === "cancel") {
-      Modal.confirm({
-        title: 'Cancelar orden',
-        content: '¿Está seguro de cancelar esta orden?',
-        icon: <ExclamationCircleOutlined />,
-        okText: 'Si',
-        okType: 'danger',
-        cancelText: 'No',
+    if (action === "cancel") {
+      ConfirmModal({
+        title: "Cancelar orden",
+        content: "¿Está seguro de cancelar esta orden?",
         onOk() {
-          cancelOrder(id)
-          notification.success('Orden cancelada')
-      },
-        onCancel() {},
-      })
+          cancelOrder(id);
+          notification.success("Orden cancelada");
+        },
+      });
+    }
+
+    if (action === "create-again") {
+      navigate(`/orders/new?templateId=${id}`);
     }
   };
 

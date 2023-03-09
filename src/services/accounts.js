@@ -109,10 +109,17 @@ const getActiveProfiles = async (network) => {
     headerConfig.headers['x-access-token'] = token
     return (await resolver(axios.get(config.BACKEND_URL + `/accounts/profiles/${network}/active`, headerConfig)))
 }
-const getAvailableProfiles = async (network) => {
+/**
+ * 
+ * @param {string} network
+ * @param {string} [templateId]
+ */
+const getAvailableProfiles = async (network, templateId) => {
     const { token } = currentUser()
+    let url = config.BACKEND_URL + `/accounts/${network}/available`
+    if(templateId) url += `?templateId=${templateId}`
     headerConfig.headers['x-access-token'] = token
-    return (await resolver(axios.get(config.BACKEND_URL + `/accounts/${network}/available`, headerConfig)))
+    return (await resolver(axios.get(url, headerConfig)))
 }
 const listProfilesGroups = async (id) => {
     const { token } = currentUser()
