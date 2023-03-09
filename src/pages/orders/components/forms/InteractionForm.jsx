@@ -28,11 +28,11 @@ function InteractionForm({
 			reactionType: values.options.reactionType
 				? values.options.reactionType
 				: 0,
-			comments: breakStringToArray(values.options.commentsText),
+			comments: breakStringToArray(values.options.commentsText || ''),
 			shares: values.options.shares,
 			watchTime: values.options.watchTime || 0,
 		};
-
+    console.log(values.options)
 		if (!validateLink(network, options.link))
 			return onError(
 				"URL no valida",
@@ -84,13 +84,6 @@ function InteractionForm({
         label="Link"
         name={["options", "link"]}
         placeholder={placeholders[network]}
-        rules={[
-          {
-            pattern: new RegExp(placeholders[network]),
-            required: true,
-            message: `El link debe ser de ${network}.`,
-          },
-        ]}
         disabled={isTemplate}
       />
       <FormItem label="Reacciones" name={["options", "reactions"]}>

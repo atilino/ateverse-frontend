@@ -22,7 +22,7 @@ function NewOrder() {
         instagram: 'https://www.instagram.com/',
         tiktok: 'https://www.tiktok.com/',
     }
-	const [search] = useSearchParams()
+	const [search, setSearch] = useSearchParams()
     const templateId = search.get('templateId')
     
     const {
@@ -63,12 +63,16 @@ function NewOrder() {
     },[order, customers])
 
     const onFinishForm = (values) => {
-        const variantId = getOr.id
+        const variantId = constants.ORDER_VARIANTS[networkRadio.value].find(v => v.name === variantRadio.value).id
         const networkId = networks.find(n => n.name === networkRadio.value)._id
         const createdOrder = {
             ...values,
             variant: variantId,
             network: networkId
+        }
+        if(templateId) {
+            search.delete('templateId')
+            setSearch(search)
         }
         createOrder(new OrderFactory().createNetworkOrder(networkRadio.value, createdOrder))
             .then(() => {
