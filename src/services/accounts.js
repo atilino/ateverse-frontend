@@ -134,6 +134,12 @@ const getAccountLogs = async (accountId) => {
     return (await resolver(axios.get(config.BACKEND_URL + `/accounts/${accountId}/logs`, headerConfig)))
 }
 
+const getMessages = async (accountId) => {
+    const { token } = currentUser()
+    headerConfig.headers['x-access-token'] = token
+    return (await resolver(axios.get(config.BACKEND_URL + `/accounts/${accountId}/messages`, headerConfig)))
+}
+
 export default {
     getAccounts,
     listAccountsSummary,
@@ -153,5 +159,6 @@ export default {
     getActiveProfiles,
     listProfilesGroups,
     updateAccountStatus,
-    updateProfileStatus
+    updateProfileStatus,
+    getMessages
 }

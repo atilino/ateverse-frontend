@@ -22,13 +22,13 @@ module.exports = () => {
         resolve: {
             alias: {
                 '/*': path.resolve(__dirname, 'src/'),
-                assets: path.resolve(__dirname, 'src/assets'),
-                models: path.resolve(__dirname, 'src/models'),
-                constants: path.resolve(__dirname, 'src/constants'),
-                components: path.resolve(__dirname, 'src/components'),
-                services: path.resolve(__dirname, 'src/services'),
-                utilities: path.resolve(__dirname, 'src/utilities'),
-                hooks: path.resolve(__dirname, 'src/hooks')
+                'assets': path.resolve(__dirname, 'src/assets'),
+                'models': path.resolve(__dirname, 'src/models'),
+                'constants': path.resolve(__dirname, 'src/constants'),
+                'components': path.resolve(__dirname, 'src/components'),
+                'services': path.resolve(__dirname, 'src/services'),
+                'utilities': path.resolve(__dirname, 'src/utilities'),
+                'hooks': path.resolve(__dirname, 'src/hooks')
             },
             extensions: ['*', '.js', '.jsx'],
         },
