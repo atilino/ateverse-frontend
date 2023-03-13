@@ -53,6 +53,7 @@ function Accounts(props) {
 				activityDays: object.activityDays,
 				interests: object.interests,
 			},
+			mobilePort: object.mobilePort
 		}
 	}
 	const updateAccountAndPersonality = async values => {
