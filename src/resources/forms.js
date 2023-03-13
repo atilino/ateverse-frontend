@@ -13,7 +13,13 @@ export const forms = {
                 },
             ]
         },
-
+        {
+            label: 'Puerto movil',
+            name: 'mobilePort',
+            key: 'mobilePort',
+            type: 'text',
+            rules: []
+        },
         {
             label: 'Teléfono',
             name: 'phone',
@@ -25,8 +31,7 @@ export const forms = {
                     message: 'El teléfono es requerido',
                 },
             ]
-        },
-
+        }
     ],
     devices: [
         {

@@ -1,4 +1,3 @@
-import { AlipayCircleOutlined } from '@ant-design/icons'
 import { DEFAULT_PAGINATE_LIMIT } from 'constants/accounts'
 import { useState, useEffect } from 'react'
 import accountService from '../services/accounts'
@@ -21,6 +20,9 @@ const useAccount = (config = { service: 'accounts' }, settings) => {
 	const [account, setAccount] = useState({})
 	const [accountsSummary, setAccountsSummary] = useState([])
 	const [personalityInterests, setPersonalityInterests] = useState([])
+
+	/** @type {[import('/models/account-message.model').AccountMessage[], React.Dispatch<any>]} */
+	const [messages, setMessages] = useState([])
 
 	useEffect(() => {
 		if (config.service === 'accounts') {
@@ -65,7 +67,7 @@ const useAccount = (config = { service: 'accounts' }, settings) => {
 	}
 
 	const listAccountsSummary = () => {
-	return accountService
+		return accountService
 			.listAccountsSummary()
 			.then(resultAccountsSummary => {
 				resultHandler(resultAccountsSummary, result => {
@@ -137,7 +139,16 @@ const useAccount = (config = { service: 'accounts' }, settings) => {
 					setPersonalityInterests(result)
 				})
 			})
+	}
 
+	const getMessages = (accountId) => {
+		return accountService
+			.getMessages(accountId)
+			.then(resultMessages => {
+				resultHandler(resultMessages, result => {
+					setMessages(result)
+			})
+		})
 	}
 	return {
 		accounts,
@@ -154,7 +165,9 @@ const useAccount = (config = { service: 'accounts' }, settings) => {
 		selectAndUpdateAccount,
 		updateAccountStatus,
 		getAccounts,
-		listAccountsSummary
+		listAccountsSummary,
+		messages,
+		getMessages
 	}
 }
 

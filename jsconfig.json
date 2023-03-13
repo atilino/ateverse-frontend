@@ -4,7 +4,6 @@
         "baseUrl": ".",
         "module": "commonjs",
         "paths": {
-            "/*": ["./src/*"],
             "assets/*": ["./src/assets/*"],
             "constants/*": ["./src/constants/*"],
             "components/*": ["./src/components/*"],
