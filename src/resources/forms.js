@@ -157,6 +157,13 @@ export const forms = {
             //         message: 'La contraseña es requerida',
             //     },
             // ]
+        },
+        {
+            label: 'Logueado',
+            name: ['_config','logged'],
+            key: 'logged',
+            type: 'checkbox',
+            valuePropName: 'checked',
         }
     ],
     personalityTemplates: [
