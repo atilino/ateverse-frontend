@@ -5,17 +5,20 @@
 import facebook  from './FacebookFactory'
 import twitter  from './TwitterFactory'
 import instagram  from './InstagramFactory'
-
+import tiktok from './TiktTokFactory'
+import youtube  from './YoutubeFactory'
 
 const networks = {
   facebook,
   twitter,
-  instagram
+  instagram,
+  tiktok,
+  youtube
 }
 
 /** Order factory for all networks */
 /** @implements {IOrderFactory}*/
-class OrderFactory {
+export class OrderFactory {
   /**
    * Create a order
    * @param {string} networkName Network name
@@ -28,4 +31,3 @@ class OrderFactory {
   }
 }
 
-export default OrderFactory

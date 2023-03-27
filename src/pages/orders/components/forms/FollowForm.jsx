@@ -25,8 +25,8 @@ function FollowForm({
 			onFinish={values => {
 				onFinish({
 					options: {
-						link: values.link,
-						followers: values['options.followers'],
+						link: values.options.link,
+						followers: values.options.followers,
 					},
 					priority: values.priority,
 					customer: values.customer
@@ -49,7 +49,7 @@ function FollowForm({
 
 			<FormInputNumber
 				label="Numero de seguidores"
-				name="options.followers"
+				name={["options", "followers"]}
 				min={0}
 				max={profilesCount}
 			/>

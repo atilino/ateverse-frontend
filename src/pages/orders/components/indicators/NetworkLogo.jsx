@@ -1,8 +1,9 @@
 import React from 'react';
-import { FacebookFilled, InstagramFilled, TwitterOutlined } from '@ant-design/icons';
+import { FacebookFilled, InstagramFilled, TwitterOutlined, YoutubeFilled } from '@ant-design/icons';
 import { Row } from 'antd';
 import { word } from 'utilities';
 import { tiktok } from '../../../../assets/img/icons';
+
 
 function NetworkLogo({ networkName, label=false }) {
   const styles = {
@@ -30,6 +31,15 @@ function NetworkLogo({ networkName, label=false }) {
     return (
       <Row align='middle' justify='space-around'>
         <img src={tiktok} style={{ width: '36px' }} />
+        {label && word.capitalize(networkName)}
+      </Row>
+    )
+  }
+
+  if (networkName === 'youtube') {
+    return (
+      <Row align='middle' justify='space-around'>
+        <YoutubeFilled style={styles} />
         {label && word.capitalize(networkName)}
       </Row>
     )

@@ -201,6 +201,15 @@ function OrderDetail() {
           render: (text, record) => <Check state={record.executed.follower} />
         }
       ],
+    },
+    youtube: {
+      0: [
+        {
+          title: 'Reacción',
+          align: 'center',
+          render: (text, record) => <Check state={record.executed.reaction} />
+        },
+      ]
     }
   }
 
