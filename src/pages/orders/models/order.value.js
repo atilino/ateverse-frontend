@@ -8,6 +8,9 @@ class Order {
     this.priority = priority
     this.customer = customer || null
   }
+  validate() {
+    throw new Error('Not implemented')
+  }
 }
 
 export default Order

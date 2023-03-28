@@ -5,7 +5,7 @@ import { useCustomer, useField, useInterval, useNetwork, useOrder, useProfiles, 
 import { useForm } from '../../components/Form';
 import { JoinGroupsForm, InteractionForm, PublicationForm, ShareGroupsForm, ReportsForm, AvailableMessage, FollowForm, DirectForm } from './components';
 import { constants } from '../../utilities';
-import OrderFactory from './application'
+import { OrderFactory } from './application'
 import { useEffect } from 'react';
 import { Row } from 'antd';
 import { useSearchParams } from 'react-router-dom';
@@ -21,6 +21,7 @@ function NewOrder() {
         twitter: 'https://www.twitter.com/',
         instagram: 'https://www.instagram.com/',
         tiktok: 'https://www.tiktok.com/',
+        youtube: 'https://www.youtube.com/',
     }
 	const [search, setSearch] = useSearchParams()
     const templateId = search.get('templateId')
@@ -56,7 +57,7 @@ function NewOrder() {
             order.customer = order.customer._id
             getAvailableProfiles(order.network.name, templateId)
         }
-        if(customers.length) {
+        if(customers.length && !order.customer) {
             order.customer = customers[0]._id
         }
         form.setFieldsValue(order)
@@ -74,7 +75,8 @@ function NewOrder() {
             search.delete('templateId')
             setSearch(search)
         }
-        createOrder(new OrderFactory().createNetworkOrder(networkRadio.value, createdOrder))
+        const orderFactory = new OrderFactory(__dirname + '/models')
+        createOrder(orderFactory.createNetworkOrder(networkRadio.value, createdOrder))
             .then(() => {
                 if (variantRadio.value === 'direct') {
                     getDirectOrder()

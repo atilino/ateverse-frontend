@@ -26,6 +26,7 @@ class Interaction extends Order {
    * @param {InteractionOptions} orderData.options
    * @param {string} orderData.customer
    * @param {boolean} orderData.priority
+   * @param {boolean} orderData.private
    */
 
   constructor({ network, variant, options, priority, customer }) {

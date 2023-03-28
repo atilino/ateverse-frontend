@@ -1,12 +1,12 @@
 import React from 'react';
-import { Form, Input, Button, Select } from 'antd';
-import { useForm } from '../Form';
+import { Form, Input, Button, Select, Checkbox } from 'antd';
 
 const fieldTypes = {
     text: (atributes) => <Input {...atributes}/>,
     password: (atributes) => <Input.Password {...atributes}/>,
     number: (atributes) => <Input type="number" {...atributes}/>,
     textarea: (atributes) => <Input.TextArea {...atributes}/>,
+    checkbox: (atributes) => <Checkbox {...atributes}/>,
 }
 
 function CustomForm({ children, fields = [], selected = {}, onFinish, form, defaultValue }) {
@@ -18,6 +18,7 @@ function CustomForm({ children, fields = [], selected = {}, onFinish, form, defa
                     key={field.key}
                     name={field.name}
                     rules={field.rules}
+                    valuePropName={field.valuePropName}
                 >
                     {field.type !== 'select' ?
                         fieldTypes[field.type](field.atributes)

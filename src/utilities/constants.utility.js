@@ -43,6 +43,9 @@ const PATTERNS = Object.freeze({
   },
   TIKTOK: {
     MAIN: /(?:(?:http|https):\/\/)?(?:www.)?tiktok.com\/?/
+  },
+  YOUTUBE: {
+    MAIN: /(?:(?:http|https):\/\/)?(?:www.)?youtube.com\/?/
   }
 })
 
@@ -69,6 +72,9 @@ const ORDER_VARIANTS = {
   tiktok: [
     { id: 0, label: 'Interacción', name: 'interaction' },
     { id: 1, label: 'Seguir', name: 'follow' },
+  ],
+  youtube: [
+    { id: 0, label: 'Interacción', name: 'interaction' },
   ]
 }
 
