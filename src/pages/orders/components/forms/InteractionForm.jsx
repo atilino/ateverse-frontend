@@ -44,9 +44,9 @@ function InteractionForm({
 	}
 
 	const handleChange = values => {
-		if (values.options.link && getVariantName(values.options.link) === 'live') {
+		if (values.options?.link && getVariantName(values.options?.link) === 'live') {
 			setOptions(options => ({ ...options, live: true }))
-		} else if (values.options.link) {
+		} else if (values.options?.link) {
 			setOptions(options => ({ ...options, live: false }))
 		}
 		formatOrder(values)

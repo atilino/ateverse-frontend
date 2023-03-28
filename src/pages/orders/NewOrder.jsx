@@ -57,7 +57,7 @@ function NewOrder() {
             order.customer = order.customer._id
             getAvailableProfiles(order.network.name, templateId)
         }
-        if(customers.length) {
+        if(customers.length && !order.customer) {
             order.customer = customers[0]._id
         }
         form.setFieldsValue(order)
