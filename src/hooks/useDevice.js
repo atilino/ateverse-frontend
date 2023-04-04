@@ -41,7 +41,7 @@ const useDevice = (service, config = { initialPagination: false }) => {
             await getDeviceById(id)
         }
         else {
-            await listDevices()
+            await listDevices(config.initialPage, config.initialLimit)
         }
     }, [])
 
