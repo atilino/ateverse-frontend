@@ -27,5 +27,6 @@ jobs:
             docker rm --force ateverse-nginx
             docker build -t ateverse-nginx ./nginx
             docker run -d --restart always --name ateverse-nginx \
-            -v ~/ateverse-infra/nginx/public:/var/www/html/app \
-            -p 80:80 --network ateverse-network ateverse-nginx
+              -v ~/ateverse-infra/nginx/public:/var/www/html/app \
+              -v /etc/letsencrypt:/etc/letsencrypt \
+              -p 80:80 -p 443:443 --network ateverse-network ateverse-nginx
