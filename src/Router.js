@@ -16,6 +16,7 @@ import { Customers } from './pages/customers'
 import { Dashboard } from './pages/dashboard'
 import { DeviceDetail, Devices, DevicesLayout, Processes } from './pages/devices'
 import useAuth from 'hooks/useAuth'
+import Tags from './pages/tags/Tags'
 
 function Router() {
     return (
@@ -28,6 +29,7 @@ function Router() {
                     <Route path='my-orders' element={<Orders />} />
                     <Route path=':orderId' element={<OrderDetail />} />
                 </Route>
+                <Route path='tags/*' element={<Tags />} />
                 <Route path='customers/*' element={<Customers />} />
                 <Route path='accounts/*' element={<AccountsLayout />}>
                     <Route index path='my-accounts' element={<Accounts />} />
