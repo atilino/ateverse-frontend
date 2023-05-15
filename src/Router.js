@@ -16,20 +16,23 @@ import { Customers } from './pages/customers'
 import { Dashboard } from './pages/dashboard'
 import { DeviceDetail, Devices, DevicesLayout, Processes } from './pages/devices'
 import useAuth from 'hooks/useAuth'
-import Tags from './pages/tags/Tags'
+import { TagCategories, Tags, TagsLayout } from './pages/tags'
 
 function Router() {
     return (
         <Routes>
             <Route path='/login' element={<Login />} />
             <Route path='/' element={<ProtectedLayout />}>
-                <Route index element={<Dashboard/>} />
+                <Route index element={<Dashboard />} />
                 <Route path='orders/*' element={<OrdersLayout />}>
                     <Route index path='new' element={<NewOrder />} />
                     <Route path='my-orders' element={<Orders />} />
                     <Route path=':orderId' element={<OrderDetail />} />
                 </Route>
-                <Route path='tags/*' element={<Tags />} />
+                <Route path='tags/*' element={<TagsLayout />}>
+                    <Route index path='categories' element={<TagCategories/>} />
+                    <Route path=':categoryId' element={<Tags/>} />
+                </Route>
                 <Route path='customers/*' element={<Customers />} />
                 <Route path='accounts/*' element={<AccountsLayout />}>
                     <Route index path='my-accounts' element={<Accounts />} />

@@ -9,11 +9,11 @@ export default async function resolve(promise){
     try{
         const data = await promise
 
-        if(data === undefined) {
-            deleteCurrentUser()
-            window.location.reload()
-            return resolved
-        }
+        // if(data === undefined) {
+        //     deleteCurrentUser()
+        //     window.location.reload()
+        //     return resolved
+        // }
 
         resolved.status = data.status
         resolved.data = data.body

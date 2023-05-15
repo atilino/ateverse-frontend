@@ -77,7 +77,7 @@ function Sider(props) {
                 title: 'Etiquetas',
                 key: 'tags',
                 icon: <TagsOutlined />,
-                path: '/tags'
+                path: '/tags/categories'
             },
             {
                 title: 'Clientes',

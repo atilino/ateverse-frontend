@@ -2,11 +2,11 @@ import React from 'react';
 import { Form, Input, Button, Select, Checkbox } from 'antd';
 
 const fieldTypes = {
-    text: (atributes) => <Input {...atributes}/>,
-    password: (atributes) => <Input.Password {...atributes}/>,
-    number: (atributes) => <Input type="number" {...atributes}/>,
-    textarea: (atributes) => <Input.TextArea {...atributes}/>,
-    checkbox: (atributes) => <Checkbox {...atributes}/>,
+    text: (atributes) => <Input {...atributes} />,
+    password: (atributes) => <Input.Password {...atributes} />,
+    number: (atributes) => <Input type="number" {...atributes} />,
+    textarea: (atributes) => <Input.TextArea {...atributes} />,
+    checkbox: (atributes) => <Checkbox {...atributes} />,
 }
 
 function CustomForm({ children, fields = [], selected = {}, onFinish, form, defaultValue }) {
@@ -19,17 +19,21 @@ function CustomForm({ children, fields = [], selected = {}, onFinish, form, defa
                     name={field.name}
                     rules={field.rules}
                     valuePropName={field.valuePropName}
+                    {...field}
                 >
-                    {field.type !== 'select' ?
-                        fieldTypes[field.type](field.atributes)
+                    {field.render ?
+                        field.render
                         :
-                        field.type === 'select' && (
-                            <Select {...field.atributes}>
-                                {field.options.map((option, index) =>
-                                    <Select.Option value={option.value ? option.value : index} key={option.key ? option.key : index}>{option.name ? option.name : option}</Select.Option>
-                                )}
-                            </Select>
-                        )
+                        field.type !== 'select' ?
+                            fieldTypes[field.type](field.atributes)
+                            :
+                            field.type === 'select' && (
+                                <Select {...field.atributes}>
+                                    {field.options.map((option, index) =>
+                                        <Select.Option value={option.value ? option.value : index} key={option.key ? option.key : index}>{option.name ? option.name : option}</Select.Option>
+                                    )}
+                                </Select>
+                            )
                     }
 
                 </Form.Item>
