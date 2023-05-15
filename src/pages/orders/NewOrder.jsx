@@ -70,7 +70,7 @@ function NewOrder() {
             ...values,
             variant: variantId,
             network: networkId,
-            tags: values.tags.map(tag => tag.value)
+            tags: values.tags?.map(tag => tag.value),
         }
         if(templateId) {
             search.delete('templateId')
