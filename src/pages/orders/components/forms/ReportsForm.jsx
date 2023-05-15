@@ -56,7 +56,8 @@ function ReportsForm({
                         reports: values['options.reports'],
                     },
                     priority: values.priority,
-                    customer: values.customer
+                    customer: values.customer,
+                    tags: values.tags
                 })
             }}
         >

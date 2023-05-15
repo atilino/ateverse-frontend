@@ -29,7 +29,8 @@ function ShareGroupsForm({ form, initialValues, onValuesChange, onFinish, onErro
                         link: values.link
                     },
                     priority: true,
-                    customer: values.customer
+                    customer: values.customer,
+                    tags: values.tags
                 })
             }}
         >

@@ -23,8 +23,7 @@ function Accounts(props) {
 		messages,
 	} = useAccount()
 
-	const { tags, listTags } = useTag()
-	const [currentTags, setCurrentTags] = useState([])
+	const { listTags } = useTag()
 
 	const { devices } = useDevice()
 	const [reload, setReload] = useState(false)
@@ -92,7 +91,6 @@ function Accounts(props) {
 		const categories = {}
 		const isDuplicate = item => {
 			const { name, multiSelect } = item.categoryId
-			console.log({ item: item.categoryId })
 			if (categories[name] && !categories[name].multiSelect) {
 				return true
 			}
@@ -144,7 +142,6 @@ function Accounts(props) {
 					placeholder="Seleccionar etiquetas"
 					style={{ width: '100%' }}
 					fetchOptions={fetchTags}
-					onChange={value => setCurrentTags(value)}
 				/>
 			),
 			rules: [
@@ -152,9 +149,7 @@ function Accounts(props) {
 					async validator(_, newCurrentTags) {
 						const allTags = await listTags()
 						newCurrentTags = allTags.filter(tag => newCurrentTags.find(newTag => tag._id === newTag.value))
-						console.log({ newCurrentTags })
 						if (!validateItems(newCurrentTags)) {
-							console.log('entro')
 							return Promise.reject(new Error('No se puede agregar más de una etiqueta de la misma categoría'))
 						}
 						return Promise.resolve()

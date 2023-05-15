@@ -69,7 +69,8 @@ function NewOrder() {
         const createdOrder = {
             ...values,
             variant: variantId,
-            network: networkId
+            network: networkId,
+            tags: values.tags.map(tag => tag.value)
         }
         if(templateId) {
             search.delete('templateId')

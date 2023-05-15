@@ -15,7 +15,7 @@ function JoinGroupsForm({ initialValues, onValuesChange, form, onFinish, onError
             form={form}
             initialValues={initialValues}
             onValuesChange={values => onValuesChange({ joinGroups: values })}
-            onFinish={values => onFinish({ options: values, priority: true, customer: values.customer })}
+            onFinish={values => onFinish({ options: values, priority: true, customer: values.customer, tags: values.tags })}
         >
             <FormSelect
                 label="Perfil"
