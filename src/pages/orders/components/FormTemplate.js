@@ -12,19 +12,6 @@ function FormTemplate({ priority, children, ...rest }) {
         const tags = await listTags({ name: value })
         return tags.map(tag => ({ ...tag, label: tag.name, value: tag._id }))
     }
-
-    function validateItems(array) {
-        const categories = {}
-        const isDuplicate = item => {
-            const { name, multiSelect } = item.categoryId
-            if (categories[name] && !categories[name].multiSelect) {
-                return true
-            }
-            categories[name] = { multiSelect }
-            return false
-        }
-        return !array.flatMap(isDuplicate).some(duplicate => duplicate)
-    }
     return (
         <FormLayout
             name='order'
