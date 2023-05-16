@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import accountService from '../services/accounts';
 import { resultHandler } from './helpers';
 
-const useProfiles = ({ type = 'all', network = 'facebook' } = {}) => {
+const useProfiles = ({ type = 'all', network = 'facebook', templateId } = {}) => {
     const [profiles, setProfiles] = useState([])
     const [profilesCount, setProfilesCount] = useState(0)
     const [groups, setGroups] = useState([])
@@ -10,7 +10,7 @@ const useProfiles = ({ type = 'all', network = 'facebook' } = {}) => {
     useEffect(() => {
         if (type === 'all') getAllProfiles(network)
         if (type === 'blocked') getBlockedProfiles(network)
-        if (type === 'available') getAvailableProfiles(network)
+        if (type === 'available') getAvailableProfiles(network, templateId)
         if (type === 'active') getActiveProfiles(network)
         if (type === 'groups') {
             listProfilesGroups()
@@ -51,9 +51,9 @@ const useProfiles = ({ type = 'all', network = 'facebook' } = {}) => {
             })
     }
 
-    const getAvailableProfiles = async (network, templateId) => {
+    const getAvailableProfiles = async (network, templateId, tags) => {
         accountService
-            .getAvailableProfiles(network, templateId)
+            .getAvailableProfiles(network, templateId, tags)
             .then(result => {
                 if (result.error) throw Error(result.error)
                 else setProfilesCount(result.data)

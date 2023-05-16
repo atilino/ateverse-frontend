@@ -63,6 +63,9 @@ function NewOrder() {
         form.setFieldsValue(order)
     },[order, customers])
 
+    useEffect(() => {
+        getAvailableProfiles(order.network.name, templateId ? templateId : null, form.getFieldValue('tags'))
+    }, [form.getFieldValue('tags')])
     const onFinishForm = (values) => {
         const variantId = constants.ORDER_VARIANTS[networkRadio.value].find(v => v.name === variantRadio.value).id
         const networkId = networks.find(n => n.name === networkRadio.value)._id
