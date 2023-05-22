@@ -19,7 +19,7 @@ function Devices() {
         createDevice,
         listDevices,
         pagination
-    } = useDevice('devices', { initialPagination: true })
+    } = useDevice('devices', { initialPagination: true, initialPage: 1, initialLimit: 10 })
 
     const [updateModal, setUpdateModal] = useState(false)
     const [createModal, setCreateModal] = useState(false)

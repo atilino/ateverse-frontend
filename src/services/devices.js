@@ -12,10 +12,13 @@ const listDevices = async (page, limit, query) => {
     const { token } = currentUser()
     headerConfig.headers['x-access-token'] = token
 
-    page = page || 1
-    limit = limit || DEFAULT_PAGINATE_LIMIT
-
     let queryString = ''
+    if(page) {
+        queryString += `?page=${page}`
+    }
+    if(limit) {
+        queryString += `&limit=${limit}`
+    }
     if(typeof query?.status === 'string') {
         queryString += `&status=${query.status}`
     }
@@ -32,7 +35,7 @@ const listDevices = async (page, limit, query) => {
         queryString += `&upgradeable=${query.upgradeable}`
     }
 
-    return await resolver(axios.get(config.BACKEND_URL + `/devices?page=${page}&limit=${limit}${queryString}`, headerConfig))
+    return await resolver(axios.get(config.BACKEND_URL + `/devices${queryString}`, headerConfig))
 }
 const getDeviceById = async (id) => {
     const { token } = currentUser()
