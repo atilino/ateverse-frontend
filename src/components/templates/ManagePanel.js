@@ -10,6 +10,7 @@ function ManagePanel({
     customContent = undefined,
     model,
     reload = () => { },
+    formFields,
     children,
     tableAtributes = {
         data: [],
@@ -26,7 +27,7 @@ function ManagePanel({
     return (
         <>
             {customHeader ?
-                <ManageHeader title={title} model={model} reload={reload} />
+                <ManageHeader title={title} model={model} reload={reload} formFields={formFields}/>
                 :
                 <PageTitle>
                     {title}

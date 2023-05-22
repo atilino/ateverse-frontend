@@ -1,38 +1,5 @@
 
 export const forms = {
-    accounts: [
-        {
-            label: 'Nombre',
-            name: 'name',
-            key: 'name',
-            type: 'text',
-            rules: [
-                {
-                    required: true,
-                    message: 'El nombre es requerido',
-                },
-            ]
-        },
-        {
-            label: 'Puerto movil',
-            name: 'mobilePort',
-            key: 'mobilePort',
-            type: 'text',
-            rules: []
-        },
-        {
-            label: 'Teléfono',
-            name: 'phone',
-            key: 'phone',
-            type: 'number',
-            rules: [
-                {
-                    required: true,
-                    message: 'El teléfono es requerido',
-                },
-            ]
-        }
-    ],
     devices: [
         {
             label: 'IMEI',

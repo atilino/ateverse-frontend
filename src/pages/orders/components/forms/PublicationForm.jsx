@@ -23,7 +23,7 @@ function PublicationForm({
                 if (options.publications.length > maxPublications) {
                     return onError('Limite de publicaciones', 'Se excedio el limite de publicaciones permitidas')
                 }
-                onFinish({ options, customer: values.customer })
+                onFinish({ options, customer: values.customer, tags: values.tags })
             }}
         >
             <FormItem label="Publicaciones" name="publications">

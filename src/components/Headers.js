@@ -1,27 +1,32 @@
 import { Col, PageHeader, Row } from "antd"
 import { DashboardTitle } from "./titles"
+import { Navigate, useLocation, useNavigate } from "react-router-dom"
 
 /**
  * @param {import('antd').PageHeaderProps}
  */
-export const AppHeader = ({ children, style, ...rest }) => (
-  <>
-    <PageHeader
-      style={{
-        backgroundColor: '#fff',
-        position: 'fixed',
-        zIndex: 100,
-        width: '100%',
-        boxShadow: '1px 1px 3px 1px rgba(0, 0, 0, 0.1)',
-        ...style
-      }}
-      {...rest}
-    >
-      {children}
-    </PageHeader>
-    <div style={{ marginBottom: '80px'}}/>
-  </>
-)
+export const AppHeader = ({ children, style, ...rest }) => {
+  const navigate = useNavigate()
+  return (
+    <>
+      <PageHeader
+        style={{
+          backgroundColor: '#fff',
+          position: 'fixed',
+          zIndex: 100,
+          width: '100%',
+          boxShadow: '1px 1px 3px 1px rgba(0, 0, 0, 0.1)',
+          ...style
+        }}
+        onBack={() => navigate(-4)}
+        {...rest}
+      >
+        {children}
+      </PageHeader>
+      <div style={{ marginBottom: '80px' }} />
+    </>
+  )
+}
 
 export const DashboardHeader = ({ title, children }) => (
   <div style={{ marginBottom: "2%" }}>

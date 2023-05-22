@@ -96,6 +96,7 @@ function FollowForm({
 								shares: 0,
 								reactionType: 0,
 							},
+							tags: values.tags
 						}
 						if (!order.options.direct) {
 							orderValues.options.direct = true

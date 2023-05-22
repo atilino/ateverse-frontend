@@ -29,7 +29,8 @@ function FollowForm({
 						followers: values.options.followers,
 					},
 					priority: values.priority,
-					customer: values.customer
+					customer: values.customer,
+					tags: values.tags
 				})
 			}}
 		>

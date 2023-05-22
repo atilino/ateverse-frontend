@@ -27,10 +27,11 @@ class Interaction extends Order {
    * @param {string} orderData.customer
    * @param {boolean} orderData.priority
    * @param {boolean} orderData.private
+   * @param {Array<string>} orderData.tags
    */
 
-  constructor({ network, variant, options, priority, customer }) {
-    super({ network, variant, priority, customer })
+  constructor({ network, variant, options, priority, customer, tags }) {
+    super({ network, variant, priority, customer, tags })
     /** @type {InteractionOptions} */
     this.options = options
   }

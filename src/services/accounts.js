@@ -11,13 +11,9 @@ const headerConfig = {
 
 const getAccounts = async (page, limit, query) => {
     const { token } = currentUser()
-    console.log({page})
-
     headerConfig.headers['x-access-token'] = token
     page = page || 1
     limit = limit || DEFAULT_PAGINATE_LIMIT
-
-    console.log({page})
 
     let queryString = ''
     if (query?.name) queryString += `&name=${query.name}`
@@ -114,12 +110,21 @@ const getActiveProfiles = async (network) => {
  * @param {string} network
  * @param {string} [templateId]
  */
-const getAvailableProfiles = async (network, templateId) => {
+const getAvailableProfiles = async (network, templateId, tags = []) => {
     const { token } = currentUser()
     let url = config.BACKEND_URL + `/accounts/${network}/available`
-    if(templateId) url += `?templateId=${templateId}`
+    let params = ''
+
+    if(templateId) {
+        params += params.length === 0 ? '?' : '&'
+        params += `templateId=${templateId}`
+    }
+    if (tags.length > 0) {
+        params += params.length === 0 ? '?' : '&'
+        params += tags.map(tag => `tags[]=${tag.value}`).join('&')
+    }
     headerConfig.headers['x-access-token'] = token
-    return (await resolver(axios.get(url, headerConfig)))
+    return (await resolver(axios.get(url + params, headerConfig)))
 }
 const listProfilesGroups = async (id) => {
     const { token } = currentUser()

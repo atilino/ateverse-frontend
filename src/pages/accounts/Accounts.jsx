@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import { deleteModal, FormModal, ManagePanel, TableModal, ViewModal } from '../../components/templates'
-import { notification } from '../../components/primitives'
+import { notification, RoleSelector } from '../../components/primitives'
 import { columns } from '../../resources/tables'
-import { forms } from '../../resources/forms'
 import { PersonalityForm, SelectorModal } from '../../components/organisms'
 import useAccount from '../../hooks/useAccount'
 import useToggle from '../../hooks/useToggle'
 import useDevice from '../../hooks/useDevice'
 import { AccountsTable } from './components'
-import { Col } from 'antd'
+import { Col, Select } from 'antd'
 import { date } from 'utilities'
+import { DebounceSelect } from '../../components'
+import { useTag } from '../../hooks'
 
 function Accounts(props) {
 	const {
@@ -21,6 +22,8 @@ function Accounts(props) {
 		getMessages,
 		messages,
 	} = useAccount()
+
+	const { listTags } = useTag()
 
 	const { devices } = useDevice()
 	const [reload, setReload] = useState(false)
@@ -39,6 +42,7 @@ function Accounts(props) {
 			activityDays: object.personality.activityDays,
 			networkPriority: object.personality.networkPriority?._id,
 			interests: object.personality.interests.map(interest => interest._id),
+			tags: object.tags.map(tag => ({ label: tag.name, value: tag._id, category: tag.categoryId })),
 		}
 	}
 	const toAccountObject = object => {
@@ -53,7 +57,8 @@ function Accounts(props) {
 				activityDays: object.activityDays,
 				interests: object.interests,
 			},
-			mobilePort: object.mobilePort
+			mobilePort: object.mobilePort,
+			tags: object.tags.map(tag => tag.value),
 		}
 	}
 	const updateAccountAndPersonality = async values => {
@@ -77,9 +82,86 @@ function Accounts(props) {
 			})
 	}
 
+	const fetchTags = async value => {
+		const tags = await listTags({ name: value })
+		return tags.map(tag => ({ ...tag, label: tag.name, value: tag._id }))
+	}
+
+	function validateItems(array) {
+		const categories = {}
+		const isDuplicate = item => {
+			const { name, multiSelect } = item.categoryId
+			if (categories[name] && !categories[name].multiSelect) {
+				return true
+			}
+			categories[name] = { multiSelect }
+			return false
+		}
+		return !array.flatMap(isDuplicate).some(duplicate => duplicate)
+	}
+
+	const formFields = [
+		{
+			label: 'Nombre',
+			name: 'name',
+			key: 'name',
+			type: 'text',
+			rules: [
+				{
+					required: true,
+					message: 'El nombre es requerido',
+				},
+			],
+		},
+		{
+			label: 'Puerto movil',
+			name: 'mobilePort',
+			key: 'mobilePort',
+			type: 'text',
+			rules: [],
+		},
+		{
+			label: 'Teléfono',
+			name: 'phone',
+			key: 'phone',
+			type: 'number',
+			rules: [
+				{
+					required: true,
+					message: 'El teléfono es requerido',
+				},
+			],
+		},
+		{
+			label: 'Tags',
+			name: 'tags',
+			key: 'tags',
+			render: (
+				<DebounceSelect
+					mode="multiple"
+					placeholder="Seleccionar etiquetas"
+					style={{ width: '100%' }}
+					fetchOptions={fetchTags}
+				/>
+			),
+			rules: [
+				{
+					async validator(_, newCurrentTags) {
+						const allTags = await listTags()
+						newCurrentTags = allTags.filter(tag => newCurrentTags.find(newTag => tag._id === newTag.value))
+						if (!validateItems(newCurrentTags)) {
+							return Promise.reject(new Error('No se puede agregar más de una etiqueta de la misma categoría'))
+						}
+						return Promise.resolve()
+					},
+				},
+			],
+		},
+	]
+
 	return (
 		<>
-			<ManagePanel model="accounts">
+			<ManagePanel model="accounts" formFields={formFields}>
 				<Col span={24}>
 					<AccountsTable
 						onChangeDevice={(id, account) => {
@@ -111,7 +193,7 @@ function Accounts(props) {
 
 			<FormModal
 				visible={modals.update.state}
-				fields={forms.accounts}
+				fields={formFields}
 				selected={account}
 				onCancel={() => modals.update.toggle()}
 				onFinish={updateAccountAndPersonality}
@@ -149,9 +231,9 @@ function Accounts(props) {
 				}}
 			/>
 			<TableModal
-        width='75%'
-        visible={modals.messages.state}
-        onCancel={modals.messages.toggle}
+				width="75%"
+				visible={modals.messages.state}
+				onCancel={modals.messages.toggle}
 				data={messages}
 				columns={[
 					{

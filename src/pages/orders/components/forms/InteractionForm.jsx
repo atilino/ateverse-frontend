@@ -40,7 +40,7 @@ function InteractionForm({
 		if (!options.comments.length && !options.reactions && !options.shares && options.watchTime === 0) {
 			return onError('Orden vacía', 'Se debe enviar al menos una interacción')
 		}
-		onFinish({ options, customer: values.customer })
+		onFinish({ options, customer: values.customer, tags: values.tags })
 	}
 
 	const handleChange = values => {

@@ -7,6 +7,7 @@ import {
     LogoutOutlined,
     ContactsOutlined,
     LineChartOutlined,
+    TagsOutlined,
 } from '@ant-design/icons';
 import { CompanyName } from '../components/primitives'
 import { Layout, Menu } from 'antd'
@@ -71,6 +72,12 @@ function Sider(props) {
                         path: '/accounts/personalities'
                     },
                 ]
+            },
+            {
+                title: 'Etiquetas',
+                key: 'tags',
+                icon: <TagsOutlined />,
+                path: '/tags/categories'
             },
             {
                 title: 'Clientes',
