@@ -110,7 +110,7 @@ const getActiveProfiles = async (network) => {
  * @param {string} network
  * @param {string} [templateId]
  */
-const getAvailableProfiles = async (network, templateId, tags) => {
+const getAvailableProfiles = async (network, templateId, tags = []) => {
     const { token } = currentUser()
     let url = config.BACKEND_URL + `/accounts/${network}/available`
     let params = ''
