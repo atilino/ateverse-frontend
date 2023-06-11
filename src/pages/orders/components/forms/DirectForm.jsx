@@ -130,7 +130,7 @@ function FollowForm({
 						<Col md={{ span: 14, offset: 2 }} xs={24}>
 							<FormSelect
 								item={itemProps}
-								disabled={order.options.direct || false}
+								disabled={order.options.direct ? true : false}
 								label="Cliente"
 								name="customer"
 								data={customers}
