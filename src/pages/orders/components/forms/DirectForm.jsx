@@ -128,14 +128,14 @@ function FollowForm({
 				>
 					<Row justify="center">
 						<Col md={{ span: 14, offset: 2 }} xs={24}>
-							<FormSelect
+							{/* <FormSelect
 								item={itemProps}
-								disabled={order.options.direct || false}
+								disabled={order.options.direct ? true : false}
 								label="Cliente"
 								name="customer"
 								data={customers}
 								config={{ label: 'name', value: '_id' }}
-							/>
+							/> */}
 						</Col>
 					</Row>
 					<Row justify="center">
