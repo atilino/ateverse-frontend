@@ -49,7 +49,10 @@ function NewOrder() {
     useInterval(() => order?.options.direct === true && getDirectOrder(), 5)
 
     useEffect(() => {
-        order?.options.direct === true && variantRadio.onChange('direct')
+        if(order?.options.direct === true && order?.network.name){
+            networkRadio.onChange(order.network.name)
+            variantRadio.onChange('direct')
+        }
         if (templateId && order._id) {
             const variant = constants.getOrderVariant(order.network.name, order.variant)
             networkRadio.onChange(order.network.name)
