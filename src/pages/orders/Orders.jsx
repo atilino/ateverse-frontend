@@ -152,7 +152,7 @@ function Orders() {
       disabled: ({ status }) => !cancelableSatus.includes(status),
     },
     {
-      title: "Crear de otra véz",
+      title: "Crear otra véz",
       dataIndex: "create-again",
       key: "create-again",
       render: ({ title }, { network, variant }) => renderCreateAgainAction(network.name, variant) ? title : null

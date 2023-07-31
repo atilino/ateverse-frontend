@@ -57,7 +57,7 @@ function NewOrder() {
             const variant = constants.getOrderVariant(order.network.name, order.variant)
             networkRadio.onChange(order.network.name)
             variantRadio.onChange(variant.name)
-            order.customer = order.customer._id
+            order.customer = order.customerDefault
             getAvailableProfiles(order.network.name, templateId)
         }
         if(customers.length && !order.customer) {

@@ -4,7 +4,7 @@ import { FormItem, FormLayout, FormSelect } from '../../../components/Form';
 import { useCustomer, useTag } from '../../../hooks';
 import { DebounceSelect } from '../../../components';
 
-function FormTemplate({ priority, children, ...rest }) {
+function FormTemplate({ priority, children, disabled, ...rest }) {
     const { customers } = useCustomer()
     const { listTags } = useTag()
 
@@ -25,6 +25,7 @@ function FormTemplate({ priority, children, ...rest }) {
                         name='customer'
                         data={customers}
                         config={{ label: 'name', value: '_id' }}
+                        disabled={disabled}
                     />
                 </Col>
             </Row>

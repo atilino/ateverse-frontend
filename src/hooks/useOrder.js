@@ -115,7 +115,7 @@ const useOrder = (service = 'orders', config) => {
 		return orderService
 			.getOrderById(orderId)
 			.then(response => {
-				resultHandler(response, result => setOrder(result))
+				resultHandler(response, result => setOrder({...result, customerDefault: result.customer._id}))
 			})
 	}
 
