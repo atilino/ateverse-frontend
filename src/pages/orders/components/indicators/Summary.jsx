@@ -1,4 +1,4 @@
-import { CommentOutlined, EditOutlined, IssuesCloseOutlined, LikeOutlined, ShareAltOutlined, UserAddOutlined, UsergroupAddOutlined } from '@ant-design/icons';
+import { CommentOutlined, EditOutlined, FileDoneOutlined, IssuesCloseOutlined, LikeOutlined, ShareAltOutlined, UserAddOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 import { Row } from 'antd';
 import useToggle from 'hooks/useToggle';
 import React from 'react';
@@ -24,6 +24,8 @@ function Summary({ variantName, interactions, executed }) {
         return <SummaryRow icons={<UserAddOutlined/>} actions={<p>{executed.followers}/{interactions.followers}</p>}/>
       case 'direct':
         return <InteractionSummary interactions={interactions} executed={executed} direct={true} />
+      case 'survey':
+        return <SummaryRow icons={<FileDoneOutlined/>} actions={<p>{executed.votes}/{interactions.votes}</p>}/>
 
       default:
         return null

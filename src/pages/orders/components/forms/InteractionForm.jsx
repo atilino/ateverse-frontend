@@ -55,7 +55,7 @@ function InteractionForm({
 
 	return (
 		<FormTemplate
-			disabled={maxInteraction === 0}
+			disabled={isTemplate}
 			form={form}
 			initialValues={initialValues}
 			onValuesChange={handleChange}

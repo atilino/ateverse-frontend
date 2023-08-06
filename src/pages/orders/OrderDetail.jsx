@@ -147,6 +147,13 @@ function OrderDetail() {
           render: (text, record) => <Check state={record.executed.follower} />
         }
       ],
+      3: [
+        {
+          title: 'Votos',
+          align: 'center',
+          render: (text, record) => <Check state={record.executed.vote} />
+        }
+      ],
     },
     instagram: {
       0: [
