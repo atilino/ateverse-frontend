@@ -33,7 +33,9 @@ const useOrder = (service = 'orders', config) => {
 			groups: [],
 			reports: 0,
 			direct: false,
-			watchTime: 0
+			watchTime: 0,
+			option: 1,
+			votes: 0,
 		},
 		executed: {
 			reactions: 0,
@@ -41,7 +43,8 @@ const useOrder = (service = 'orders', config) => {
 			shares: 0,
 			publications: [],
 			groups: [],
-			reports: 0
+			reports: 0,
+			votes: 0,
 		},
 		customer: null,
 		templateId: null,

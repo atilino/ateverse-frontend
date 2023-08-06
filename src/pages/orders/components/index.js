@@ -8,6 +8,7 @@ import JoinGroupsInput from "./inputs/JoinGroupsInput"
 import ReactionsInput from "./inputs/ReactionsInput"
 import AvailableMessage from "./AvailableMessage"
 import FollowForm from "./forms/FollowForm"
+import SurveyForm from "./forms/SurveyForm"
 import DirectForm from "./forms/DirectForm"
 export * from './inputs'
 
@@ -22,5 +23,6 @@ export {
     AvailableMessage,
     JoinGroupsInput,
     ReportsForm,
-    DirectForm
+    DirectForm,
+    SurveyForm,
 }

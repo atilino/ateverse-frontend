@@ -3,7 +3,7 @@ import React from 'react';
 import { notification, RadioGroup, Selector } from '../../components/primitives';
 import { useCustomer, useField, useInterval, useNetwork, useOrder, useProfiles, useResponsiveBreakpoints } from '../../hooks'
 import { useForm } from '../../components/Form';
-import { JoinGroupsForm, InteractionForm, PublicationForm, ShareGroupsForm, ReportsForm, AvailableMessage, FollowForm, DirectForm } from './components';
+import { JoinGroupsForm, InteractionForm, PublicationForm, ShareGroupsForm, ReportsForm, AvailableMessage, FollowForm, DirectForm, SurveyForm } from './components';
 import { constants } from '../../utilities';
 import { OrderFactory } from './application'
 import { useEffect } from 'react';
@@ -226,6 +226,18 @@ function NewOrder() {
                 }
                 {variantRadio.value === 'follow' &&
                     <FollowForm
+                        placeholders={placeholders}
+                        network={networkRadio.value}
+                        initialValues={order}
+                        onValuesChange={updateLocalOrder}
+                        form={form}
+                        onFinish={onFinishForm}
+                        onError={onError}
+                        isTemplate={templateId !== null}
+                    />
+                }
+                {variantRadio.value === 'survey' &&
+                    <SurveyForm
                         placeholders={placeholders}
                         network={networkRadio.value}
                         initialValues={order}

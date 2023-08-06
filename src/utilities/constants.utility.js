@@ -69,6 +69,7 @@ const ORDER_VARIANTS = {
     { id: 0, label: 'Interacción', name: 'interaction' },
     { id: 1, label: 'Publicación', name: 'publication' },
     { id: 2, label: 'Seguir', name: 'follow' },
+    { id: 3, label: 'Encuesta', name: 'survey' },
   ],
   tiktok: [
     { id: 0, label: 'Interacción', name: 'interaction' },
