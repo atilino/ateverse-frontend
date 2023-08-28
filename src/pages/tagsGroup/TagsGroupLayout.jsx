@@ -4,11 +4,11 @@ import { AppHeader } from '../../components'
 import { Layout } from 'antd'
 import { LeftOutlined } from '@ant-design/icons'
 
-function AccountsLayout(props) {
+function TagsGroupLayout(props) {
 	const location = useLocation()
 	return (
 		<Layout className="site-layout">
-			<AppHeader title="Etiquetas de Cuentas" subTitle={<Subtitle />}>
+			<AppHeader title="Etiquetas de Grupos" subTitle={<Subtitle />}>
 			</AppHeader>
 			<Layout.Content
 				style={{
@@ -27,4 +27,4 @@ const Subtitle = () => {
 	return ''
 }
 
-export default AccountsLayout
+export default TagsGroupLayout

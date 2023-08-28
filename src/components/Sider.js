@@ -77,7 +77,20 @@ function Sider(props) {
                 title: 'Etiquetas',
                 key: 'tags',
                 icon: <TagsOutlined />,
-                path: '/tags/categories'
+                submenu: [
+                    {
+                        title: 'Cuentas',
+                        key: 'tagsAccount',
+                        icon: <TagsOutlined />,
+                        path: '/tags/categories'
+                    },
+                    {
+                        title: 'Grupos',
+                        key: 'tagsGroup',
+                        icon: <TagsOutlined />,
+                        path: '/tags/group/categories'
+                    },
+                ]
             },
             {
                 title: 'Clientes',

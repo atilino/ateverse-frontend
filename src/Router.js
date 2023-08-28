@@ -17,6 +17,7 @@ import { Dashboard } from './pages/dashboard'
 import { DeviceDetail, Devices, DevicesLayout, Processes } from './pages/devices'
 import useAuth from 'hooks/useAuth'
 import { TagCategories, Tags, TagsLayout } from './pages/tags'
+import { TagCategoriesGroup, TagsGroup, TagsGroupLayout } from './pages/tagsGroup'
 
 function Router() {
     return (
@@ -32,6 +33,10 @@ function Router() {
                 <Route path='tags/*' element={<TagsLayout />}>
                     <Route index path='categories' element={<TagCategories/>} />
                     <Route path=':categoryId' element={<Tags/>} />
+                </Route>
+                <Route path='tags/group/*' element={<TagsGroupLayout />}>
+                    <Route index path='categories' element={<TagCategoriesGroup/>} />
+                    <Route path=':categoryId' element={<TagsGroup/>} />
                 </Route>
                 <Route path='customers/*' element={<Customers />} />
                 <Route path='accounts/*' element={<AccountsLayout />}>
