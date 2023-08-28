@@ -8,6 +8,7 @@ import {
     ContactsOutlined,
     LineChartOutlined,
     TagsOutlined,
+    FacebookOutlined,
 } from '@ant-design/icons';
 import { CompanyName } from '../components/primitives'
 import { Layout, Menu } from 'antd'
@@ -79,18 +80,24 @@ function Sider(props) {
                 icon: <TagsOutlined />,
                 submenu: [
                     {
-                        title: 'Cuentas',
+                        title: 'Etiquetas de Cuentas',
                         key: 'tagsAccount',
                         icon: <TagsOutlined />,
                         path: '/tags/categories'
                     },
                     {
-                        title: 'Grupos',
+                        title: 'Etiquetas de Grupos',
                         key: 'tagsGroup',
                         icon: <TagsOutlined />,
                         path: '/tags/group/categories'
                     },
                 ]
+            },
+            {
+                title: 'Grupos',
+                key: 'groups',
+                icon: <FacebookOutlined />,
+                path: '/groups'
             },
             {
                 title: 'Clientes',

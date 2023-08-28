@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import accountService from '../services/accounts';
+import networksService from '../services/networks';
 import { resultHandler } from './helpers';
 
 const useProfiles = ({ type = 'all', network = 'facebook', templateId } = {}) => {
     const [profiles, setProfiles] = useState([])
     const [profilesCount, setProfilesCount] = useState(0)
     const [groups, setGroups] = useState([])
+    const [group, setGroup] = useState({name: '', url: '', tags: []})
 
     useEffect(() => {
         if (type === 'all') getAllProfiles(network)
@@ -31,8 +33,8 @@ const useProfiles = ({ type = 'all', network = 'facebook', templateId } = {}) =>
         accountService
             .listProfilesGroups()
             .then(result => {
-                if (result.error) throw Error(result.error)
-                else setGroups(result.data)
+                if (result.error) { throw Error(result.error) }
+                else { setGroups(result.data)}
             })
     }
 
@@ -113,8 +115,35 @@ const useProfiles = ({ type = 'all', network = 'facebook', templateId } = {}) =>
                 else setProfiles(profiles.filter(item => item._id !== id))
             })
     }
+
+    const findGroup = (id) => {
+        const groupResult = groups.filter(item => item._id === id)[0]
+        const groupAdapted = {...groupResult, tags: groupResult.tags.map(tag => ({ ...tag, label: tag.name, value: tag._id })) }
+        setGroup(groupAdapted)
+        return groupAdapted
+    }
+
+    const updateGroup = async (id, groupObject) => {
+        try {
+            const tags = groupObject.tags.map(item => item.value)
+            await networksService.updateGroupById(id, {...groupObject, tags: tags})
+            const updatedGroups = groups.map(item => {
+                if (item._id === id) {
+                    return { ...item, ...groupObject, tags: groupObject.tags.map(tag => ({...tag, name: tag.label, _id: tag.key})) }
+                }
+            return item
+            })
+            setGroups(updatedGroups)
+            setGroup({ ...group, ...groupObject })
+        }
+        catch(error) {
+            console.log(error)
+        }
+      }
+
     return {
         groups,
+        group,
         profiles,
         profilesCount,
         getAllProfiles,
@@ -126,7 +155,9 @@ const useProfiles = ({ type = 'all', network = 'facebook', templateId } = {}) =>
         updateProfile,
         updateProfileStatus,
         deleteProfile,
-        filterProfilesGroups
+        filterProfilesGroups,
+        findGroup,
+        updateGroup,
     }
 }
 
