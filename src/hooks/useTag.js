@@ -112,7 +112,7 @@ const useTag = (service='tagCategories', config) => {
    */
   const listTagsGroup = async (query) => {
     const tags = await tagsService.listTagsGroup(query)
-    return resultHandler(tags, result => setTags(result))
+    return resultHandler(tags, result => setTags(result.filter(item => item.categoryId !== null)))
   }
 
   const createTagGroup = async (tag) => {
