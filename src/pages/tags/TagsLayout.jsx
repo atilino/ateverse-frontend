@@ -8,7 +8,7 @@ function AccountsLayout(props) {
 	const location = useLocation()
 	return (
 		<Layout className="site-layout">
-			<AppHeader title="Etiquetas" subTitle={<Subtitle />}>
+			<AppHeader title="Etiquetas de Cuentas" subTitle={<Subtitle />}>
 			</AppHeader>
 			<Layout.Content
 				style={{

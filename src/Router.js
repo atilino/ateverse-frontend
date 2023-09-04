@@ -17,6 +17,8 @@ import { Dashboard } from './pages/dashboard'
 import { DeviceDetail, Devices, DevicesLayout, Processes } from './pages/devices'
 import useAuth from 'hooks/useAuth'
 import { TagCategories, Tags, TagsLayout } from './pages/tags'
+import { TagCategoriesGroup, TagsGroup, TagsGroupLayout } from './pages/tagsGroup'
+import { GroupsFB } from './pages/groupsFB'
 
 function Router() {
     return (
@@ -33,6 +35,11 @@ function Router() {
                     <Route index path='categories' element={<TagCategories/>} />
                     <Route path=':categoryId' element={<Tags/>} />
                 </Route>
+                <Route path='tags/group/*' element={<TagsGroupLayout />}>
+                    <Route index path='categories' element={<TagCategoriesGroup/>} />
+                    <Route path=':categoryId' element={<TagsGroup/>} />
+                </Route>
+                <Route path='groups/*' element={<GroupsFB />} />
                 <Route path='customers/*' element={<Customers />} />
                 <Route path='accounts/*' element={<AccountsLayout />}>
                     <Route index path='my-accounts' element={<Accounts />} />

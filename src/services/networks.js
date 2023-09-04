@@ -38,10 +38,10 @@ const getAllGroups = async (query = {}) => {
     return await resolver(axios.get(config.BACKEND_URL + '/networks/groups' + rest, headerConfig))
 }
 
-const updateGroupById = async (id) => {
+const updateGroupById = async (id, data) => {
     const { token } = currentUser()
     headerConfig.headers['x-access-token'] = token
-    return await resolver(axios.put(config.BACKEND_URL + `network/groups/${id}`, headerConfig))
+    return await resolver(axios.put(config.BACKEND_URL + `/networks/groups/${id}`, data, headerConfig))
 }
 
 const createGroup = async () => {
