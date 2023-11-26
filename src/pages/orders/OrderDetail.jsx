@@ -115,6 +115,20 @@ function OrderDetail() {
           render: (text, record) => <Check state={record.executed.share} />
         },
       ],
+      6: [
+        {
+          title: 'Grupos confirmados',
+          render: (text, record) => (
+            <List
+              dataSource={record.executed.groups.map(group => group.name)}
+              size='small'
+              renderItem={item => (
+                <List.Item>{item}</List.Item>
+              )}
+            />
+          )
+        }
+      ],
     },
     twitter: {
       0: [
@@ -312,6 +326,12 @@ function OrderDetail() {
           <Item label='Grupos'>
             <Row justify='center' align='middle'>
               {order.executed.groups.length}/{order.options.groups.length}
+            </Row>
+          </Item>
+          ||(order.variant == 6) &&
+          <Item label='Perfiles confirmados'>
+            <Row justify='center' align='middle'>
+              {order.executed.groups.length}
             </Row>
           </Item>
           || order.variant === 3 &&

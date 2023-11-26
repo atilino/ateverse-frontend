@@ -8,7 +8,7 @@ import { DebounceSelect } from '../../components'
 
 function Customers(props) {
 
-  const { groups, group, findGroup, updateGroup } = useProfiles({ type: 'groups', network: 'facebook' })
+  const { groups, group, findGroup, updateGroup } = useProfiles({ type: 'networkGroups', network: 'facebook' })
   const { listTagsGroup } = useTag()
 
   const fetchTags = async value => {
@@ -127,6 +127,11 @@ function Customers(props) {
                 title: 'Nombre',
                 dataIndex: 'name',
                 key: 'name'
+              },
+              {
+                title: 'Perfiles',
+                dataIndex: 'joinedProfiles',
+                key: 'joinedProfiles'
               }
             ]}
             dataSource={groups}

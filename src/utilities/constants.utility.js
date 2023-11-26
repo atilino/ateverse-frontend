@@ -56,7 +56,8 @@ const ORDER_VARIANTS = {
     { id: 2, label: 'Compartir en grupos', name: 'share-groups' },
     { id: 3, label: 'Reportar', name: 'report' },
     { id: 4, label: 'Seguir', name: 'follow' },
-    { id: 5, label: 'Directo', name: 'direct' }
+    { id: 5, label: 'Directo', name: 'direct' },
+    { id: 6, label: 'Confirmar grupos', name: 'confirm-groups' }
 
   ],
   instagram: [

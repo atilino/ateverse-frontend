@@ -4,7 +4,7 @@ import { FormItem, FormLayout, FormSelect } from '../../../components/Form';
 import { useCustomer, useTag } from '../../../hooks';
 import { DebounceSelect } from '../../../components';
 
-function FormTemplate({ priority, children, disabled, ...rest }) {
+function FormTemplate({ priority, children, disabled, disabledTags = false, ...rest }) {
     const { customers } = useCustomer()
     const { listTags } = useTag()
 
@@ -29,18 +29,21 @@ function FormTemplate({ priority, children, disabled, ...rest }) {
                     />
                 </Col>
             </Row>
-            <Row justify='center'>
-                <Col span={24}>
-                    <FormItem label='Etiquetas' name='tags'>
-                        <DebounceSelect
-                            mode="multiple"
-                            placeholder="Seleccionar etiquetas"
-                            style={{ width: '100%' }}
-                            fetchOptions={fetchTags}
-                        />
-                    </FormItem>
-                </Col>
-            </Row>
+            {
+                !disabledTags &&
+                <Row justify='center'>
+                    <Col span={24}>
+                        <FormItem label='Etiquetas' name='tags'>
+                            <DebounceSelect
+                                mode="multiple"
+                                placeholder="Seleccionar etiquetas"
+                                style={{ width: '100%' }}
+                                fetchOptions={fetchTags}
+                            />
+                        </FormItem>
+                    </Col>
+                </Row>
+            }
             {children}
         </FormLayout>
     );
