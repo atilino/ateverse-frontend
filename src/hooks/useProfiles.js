@@ -18,6 +18,10 @@ const useProfiles = ({ type = 'all', network = 'facebook', templateId } = {}) =>
             listProfilesGroups()
             getActiveProfiles(network)
         }
+        if(type === 'networkGroups') {
+            listAllGroups()
+            getActiveProfiles(network)
+        }
     }, [])
 
     const getAllProfiles = async (network) => {
@@ -32,6 +36,15 @@ const useProfiles = ({ type = 'all', network = 'facebook', templateId } = {}) =>
     const listProfilesGroups = async () => {
         accountService
             .listProfilesGroups()
+            .then(result => {
+                if (result.error) { throw Error(result.error) }
+                else { setGroups(result.data)}
+            })
+    }
+
+    const listAllGroups = async () => {
+        networksService
+            .getAllGroups()
             .then(result => {
                 if (result.error) { throw Error(result.error) }
                 else { setGroups(result.data)}

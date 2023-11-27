@@ -9,6 +9,7 @@ import { OrderFactory } from './application'
 import { useEffect } from 'react';
 import { Row } from 'antd';
 import { useSearchParams } from 'react-router-dom';
+import ConfirmGroupsForm from './components/forms/ConfirmGroupsForm';
 
 function NewOrder() {
     const defaults = {
@@ -272,6 +273,17 @@ function NewOrder() {
                         }}
                         onError={onError}
                         order={order}
+                    />
+                }
+                {variantRadio.value === 'confirm-groups' &&
+                    <ConfirmGroupsForm
+                        profiles={profiles}
+                        initialValues={order}
+                        onValuesChange={updateLocalOrder}
+                        form={form}
+                        onFinish={onFinishForm}
+                        onError={onError}
+                        isTemplate={templateId !== null}
                     />
                 }
             </Row>

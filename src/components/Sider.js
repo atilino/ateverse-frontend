@@ -45,7 +45,7 @@ function Sider(props) {
             ]
         },
     ]
-    if (isModerator || isAdmin) {
+
         menu.push(
             {
                 title: 'Cuentas',
@@ -112,8 +112,8 @@ function Sider(props) {
                 path: '/devices'
             },
         )
-    }
-    if (isAdmin) {
+
+
         menu.push(
             {
                 title: 'Usuarios',
@@ -122,7 +122,7 @@ function Sider(props) {
                 path: '/users'
             },
         )
-    }
+
     menu.push(
         {
             title: 'Cerrar sesión',

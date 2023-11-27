@@ -2,7 +2,7 @@ import React from 'react';
 import { FormItem, FormList } from '../../../../components/Form';
 import { Selector } from '../../../../components/primitives';
 
-function ShareGroupsInputMulti({ groups, selectedGroups }) {
+function ShareGroupsInputMulti({ groups, selectedGroups, multiselect = true }) {
     return (
         <FormList name="groupsMulti">
           {
@@ -13,7 +13,7 @@ function ShareGroupsInputMulti({ groups, selectedGroups }) {
                 style={{ width: '100%', marginRigth: '2%', marginBottom: '2%' }}
               >
                   <Selector
-                      mode="multiple"
+                      mode={multiselect ? 'multiple' : ''}
                       data={groups}
                       placeholder="Selecciona multiples grupos (opcional)"
                       config={{ label: 'name', value: '_id' }}

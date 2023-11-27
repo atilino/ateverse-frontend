@@ -4,6 +4,7 @@ import ShareGroups from './ShareGroups'
 import Report from './Report'
 import Follow from './Follow'
 import DirectInteraction from './DirectInteraction'
+import ConfirmGroups from './ConfirmGroups'
 
 
 export default {
@@ -12,5 +13,6 @@ export default {
   2: ShareGroups,
   3: Report,
   4: Follow,
-  5: DirectInteraction
+  5: DirectInteraction,
+  6: ConfirmGroups
 }
